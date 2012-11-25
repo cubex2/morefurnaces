@@ -31,7 +31,7 @@ public class PacketHandler implements IPacketHandler {
 		if (te instanceof TileEntityIronFurnace) {
 			TileEntityIronFurnace furnace = (TileEntityIronFurnace) te;
 			furnace.setFacing(facing);
-			world.markBlockNeedsUpdate(x, y, z);
+			world.markBlockForUpdate(x, y, z);
 			world.updateAllLightTypes(x, y, z);
 		}
 	}

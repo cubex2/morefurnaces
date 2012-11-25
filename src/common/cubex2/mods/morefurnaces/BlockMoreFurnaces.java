@@ -76,7 +76,7 @@ public class BlockMoreFurnaces extends BlockContainer {
 	public void onBlockAdded(World world, int x, int y, int z) {
 		super.onBlockAdded(world, x, y, z);
 		this.setDefaultDirection(world, x, y, z);
-		world.markBlockNeedsUpdate(x, y, z);
+		world.markBlockForUpdate(x, y, z);
 	}
 
 	private void setDefaultDirection(World world, int x, int y, int z) {
@@ -106,7 +106,7 @@ public class BlockMoreFurnaces extends BlockContainer {
 			TileEntity te = world.getBlockTileEntity(x, y, z);
 			if (te != null && te instanceof TileEntityIronFurnace) {
 				((TileEntityIronFurnace) te).setFacing(facing);
-				world.markBlockNeedsUpdate(x, y, z);
+				world.markBlockForUpdate(x, y, z);
 			}
 		}
 	}
@@ -226,7 +226,7 @@ public class BlockMoreFurnaces extends BlockContainer {
 		TileEntity te = world.getBlockTileEntity(x, y, z);
 		if (te != null && te instanceof TileEntityIronFurnace) {
 			((TileEntityIronFurnace) te).setFacing(furnaceFacing);
-			world.markBlockNeedsUpdate(x, y, z);
+			world.markBlockForUpdate(x, y, z);
 		}
 	}
 

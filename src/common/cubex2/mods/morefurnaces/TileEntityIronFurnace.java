@@ -154,7 +154,7 @@ public class TileEntityIronFurnace extends TileEntity implements IInventory {
 		this.facing = nbtTagCompound.getByte("facing");
 		this.isActive = nbtTagCompound.getBoolean("isActive");
 		if (worldObj != null)
-			worldObj.markBlockNeedsUpdate(xCoord, yCoord, zCoord);
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 
 	@Override
@@ -268,14 +268,14 @@ public class TileEntityIronFurnace extends TileEntity implements IInventory {
 			if (var1 != this.isBurning() && type.fuelSlots > 0) {
 				inventoryChanged = true;
 				isActive = this.isBurning();
-				worldObj.markBlockNeedsUpdate(xCoord, yCoord, zCoord);
+				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			}
 			else if (type.fuelSlots == 0) {
 				if (isActive != isBurning()) {
 					currentItemBurnTime = furnaceBurnTime = 3600;
 					inventoryChanged = true;
 					isActive = this.isBurning();
-					worldObj.markBlockNeedsUpdate(xCoord, yCoord, zCoord);
+					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 				}
 			}
 		}

@@ -70,11 +70,11 @@ public class ContainerIronFurnace extends Container {
 		super.addCraftingToCrafters(icrafting);
 
 		for (int i = 0; i < type.parallelSmelting; i++) {
-			icrafting.updateCraftingInventoryInfo(this, i, this.furnace.furnaceCookTime[i]);
+			icrafting.sendProgressBarUpdate(this, i, this.furnace.furnaceCookTime[i]);
 		}
 
-		icrafting.updateCraftingInventoryInfo(this, type.parallelSmelting, this.furnace.furnaceBurnTime);
-		icrafting.updateCraftingInventoryInfo(this, type.parallelSmelting + 1, this.furnace.currentItemBurnTime);
+		icrafting.sendProgressBarUpdate(this, type.parallelSmelting, this.furnace.furnaceBurnTime);
+		icrafting.sendProgressBarUpdate(this, type.parallelSmelting + 1, this.furnace.currentItemBurnTime);
 	}
 
 	@Override
@@ -87,16 +87,16 @@ public class ContainerIronFurnace extends Container {
 
 			for (int i = 0; i < type.parallelSmelting; i++) {
 				if (this.lastCookTime[i] != this.furnace.furnaceCookTime[i]) {
-					var2.updateCraftingInventoryInfo(this, i, this.furnace.furnaceCookTime[i]);
+					var2.sendProgressBarUpdate(this, i, this.furnace.furnaceCookTime[i]);
 				}
 			}
 
 			if (this.lastBurnTime != this.furnace.furnaceBurnTime) {
-				var2.updateCraftingInventoryInfo(this, type.parallelSmelting, this.furnace.furnaceBurnTime);
+				var2.sendProgressBarUpdate(this, type.parallelSmelting, this.furnace.furnaceBurnTime);
 			}
 
 			if (this.lastItemBurnTime != this.furnace.currentItemBurnTime) {
-				var2.updateCraftingInventoryInfo(this, type.parallelSmelting + 1, this.furnace.currentItemBurnTime);
+				var2.sendProgressBarUpdate(this, type.parallelSmelting + 1, this.furnace.currentItemBurnTime);
 			}
 		}
 
