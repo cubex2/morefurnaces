@@ -3,6 +3,7 @@ package cubex2.mods.morefurnaces;
 import java.util.Arrays;
 import java.util.logging.Level;
 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -18,8 +19,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-
-@Mod(modid ="MoreFurnaces", name = "More Furnaces", version = "1.3.1")
+@Mod(modid = "MoreFurnaces", name = "More Furnaces", version = "1.3.2")
 @NetworkMod(channels = { "MoreFurnaces" }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class MoreFurnaces {
 	public static BlockMoreFurnaces blockFurnaces;
@@ -28,13 +28,13 @@ public class MoreFurnaces {
 	@Instance("MoreFurnaces")
 	public static MoreFurnaces instance;
 	private int blockId;
-	
+
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) {
 		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
 		try {
 			cfg.load();
-			blockId = cfg.getBlock("id", 203).getInt(203);						
+			blockId = cfg.getBlock("id", 203).getInt(203);
 		} catch (Exception e) {
 			FMLLog.log(Level.SEVERE, e, "MoreFurnaces has a problem loading it's configuration");
 		} finally {
@@ -46,12 +46,12 @@ public class MoreFurnaces {
 		md.authorList = Arrays.asList("CubeX2");
 		md.url = "http://www.minecraftforum.net/topic/506109-";
 	}
-	
+
 	@Init
 	public void load(FMLInitializationEvent evt) {
 		blockFurnaces = new BlockMoreFurnaces(blockId);
 		GameRegistry.registerBlock(blockFurnaces, ItemMoreFurnaces.class);
-		for(FurnaceType typ : FurnaceType.values()) {
+		for (FurnaceType typ : FurnaceType.values()) {
 			GameRegistry.registerTileEntity(typ.clazz, "CubeX2 " + typ.friendlyName);
 			LanguageRegistry.instance().addStringLocalization(typ.name() + "_furnace.name", "en_US", typ.friendlyName);
 		}

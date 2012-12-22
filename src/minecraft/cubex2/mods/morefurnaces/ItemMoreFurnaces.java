@@ -1,7 +1,7 @@
 package cubex2.mods.morefurnaces;
 
-import net.minecraft.src.ItemBlock;
-import net.minecraft.src.ItemStack;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 
 public class ItemMoreFurnaces extends ItemBlock{
 

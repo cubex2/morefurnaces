@@ -1,6 +1,6 @@
 package cubex2.mods.morefurnaces;
 
-import net.minecraft.src.Block;
+import net.minecraft.block.Block;
 
 public class TileEntityNetherrackFurnace extends TileEntityIronFurnace {
 

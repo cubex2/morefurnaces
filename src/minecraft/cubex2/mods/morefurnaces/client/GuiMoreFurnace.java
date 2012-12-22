@@ -1,8 +1,8 @@
 package cubex2.mods.morefurnaces.client;
 
-import net.minecraft.src.Container;
-import net.minecraft.src.GuiContainer;
-import net.minecraft.src.IInventory;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import org.lwjgl.opengl.GL11;
 import cubex2.mods.morefurnaces.ContainerIronFurnace;
 import cubex2.mods.morefurnaces.FurnaceType;

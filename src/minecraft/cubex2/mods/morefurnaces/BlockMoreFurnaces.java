@@ -5,22 +5,22 @@ import static net.minecraftforge.common.ForgeDirection.UP;
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.BlockContainer;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Material;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
 public class BlockMoreFurnaces extends BlockContainer {
@@ -184,8 +184,7 @@ public class BlockMoreFurnaces extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float f1, float f2, float f3) {
 		int meta = world.getBlockMetadata(x, y, z);
-		if(meta == FurnaceType.NETHERRACK.ordinal() && ForgeDirection.getOrientation(side) == ForgeDirection.UP)
-		{
+		if (meta == FurnaceType.NETHERRACK.ordinal() && ForgeDirection.getOrientation(side) == ForgeDirection.UP) {
 			return false;
 		}
 		TileEntity te = world.getBlockTileEntity(x, y, z);
@@ -254,7 +253,7 @@ public class BlockMoreFurnaces extends BlockContainer {
 						EntityItem var14 = new EntityItem(world, (x + var10), (y + var11), (z + var12), new ItemStack(stack.itemID, var13, stack.getItemDamage()));
 
 						if (stack.hasTagCompound()) {
-							var14.item.setTagCompound((NBTTagCompound) stack.getTagCompound().copy());
+							var14.func_92014_d().setTagCompound((NBTTagCompound) stack.getTagCompound().copy());
 						}
 
 						float var15 = 0.05F;

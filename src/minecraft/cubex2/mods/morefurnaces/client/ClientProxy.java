@@ -1,6 +1,6 @@
 package cubex2.mods.morefurnaces.client;
 
-import net.minecraft.src.World;
+import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.client.FMLClientHandler;
 import cubex2.mods.morefurnaces.CommonProxy;
