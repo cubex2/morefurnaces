@@ -407,7 +407,7 @@ public class TileEntityIronFurnace extends TileEntity implements IInventory {
 			return 0;
 		}
 		else {
-			int var1 = stack.getItem().shiftedIndex;
+			int var1 = stack.getItem().itemID;
 			Item var2 = stack.getItem();
 
 			if (stack.getItem() instanceof ItemBlock && Block.blocksList[var1] != null) {
@@ -427,15 +427,15 @@ public class TileEntityIronFurnace extends TileEntity implements IInventory {
 				return 200;
 			if (var2 instanceof ItemHoe && ((ItemHoe) var2).func_77842_f().equals("WOOD"))
 				return 200;
-			if (var1 == Item.stick.shiftedIndex)
+			if (var1 == Item.stick.itemID)
 				return 100;
-			if (var1 == Item.coal.shiftedIndex)
+			if (var1 == Item.coal.itemID)
 				return 1600;
-			if (var1 == Item.bucketLava.shiftedIndex)
+			if (var1 == Item.bucketLava.itemID)
 				return 20000;
 			if (var1 == Block.sapling.blockID)
 				return 100;
-			if (var1 == Item.blazeRod.shiftedIndex)
+			if (var1 == Item.blazeRod.itemID)
 				return 2400;
 			return GameRegistry.getFuelValue(stack);
 		}

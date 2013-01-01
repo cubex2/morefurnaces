@@ -3,7 +3,6 @@ package cubex2.mods.morefurnaces;
 import java.util.Arrays;
 import java.util.logging.Level;
 
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;

@@ -79,8 +79,8 @@ public class ContainerIronFurnace extends Container {
 	}
 
 	@Override
-	public void updateCraftingResults() {
-		super.updateCraftingResults();
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
 		Iterator iterator = this.crafters.iterator();
 
 		while (iterator.hasNext()) {
