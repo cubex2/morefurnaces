@@ -6,10 +6,10 @@ import java.util.logging.Level;
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -18,9 +18,10 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "MoreFurnaces", name = "More Furnaces", version = "1.3.2")
+@Mod(modid = "MoreFurnaces", name = "More Furnaces", version = "1.3.3")
 @NetworkMod(channels = { "MoreFurnaces" }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
-public class MoreFurnaces {
+public class MoreFurnaces
+{
 	public static BlockMoreFurnaces blockFurnaces;
 	@SidedProxy(clientSide = "cubex2.mods.morefurnaces.client.ClientProxy", serverSide = "cubex2.mods.morefurnaces.CommonProxy")
 	public static CommonProxy proxy;
@@ -29,14 +30,20 @@ public class MoreFurnaces {
 	private int blockId;
 
 	@PreInit
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit(FMLPreInitializationEvent event)
+	{
 		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
-		try {
+		try
+		{
 			cfg.load();
 			blockId = cfg.getBlock("id", 203).getInt(203);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			FMLLog.log(Level.SEVERE, e, "MoreFurnaces has a problem loading it's configuration");
-		} finally {
+		}
+		finally
+		{
 			cfg.save();
 		}
 		ModMetadata md = event.getModMetadata();
@@ -47,10 +54,12 @@ public class MoreFurnaces {
 	}
 
 	@Init
-	public void load(FMLInitializationEvent evt) {
+	public void load(FMLInitializationEvent evt)
+	{
 		blockFurnaces = new BlockMoreFurnaces(blockId);
 		GameRegistry.registerBlock(blockFurnaces, ItemMoreFurnaces.class);
-		for (FurnaceType typ : FurnaceType.values()) {
+		for (FurnaceType typ : FurnaceType.values())
+		{
 			GameRegistry.registerTileEntity(typ.clazz, "CubeX2 " + typ.friendlyName);
 			LanguageRegistry.instance().addStringLocalization(typ.name() + "_furnace.name", "en_US", typ.friendlyName);
 		}

@@ -16,10 +16,12 @@ import com.google.common.io.ByteStreams;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
 
-public class PacketHandler implements IPacketHandler {
+public class PacketHandler implements IPacketHandler
+{
 
 	@Override
-	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
+	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player)
+	{
 		ByteArrayDataInput dat = ByteStreams.newDataInput(packet.data);
 		int x = dat.readInt();
 		int y = dat.readInt();
@@ -29,7 +31,8 @@ public class PacketHandler implements IPacketHandler {
 		byte facing = dat.readByte();
 		World world = MoreFurnaces.proxy.getClientWorld();
 		TileEntity te = world.getBlockTileEntity(x, y, z);
-		if (te instanceof TileEntityIronFurnace) {
+		if (te instanceof TileEntityIronFurnace)
+		{
 			TileEntityIronFurnace furnace = (TileEntityIronFurnace) te;
 			furnace.setFacing(facing);
 			world.markBlockForUpdate(x, y, z);
@@ -37,21 +40,25 @@ public class PacketHandler implements IPacketHandler {
 		}
 	}
 
-	public static Packet getPacket(TileEntityIronFurnace furnace) {
+	public static Packet getPacket(TileEntityIronFurnace furnace)
+	{
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(15);
 		DataOutputStream dos = new DataOutputStream(bos);
 		int x = furnace.xCoord;
 		int y = furnace.yCoord;
 		int z = furnace.zCoord;
 		int typ = furnace.getType().ordinal();
-		try {
+		try
+		{
 			dos.writeInt(x);
 			dos.writeInt(y);
 			dos.writeInt(z);
 			dos.writeByte(typ);
 			dos.writeBoolean(furnace.isActive());
 			dos.writeByte(furnace.getFacing());
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 		Packet250CustomPayload pkt = new Packet250CustomPayload();
