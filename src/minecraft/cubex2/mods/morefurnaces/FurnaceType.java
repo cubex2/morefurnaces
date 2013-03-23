@@ -9,6 +9,7 @@ import net.minecraft.util.Icon;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import cubex2.mods.customstuff2.util.Utils;
 
 public enum FurnaceType
 {
@@ -26,6 +27,11 @@ public enum FurnaceType
 	int outputSlots;
 	int fuelSlots;
 	int parallelSmelting;
+
+	public int[] inputSlotIds;
+	public int[] outputSlotIds;
+	public int[] fuelSlotIds;
+
 	int speed;
 	int[] mainInputX;
 	int[] mainInputY;
@@ -51,6 +57,18 @@ public enum FurnaceType
 		this.outputSlots = outputSlots;
 		this.fuelSlots = fuelSlots;
 		this.parallelSmelting = parallelSmelting;
+
+		inputSlotIds = new int[inputSlots * parallelSmelting];
+		outputSlotIds = new int[outputSlots * parallelSmelting];
+		fuelSlotIds = new int[fuelSlots];
+
+		for (int i = 0; i < inputSlotIds.length; i++)
+			inputSlotIds[i] = i;
+		for (int i = 0; i < fuelSlotIds.length; i++)
+			fuelSlotIds[i] = i + inputSlotIds.length;
+		for (int i = 0; i < outputSlotIds.length; i++)
+			outputSlotIds[i] = i + inputSlotIds.length + fuelSlotIds.length;
+
 		this.speed = speed;
 		this.mainInputX = mainInputX;
 		this.mainInputY = mainInputY;
@@ -108,6 +126,21 @@ public enum FurnaceType
 	public int getSpeed()
 	{
 		return speed;
+	}
+
+	public boolean isInputSlot(int slotId)
+	{
+		return Utils.arrayContains(inputSlotIds, slotId);
+	}
+
+	public boolean isFuelSlot(int slotId)
+	{
+		return Utils.arrayContains(fuelSlotIds, slotId);
+	}
+
+	public boolean isOutputSlot(int slotId)
+	{
+		return Utils.arrayContains(outputSlotIds, slotId);
 	}
 
 	public int getFirstInputSlot(int id)

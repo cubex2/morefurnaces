@@ -594,30 +594,27 @@ public class TileEntityIronFurnace extends TileEntity implements
 	}
 
 	@Override
-	public boolean isStackValidForSlot(int i, ItemStack itemstack)
+	public boolean isStackValidForSlot(int slot, ItemStack itemstack)
 	{
-		return i == 2 ? false : (i == 1 ? isItemFuel(itemstack) : true);
+		return type.isOutputSlot(slot) ? false : type.isFuelSlot(slot) ? isItemFuel(itemstack) : true;
 	}
 
 	@Override
-	public int[] getSizeInventorySide(int var1)
+	public int[] getSizeInventorySide(int side)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return side == 0 ? type.outputSlotIds : side == 1 ? type.inputSlotIds : type.fuelSlotIds;
 	}
 
 	@Override
-	public boolean func_102007_a(int i, ItemStack itemstack, int j)
+	public boolean func_102007_a(int slot, ItemStack itemstack, int side)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return isStackValidForSlot(slot, itemstack);
 	}
 
 	@Override
-	public boolean func_102008_b(int i, ItemStack itemstack, int j)
+	public boolean func_102008_b(int slot, ItemStack itemstack, int side)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return side != 0 || !type.isFuelSlot(slot) || itemstack.itemID == Item.bucketEmpty.itemID;
 	}
 
 }

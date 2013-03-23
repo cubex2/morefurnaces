@@ -18,7 +18,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "MoreFurnaces", name = "More Furnaces", version = "1.3.3")
+@Mod(modid = "MoreFurnaces", name = "More Furnaces", version = "1.3.4")
 @NetworkMod(channels = { "MoreFurnaces" }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class MoreFurnaces
 {
@@ -57,7 +57,7 @@ public class MoreFurnaces
 	public void load(FMLInitializationEvent evt)
 	{
 		blockFurnaces = new BlockMoreFurnaces(blockId);
-		GameRegistry.registerBlock(blockFurnaces, ItemMoreFurnaces.class);
+		GameRegistry.registerBlock(blockFurnaces, ItemMoreFurnaces.class, "furnaceBlock");
 		for (FurnaceType typ : FurnaceType.values())
 		{
 			GameRegistry.registerTileEntity(typ.clazz, "CubeX2 " + typ.friendlyName);
