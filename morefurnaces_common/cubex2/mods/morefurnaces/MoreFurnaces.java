@@ -1,5 +1,6 @@
 package cubex2.mods.morefurnaces;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Level;
 
@@ -18,7 +19,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = "MoreFurnaces", name = "More Furnaces", version = "1.3.4")
+@Mod(modid = "MoreFurnaces", name = "More Furnaces", version = "1.3.4b")
 @NetworkMod(channels = { "MoreFurnaces" }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class MoreFurnaces
 {
@@ -30,7 +31,7 @@ public class MoreFurnaces
 	private int blockId;
 
 	@PreInit
-	public void preInit(FMLPreInitializationEvent event)
+	public void preInit(FMLPreInitializationEvent event) throws IOException
 	{
 		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
 		try
