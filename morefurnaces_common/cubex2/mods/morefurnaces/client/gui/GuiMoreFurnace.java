@@ -1,15 +1,15 @@
-package cubex2.mods.morefurnaces.client;
+package cubex2.mods.morefurnaces.client.gui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import cubex2.mods.morefurnaces.ContainerIronFurnace;
 import cubex2.mods.morefurnaces.FurnaceType;
-import cubex2.mods.morefurnaces.TileEntityIronFurnace;
+import cubex2.mods.morefurnaces.inventory.ContainerIronFurnace;
+import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 
 public class GuiMoreFurnace extends GuiContainer
 {
@@ -47,7 +47,7 @@ public class GuiMoreFurnace extends GuiContainer
             this.cookDestY = cookDestY;
             this.cookSrcX = cookSrcX;
             this.cookSrcY = cookSrcY;
-            this.guiLocation = new ResourceLocation("morefurnaces", "textures/gui/" + guiTexture);
+            guiLocation = new ResourceLocation("morefurnaces", "textures/gui/" + guiTexture);
             this.mainType = mainType;
         }
 

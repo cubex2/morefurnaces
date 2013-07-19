@@ -17,16 +17,23 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cubex2.mods.morefurnaces.blocks.BlockMoreFurnaces;
+import cubex2.mods.morefurnaces.items.ItemMoreFurnaces;
+import cubex2.mods.morefurnaces.network.PacketHandler;
+import cubex2.mods.morefurnaces.proxies.CommonProxy;
 
-@Mod(modid = "MoreFurnaces", name = "More Furnaces", version = "1.3.5")
-@NetworkMod(channels = { "MoreFurnaces" }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
+@Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION)
+@NetworkMod(channels = { ModInformation.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class MoreFurnaces
 {
     public static BlockMoreFurnaces blockFurnaces;
-    @SidedProxy(clientSide = "cubex2.mods.morefurnaces.client.ClientProxy", serverSide = "cubex2.mods.morefurnaces.CommonProxy")
+
+    @SidedProxy(clientSide = "cubex2.mods.morefurnaces.proxies.ClientProxy", serverSide = "cubex2.mods.morefurnaces.proxies.CommonProxy")
     public static CommonProxy proxy;
-    @Instance("MoreFurnaces")
+
+    @Instance(ModInformation.ID)
     public static MoreFurnaces instance;
+
     private int blockId;
 
     @EventHandler

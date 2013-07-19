@@ -9,6 +9,12 @@ import net.minecraft.util.Icon;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import cubex2.mods.morefurnaces.blocks.BlockMoreFurnaces;
+import cubex2.mods.morefurnaces.tileentity.TileEntityDiamondFurnace;
+import cubex2.mods.morefurnaces.tileentity.TileEntityGoldFurnace;
+import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
+import cubex2.mods.morefurnaces.tileentity.TileEntityNetherrackFurnace;
+import cubex2.mods.morefurnaces.tileentity.TileEntityObsidianFurnace;
 
 public enum FurnaceType
 {
@@ -18,33 +24,33 @@ public enum FurnaceType
     OBSIDIAN(2, 2, 2, 2, 150, new int[] { 56, 56 }, new int[] { 17, 43 }, new int[] { 38, 38 }, new int[] { 17, 43 }, 56, 83, 38, 83, new int[] { 116, 116 }, new int[] { 18, 44 }, new int[] { 138, 138 }, new int[] { 22, 48 }, 8, 114, "Obsidian Furnace", TileEntityObsidianFurnace.class, "OOO", "O1O", "OOO"),
     NETHERRACK(1, 1, 0, 1, 1800, 56, 17, -1, -1, -1, -1, -1, -1, 116, 35, -1, -1, 8, 84, "Netherrack Furnace", TileEntityNetherrackFurnace.class, "NNN", "NFN", "NNN");
 
-    int inputSlots;
-    int outputSlots;
-    int fuelSlots;
-    int parallelSmelting;
+    final int inputSlots;
+    final int outputSlots;
+    public final int fuelSlots;
+    public final int parallelSmelting;
 
-    public int[] inputSlotIds;
-    public int[] outputSlotIds;
-    public int[] fuelSlotIds;
+    public final int[] inputSlotIds;
+    public final int[] outputSlotIds;
+    public final int[] fuelSlotIds;
 
-    int speed;
-    int[] mainInputX;
-    int[] mainInputY;
-    int[] inputX;
-    int[] inputY;
-    int mainFuelX;
-    int mainFuelY;
-    int fuelX;
-    int fuelY;
-    int[] mainOutputX;
-    int[] mainOutputY;
-    int[] outputX;
-    int[] outputY;
-    int inventoryX;
-    int inventoryY;
-    public String friendlyName;
-    public Class<? extends TileEntityIronFurnace> clazz;
-    private String[] recipe;
+    public final int speed;
+    public final int[] mainInputX;
+    public final int[] mainInputY;
+    public final int[] inputX;
+    public final int[] inputY;
+    public final int mainFuelX;
+    public final int mainFuelY;
+    public final int fuelX;
+    public final int fuelY;
+    public final int[] mainOutputX;
+    public final int[] mainOutputY;
+    public final int[] outputX;
+    public final int[] outputY;
+    public final int inventoryX;
+    public final int inventoryY;
+    public final String friendlyName;
+    public final Class<? extends TileEntityIronFurnace> clazz;
+    private final String[] recipe;
 
     private FurnaceType(int inputSlots, int outputSlots, int fuelSlots,
             int parallelSmelting, int speed, int[] mainInputX,

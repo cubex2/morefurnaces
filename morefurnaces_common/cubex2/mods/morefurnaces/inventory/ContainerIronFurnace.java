@@ -1,4 +1,4 @@
-package cubex2.mods.morefurnaces;
+package cubex2.mods.morefurnaces.inventory;
 
 import java.util.Iterator;
 
@@ -13,6 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import cubex2.mods.morefurnaces.FurnaceType;
+import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 
 public class ContainerIronFurnace extends Container
 {

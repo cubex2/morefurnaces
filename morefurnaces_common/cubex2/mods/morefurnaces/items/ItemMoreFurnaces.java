@@ -1,7 +1,8 @@
-package cubex2.mods.morefurnaces;
+package cubex2.mods.morefurnaces.items;
 
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import cubex2.mods.morefurnaces.FurnaceType;
 
 public class ItemMoreFurnaces extends ItemBlock
 {

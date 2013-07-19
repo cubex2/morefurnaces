@@ -1,4 +1,4 @@
-package cubex2.mods.morefurnaces;
+package cubex2.mods.morefurnaces.tileentity;
 
 import java.util.Arrays;
 
@@ -20,6 +20,9 @@ import net.minecraft.tileentity.TileEntity;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import cubex2.mods.morefurnaces.FurnaceType;
+import cubex2.mods.morefurnaces.MoreFurnaces;
+import cubex2.mods.morefurnaces.network.PacketHandler;
 
 public class TileEntityIronFurnace extends TileEntity implements
         ISidedInventory
@@ -445,8 +448,7 @@ public class TileEntityIronFurnace extends TileEntity implements
     }
 
     /**
-     * Returns true if the furnace can smelt an item, i.e. has a source item,
-     * destination stack isn't full, etc.
+     * Returns true if the furnace can smelt an item, i.e. has a source item, destination stack isn't full, etc.
      */
     private boolean canSmelt(int id)
     {
@@ -471,8 +473,7 @@ public class TileEntityIronFurnace extends TileEntity implements
     }
 
     /**
-     * Turn one item from the furnace source stack into the appropriate smelted
-     * item in the furnace result stack
+     * Turn one item from the furnace source stack into the appropriate smelted item in the furnace result stack
      */
     public void smeltItem(int id)
     {
@@ -501,8 +502,7 @@ public class TileEntityIronFurnace extends TileEntity implements
     }
 
     /**
-     * Returns the number of ticks that the supplied fuel item will keep the
-     * furnace burning, or 0 if the item isn't fuel
+     * Returns the number of ticks that the supplied fuel item will keep the furnace burning, or 0 if the item isn't fuel
      */
     public static int getItemBurnTime(ItemStack stack)
     {

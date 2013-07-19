@@ -1,4 +1,4 @@
-package cubex2.mods.morefurnaces;
+package cubex2.mods.morefurnaces.blocks;
 
 import static net.minecraftforge.common.ForgeDirection.UP;
 
@@ -23,13 +23,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import cubex2.mods.morefurnaces.FurnaceType;
+import cubex2.mods.morefurnaces.MoreFurnaces;
+import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 
 public class BlockMoreFurnaces extends BlockContainer
 {
 
     private Random random;
 
-    protected BlockMoreFurnaces(int id)
+    public BlockMoreFurnaces(int id)
     {
         super(id, Material.iron);
         setUnlocalizedName("ironFurnace");

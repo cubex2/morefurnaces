@@ -1,4 +1,4 @@
-package cubex2.mods.morefurnaces;
+package cubex2.mods.morefurnaces.network;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -15,6 +15,8 @@ import com.google.common.io.ByteStreams;
 
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
+import cubex2.mods.morefurnaces.MoreFurnaces;
+import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 
 public class PacketHandler implements IPacketHandler
 {

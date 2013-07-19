@@ -1,10 +1,13 @@
-package cubex2.mods.morefurnaces;
+package cubex2.mods.morefurnaces.proxies;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
-import cubex2.mods.morefurnaces.client.GuiMoreFurnace;
+import cubex2.mods.morefurnaces.FurnaceType;
+import cubex2.mods.morefurnaces.client.gui.GuiMoreFurnace;
+import cubex2.mods.morefurnaces.inventory.ContainerIronFurnace;
+import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 
 public class CommonProxy implements IGuiHandler
 {
