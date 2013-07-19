@@ -12,27 +12,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public enum FurnaceType
 {
-    IRON(2, 2, 2, 1, 150, 56, 17, 38, 17, 56, 53, 38, 53, 116, 35, 138, 39, 8,
-            84, "Iron Furnace", TileEntityIronFurnace.class, "III", "IPI",
-            "III"),
-    GOLD(4, 5, 4, 1, 80, 62, 17, 8, 17, 62, 53, 8, 53, 116, 35, 138, 39, 28,
-            84, "Gold Furnace", TileEntityGoldFurnace.class, "GGG", "GPG",
-            "GGG"),
-    DIAMOND(7, 9, 7, 1, 40, 62, 35, 8, 17, 62, 71, 8, 71, 116, 53, 138, 39, 28,
-            120, "Diamond Furnace", TileEntityDiamondFurnace.class, "DDD",
-            "DPD", "DDD"),
-    OBSIDIAN(2, 2, 2, 2, 150, new int[] { 56, 56 }, new int[] { 17, 43 },
-            new int[] {
-                    38,
-                    38 }, new int[] { 17, 43 }, 56, 83, 38, 83, new int[] {
-                    116, 116 }, new int[] {
-                    18,
-                    44 }, new int[] { 138, 138 }, new int[] { 22, 48 }, 8, 114,
-            "Obsidian Furnace", TileEntityObsidianFurnace.class, "OOO", "O1O",
-            "OOO"),
-    NETHERRACK(1, 1, 0, 1, 1800, 56, 17, -1, -1, -1, -1, -1, -1, 116, 35, -1,
-            -1, 8, 84, "Netherrack Furnace", TileEntityNetherrackFurnace.class,
-            "NNN", "NFN", "NNN");
+    IRON(2, 2, 2, 1, 150, 56, 17, 38, 17, 56, 53, 38, 53, 116, 35, 138, 39, 8, 84, "Iron Furnace", TileEntityIronFurnace.class, "III", "IPI", "III"),
+    GOLD(4, 5, 4, 1, 80, 62, 17, 8, 17, 62, 53, 8, 53, 116, 35, 138, 39, 28, 84, "Gold Furnace", TileEntityGoldFurnace.class, "GGG", "GPG", "GGG"),
+    DIAMOND(7, 9, 7, 1, 40, 62, 35, 8, 17, 62, 71, 8, 71, 116, 53, 138, 39, 28, 120, "Diamond Furnace", TileEntityDiamondFurnace.class, "DDD", "DPD", "DDD"),
+    OBSIDIAN(2, 2, 2, 2, 150, new int[] { 56, 56 }, new int[] { 17, 43 }, new int[] { 38, 38 }, new int[] { 17, 43 }, 56, 83, 38, 83, new int[] { 116, 116 }, new int[] { 18, 44 }, new int[] { 138, 138 }, new int[] { 22, 48 }, 8, 114, "Obsidian Furnace", TileEntityObsidianFurnace.class, "OOO", "O1O", "OOO"),
+    NETHERRACK(1, 1, 0, 1, 1800, 56, 17, -1, -1, -1, -1, -1, -1, 116, 35, -1, -1, 8, 84, "Netherrack Furnace", TileEntityNetherrackFurnace.class, "NNN", "NFN", "NNN");
 
     int inputSlots;
     int outputSlots;
@@ -80,11 +64,17 @@ public enum FurnaceType
         fuelSlotIds = new int[fuelSlots];
 
         for (int i = 0; i < inputSlotIds.length; i++)
+        {
             inputSlotIds[i] = i;
+        }
         for (int i = 0; i < fuelSlotIds.length; i++)
+        {
             fuelSlotIds[i] = i + inputSlotIds.length;
+        }
         for (int i = 0; i < outputSlotIds.length; i++)
+        {
             outputSlotIds[i] = i + inputSlotIds.length + fuelSlotIds.length;
+        }
 
         this.speed = speed;
         this.mainInputX = mainInputX;
@@ -190,7 +180,6 @@ public enum FurnaceType
     public int getLastInputSlot(int id)
     {
         return getFirstInputSlot(id) + inputSlots - 1;
-
     }
 
     public int getFirstFuelSlot()
@@ -264,21 +253,10 @@ public enum FurnaceType
         icons = new Icon[5];
         for (int i = 0; i < icons.length; i++)
         {
-            icons[i] = iconRegister.registerIcon("morefurnaces:"
-                    + name().toLowerCase() + postFixMap[i]);
+            icons[i] = iconRegister.registerIcon("morefurnaces:" + name().toLowerCase() + postFixMap[i]);
         }
     }
 
-    // public Icon getIcon(int side)
-    // {
-    //
-    // }
-
-    private static String[] postFixMap = new String[] {
-            "Bottom",
-            "Top",
-            "Side",
-            "FrontOn",
-            "FrontOff" };
+    private static String[] postFixMap = new String[] { "Bottom", "Top", "Side", "FrontOn", "FrontOff" };
 
 }
