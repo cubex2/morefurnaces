@@ -1,5 +1,9 @@
 package cubex2.mods.morefurnaces;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import cubex2.mods.morefurnaces.blocks.BlockMoreFurnaces;
+import cubex2.mods.morefurnaces.tileentity.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
@@ -7,14 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.util.Icon;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import cubex2.mods.morefurnaces.blocks.BlockMoreFurnaces;
-import cubex2.mods.morefurnaces.tileentity.TileEntityDiamondFurnace;
-import cubex2.mods.morefurnaces.tileentity.TileEntityGoldFurnace;
-import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
-import cubex2.mods.morefurnaces.tileentity.TileEntityNetherrackFurnace;
-import cubex2.mods.morefurnaces.tileentity.TileEntityObsidianFurnace;
 
 public enum FurnaceType
 {
@@ -53,12 +49,12 @@ public enum FurnaceType
     private final String[] recipe;
 
     private FurnaceType(int inputSlots, int outputSlots, int fuelSlots,
-            int parallelSmelting, int speed, int[] mainInputX,
-            int[] mainInputY, int[] inputX, int[] inputY, int mainFuelX,
-            int mainFuelY, int fuelX, int fuelY, int[] mainOutputX,
-            int[] mainOutputY, int[] outputX, int[] outputY, int inventoryX,
-            int inventoryY, String friendlyName,
-            Class<? extends TileEntityIronFurnace> clazz, String... recipe)
+                        int parallelSmelting, int speed, int[] mainInputX,
+                        int[] mainInputY, int[] inputX, int[] inputY, int mainFuelX,
+                        int mainFuelY, int fuelX, int fuelY, int[] mainOutputX,
+                        int[] mainOutputY, int[] outputX, int[] outputY, int inventoryX,
+                        int inventoryY, String friendlyName,
+                        Class<? extends TileEntityIronFurnace> clazz, String... recipe)
     {
         this.inputSlots = inputSlots;
         this.outputSlots = outputSlots;
@@ -103,11 +99,11 @@ public enum FurnaceType
     }
 
     private FurnaceType(int inputSlots, int outputSlots, int fuelSlots,
-            int parallelSmelting, int speed, int mainInputX, int mainInputY,
-            int inputX, int inputY, int mainFuelX, int mainFuelY, int fuelX,
-            int fuelY, int mainOutputX, int mainOutputY, int outputX,
-            int outputY, int inventoryX, int inventoryY, String friendlyName,
-            Class<? extends TileEntityIronFurnace> clazz, String... recipe)
+                        int parallelSmelting, int speed, int mainInputX, int mainInputY,
+                        int inputX, int inputY, int mainFuelX, int mainFuelY, int fuelX,
+                        int fuelY, int mainOutputX, int mainOutputY, int outputX,
+                        int outputY, int inventoryX, int inventoryY, String friendlyName,
+                        Class<? extends TileEntityIronFurnace> clazz, String... recipe)
     {
         this(inputSlots, outputSlots, fuelSlots, parallelSmelting, speed,
                 new int[] { mainInputX }, new int[] { mainInputY },
@@ -144,7 +140,7 @@ public enum FurnaceType
                     Item.ingotIron, 'G', Item.ingotGold, 'D', Item.diamond,
                     'O', Block.obsidian, 'N', Block.netherrack, 'F',
                     Block.furnaceIdle, '1', new ItemStack(
-                            MoreFurnaces.blockFurnaces, 0), 'P', previous);
+                    MoreFurnaces.blockFurnaces, 0), 'P', previous);
             CraftingManager.getInstance().getRecipeList().add(recipe);
             previous = new ItemStack(blockResult, 1, typ.ordinal());
         }

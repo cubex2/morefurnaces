@@ -1,15 +1,13 @@
 package cubex2.mods.morefurnaces.client.gui;
 
+import cubex2.mods.morefurnaces.FurnaceType;
+import cubex2.mods.morefurnaces.inventory.ContainerIronFurnace;
+import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
-
-import cubex2.mods.morefurnaces.FurnaceType;
-import cubex2.mods.morefurnaces.inventory.ContainerIronFurnace;
-import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 
 public class GuiMoreFurnace extends GuiContainer
 {
@@ -79,7 +77,7 @@ public class GuiMoreFurnace extends GuiContainer
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         // TODO
-        mc.renderEngine.func_110577_a(type.guiLocation);
+        mc.renderEngine.bindTexture(type.guiLocation);
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);

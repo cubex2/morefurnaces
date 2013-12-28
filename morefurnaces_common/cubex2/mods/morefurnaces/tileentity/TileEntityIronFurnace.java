@@ -1,28 +1,23 @@
 package cubex2.mods.morefurnaces.tileentity;
 
-import java.util.Arrays;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.item.ItemTool;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.tileentity.TileEntity;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.MoreFurnaces;
 import cubex2.mods.morefurnaces.network.PacketHandler;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.*;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.tileentity.TileEntity;
+
+import java.util.Arrays;
 
 public class TileEntityIronFurnace extends TileEntity implements
         ISidedInventory
@@ -34,7 +29,8 @@ public class TileEntityIronFurnace extends TileEntity implements
     private FurnaceType type;
     private ItemStack[] furnaceContents;
     private byte facing;
-    private boolean isActive = false;;
+    private boolean isActive = false;
+    ;
     private int ticksSinceSync = 0;
 
     public TileEntityIronFurnace()
@@ -107,7 +103,8 @@ public class TileEntityIronFurnace extends TileEntity implements
 
                 return itemstack;
             }
-        } else
+        }
+        else
             return null;
     }
 
@@ -119,7 +116,8 @@ public class TileEntityIronFurnace extends TileEntity implements
             ItemStack stack = furnaceContents[i];
             furnaceContents[i] = null;
             return stack;
-        } else
+        }
+        else
             return null;
     }
 
@@ -252,7 +250,7 @@ public class TileEntityIronFurnace extends TileEntity implements
                     MoreFurnaces.blockFurnaces.blockID, 1, facing & 0xFF);
             worldObj.addBlockEvent(xCoord, yCoord, zCoord,
                     MoreFurnaces.blockFurnaces.blockID, 2, (byte) (isActive ? 1
-                            : 0));
+                    : 0));
         }
         boolean var1 = this.isBurning();
         boolean inventoryChanged = false;
@@ -389,8 +387,8 @@ public class TileEntityIronFurnace extends TileEntity implements
                 {
                     if (furnaceContents[startSlot] != null
                             && (furnaceContents[startSlot].stackSize >= furnaceContents[startSlot]
-                                    .getMaxStackSize() - result.stackSize + 1 || !result
-                                        .isItemEqual(furnaceContents[startSlot])))
+                            .getMaxStackSize() - result.stackSize + 1 || !result
+                            .isItemEqual(furnaceContents[startSlot])))
                     {
                         if (furnaceContents[i] == null)
                         {
@@ -402,7 +400,7 @@ public class TileEntityIronFurnace extends TileEntity implements
                         else if (furnaceContents[i]
                                 .isItemEqual(furnaceContents[startSlot])
                                 && furnaceContents[i].stackSize < furnaceContents[i]
-                                        .getMaxStackSize()
+                                .getMaxStackSize()
                                 && furnaceContents[startSlot].stackSize > 0)
                         {
                             int emptySlots = furnaceContents[i]
@@ -558,7 +556,7 @@ public class TileEntityIronFurnace extends TileEntity implements
         return worldObj.getBlockTileEntity(xCoord, yCoord,
                 zCoord) != this ? false
                 : player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D,
-                        zCoord + 0.5D) <= 64.0D;
+                zCoord + 0.5D) <= 64.0D;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package cubex2.mods.morefurnaces.items;
 
+import cubex2.mods.morefurnaces.FurnaceType;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import cubex2.mods.morefurnaces.FurnaceType;
 
 public class ItemMoreFurnaces extends ItemBlock
 {
@@ -25,5 +25,4 @@ public class ItemMoreFurnaces extends ItemBlock
     {
         return FurnaceType.values()[stack.getItemDamage()].name() + "_furnace";
     }
-
 }

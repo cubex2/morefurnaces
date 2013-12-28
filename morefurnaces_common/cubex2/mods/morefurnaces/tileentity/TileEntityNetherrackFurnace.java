@@ -1,7 +1,7 @@
 package cubex2.mods.morefurnaces.tileentity;
 
-import net.minecraft.block.Block;
 import cubex2.mods.morefurnaces.FurnaceType;
+import net.minecraft.block.Block;
 
 public class TileEntityNetherrackFurnace extends TileEntityIronFurnace
 {

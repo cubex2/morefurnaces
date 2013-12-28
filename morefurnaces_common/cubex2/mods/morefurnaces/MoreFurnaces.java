@@ -1,10 +1,5 @@
 package cubex2.mods.morefurnaces;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.logging.Level;
-
-import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -21,6 +16,11 @@ import cubex2.mods.morefurnaces.blocks.BlockMoreFurnaces;
 import cubex2.mods.morefurnaces.items.ItemMoreFurnaces;
 import cubex2.mods.morefurnaces.network.PacketHandler;
 import cubex2.mods.morefurnaces.proxies.CommonProxy;
+import net.minecraftforge.common.Configuration;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.logging.Level;
 
 @Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION)
 @NetworkMod(channels = { ModInformation.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)

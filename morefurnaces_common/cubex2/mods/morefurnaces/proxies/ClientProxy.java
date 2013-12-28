@@ -1,7 +1,7 @@
 package cubex2.mods.morefurnaces.proxies;
 
-import net.minecraft.world.World;
 import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraft.world.World;
 
 public class ClientProxy extends CommonProxy
 {
