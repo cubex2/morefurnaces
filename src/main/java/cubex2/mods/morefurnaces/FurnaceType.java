@@ -4,12 +4,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import cubex2.mods.morefurnaces.blocks.BlockMoreFurnaces;
 import cubex2.mods.morefurnaces.tileentity.*;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.item.Item;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public enum FurnaceType
@@ -17,7 +17,7 @@ public enum FurnaceType
     IRON(2, 2, 2, 1, 150, 56, 17, 38, 17, 56, 53, 38, 53, 116, 35, 138, 39, 8, 84, "Iron Furnace", TileEntityIronFurnace.class, "III", "IPI", "III"),
     GOLD(4, 5, 4, 1, 80, 62, 17, 8, 17, 62, 53, 8, 53, 116, 35, 138, 39, 28, 84, "Gold Furnace", TileEntityGoldFurnace.class, "GGG", "GPG", "GGG"),
     DIAMOND(7, 9, 7, 1, 40, 62, 35, 8, 17, 62, 71, 8, 71, 116, 53, 138, 39, 28, 120, "Diamond Furnace", TileEntityDiamondFurnace.class, "DDD", "DPD", "DDD"),
-    OBSIDIAN(2, 2, 2, 2, 150, new int[] { 56, 56 }, new int[] { 17, 43 }, new int[] { 38, 38 }, new int[] { 17, 43 }, 56, 83, 38, 83, new int[] { 116, 116 }, new int[] { 18, 44 }, new int[] { 138, 138 }, new int[] { 22, 48 }, 8, 114, "Obsidian Furnace", TileEntityObsidianFurnace.class, "OOO", "O1O", "OOO"),
+    OBSIDIAN(2, 2, 2, 2, 150, new int[]{56, 56}, new int[]{17, 43}, new int[]{38, 38}, new int[]{17, 43}, 56, 83, 38, 83, new int[]{116, 116}, new int[]{18, 44}, new int[]{138, 138}, new int[]{22, 48}, 8, 114, "Obsidian Furnace", TileEntityObsidianFurnace.class, "OOO", "O1O", "OOO"),
     NETHERRACK(1, 1, 0, 1, 1800, 56, 17, -1, -1, -1, -1, -1, -1, 116, 35, -1, -1, 8, 84, "Netherrack Furnace", TileEntityNetherrackFurnace.class, "NNN", "NFN", "NNN");
 
     final int inputSlots;
@@ -106,11 +106,11 @@ public enum FurnaceType
                         Class<? extends TileEntityIronFurnace> clazz, String... recipe)
     {
         this(inputSlots, outputSlots, fuelSlots, parallelSmelting, speed,
-                new int[] { mainInputX }, new int[] { mainInputY },
-                new int[] { inputX }, new int[] { inputY }, mainFuelX,
-                mainFuelY, fuelX, fuelY, new int[] { mainOutputX },
-                new int[] { mainOutputY }, new int[] { outputX },
-                new int[] { outputY }, inventoryX, inventoryY, friendlyName,
+                new int[]{mainInputX}, new int[]{mainInputY},
+                new int[]{inputX}, new int[]{inputY}, mainFuelX,
+                mainFuelY, fuelX, fuelY, new int[]{mainOutputX},
+                new int[]{mainOutputY}, new int[]{outputX},
+                new int[]{outputY}, inventoryX, inventoryY, friendlyName,
                 clazz, recipe);
     }
 
@@ -132,14 +132,14 @@ public enum FurnaceType
 
     public static void generateRecipes(BlockMoreFurnaces blockResult)
     {
-        ItemStack previous = new ItemStack(Block.furnaceIdle);
+        ItemStack previous = new ItemStack(Blocks.furnace);
         for (FurnaceType typ : values())
         {
             ShapedOreRecipe recipe = new ShapedOreRecipe(new ItemStack(
                     blockResult, 1, typ.ordinal()), typ.recipe, 'I',
-                    Item.ingotIron, 'G', Item.ingotGold, 'D', Item.diamond,
-                    'O', Block.obsidian, 'N', Block.netherrack, 'F',
-                    Block.furnaceIdle, '1', new ItemStack(
+                    Items.iron_ingot, 'G', Items.gold_ingot, 'D', Items.diamond,
+                    'O', Blocks.obsidian, 'N', Blocks.netherrack, 'F',
+                    Blocks.furnace, '1', new ItemStack(
                     MoreFurnaces.blockFurnaces, 0), 'P', previous);
             CraftingManager.getInstance().getRecipeList().add(recipe);
             previous = new ItemStack(blockResult, 1, typ.ordinal());
@@ -248,17 +248,17 @@ public enum FurnaceType
     }
 
     @SideOnly(Side.CLIENT)
-    public Icon[] icons;
+    public IIcon[] icons;
 
-    public void makeIcons(IconRegister iconRegister)
+    public void makeIcons(IIconRegister iconRegister)
     {
-        icons = new Icon[5];
+        icons = new IIcon[5];
         for (int i = 0; i < icons.length; i++)
         {
             icons[i] = iconRegister.registerIcon("morefurnaces:" + name().toLowerCase() + postFixMap[i]);
         }
     }
 
-    private static String[] postFixMap = new String[] { "Bottom", "Top", "Side", "FrontOn", "FrontOff" };
+    private static String[] postFixMap = new String[]{"Bottom", "Top", "Side", "FrontOn", "FrontOff"};
 
 }

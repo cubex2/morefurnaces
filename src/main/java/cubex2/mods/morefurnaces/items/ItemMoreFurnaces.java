@@ -1,15 +1,16 @@
 package cubex2.mods.morefurnaces.items;
 
 import cubex2.mods.morefurnaces.FurnaceType;
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ItemMoreFurnaces extends ItemBlock
 {
 
-    public ItemMoreFurnaces(int id)
+    public ItemMoreFurnaces(Block block)
     {
-        super(id);
+        super(block);
         setMaxDamage(0);
         setHasSubtypes(true);
     }

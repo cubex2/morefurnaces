@@ -20,7 +20,7 @@ public class CommonProxy implements IGuiHandler
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        TileEntity te = world.getBlockTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
         if (te != null && te instanceof TileEntityIronFurnace)
             return GuiMoreFurnace.GUI.buildGui(FurnaceType.values()[ID], player.inventory, (TileEntityIronFurnace) te);
         else
@@ -30,7 +30,7 @@ public class CommonProxy implements IGuiHandler
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        TileEntity te = world.getBlockTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
         if (te != null && te instanceof TileEntityIronFurnace)
         {
             TileEntityIronFurnace furnace = (TileEntityIronFurnace) te;

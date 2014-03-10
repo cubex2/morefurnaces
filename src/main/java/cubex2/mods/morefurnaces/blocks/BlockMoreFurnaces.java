@@ -8,60 +8,42 @@ import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.List;
 import java.util.Random;
 
-import static net.minecraftforge.common.ForgeDirection.UP;
-
 public class BlockMoreFurnaces extends BlockContainer
 {
-
     private Random random;
 
-    public BlockMoreFurnaces(int id)
+    public BlockMoreFurnaces()
     {
-        super(id, Material.iron);
-        setUnlocalizedName("ironFurnace");
+        super(Material.iron);
+        setBlockName("ironFurnace");
         setHardness(2.5F);
-        setStepSound(Block.soundMetalFootstep);
-        if (id >= 256)
-        {
-            disableStats();
-        }
+        setStepSound(Block.soundTypeMetal);
         random = new Random();
         setCreativeTab(CreativeTabs.tabDecorations);
     }
 
     @Override
-    public TileEntity createNewTileEntity(World w)
-    {
-        return null;
-    }
-
-    @Override
-    public TileEntity createTileEntity(World world, int meta)
+    public TileEntity createNewTileEntity(World world, int meta)
     {
         return FurnaceType.makeEntity(meta);
-    }
-
-    @Override
-    public int idDropped(int i, Random random, int fortune)
-    {
-        return MoreFurnaces.blockFurnaces.blockID;
     }
 
     @Override
@@ -73,7 +55,7 @@ public class BlockMoreFurnaces extends BlockContainer
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z)
     {
-        TileEntity te = world.getBlockTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
         if (te != null && te instanceof TileEntityIronFurnace)
             return ((TileEntityIronFurnace) te).isActive() ? (int) (0.8 * 15) : 0;
         else
@@ -92,33 +74,33 @@ public class BlockMoreFurnaces extends BlockContainer
     {
         if (!world.isRemote)
         {
-            int var5 = world.getBlockId(x, y, z - 1);
-            int var6 = world.getBlockId(x, y, z + 1);
-            int var7 = world.getBlockId(x - 1, y, z);
-            int var8 = world.getBlockId(x + 1, y, z);
+            Block blockZNeg = world.getBlock(x, y, z - 1);
+            Block blockZPos = world.getBlock(x, y, z + 1);
+            Block blockXNeg = world.getBlock(x - 1, y, z);
+            Block blockXPos = world.getBlock(x + 1, y, z);
             byte facing = 3;
 
-            if (Block.opaqueCubeLookup[var5] && !Block.opaqueCubeLookup[var6])
+            if (blockZNeg.func_149730_j() && !blockZPos.func_149730_j())
             {
                 facing = 3;
             }
 
-            if (Block.opaqueCubeLookup[var6] && !Block.opaqueCubeLookup[var5])
+            if (blockZPos.func_149730_j() && !blockZNeg.func_149730_j())
             {
                 facing = 2;
             }
 
-            if (Block.opaqueCubeLookup[var7] && !Block.opaqueCubeLookup[var8])
+            if (blockXNeg.func_149730_j() && !blockXPos.func_149730_j())
             {
                 facing = 5;
             }
 
-            if (Block.opaqueCubeLookup[var8] && !Block.opaqueCubeLookup[var7])
+            if (blockXPos.func_149730_j() && !blockXNeg.func_149730_j())
             {
                 facing = 4;
             }
 
-            TileEntity te = world.getBlockTileEntity(x, y, z);
+            TileEntity te = world.getTileEntity(x, y, z);
             if (te != null && te instanceof TileEntityIronFurnace)
             {
                 ((TileEntityIronFurnace) te).setFacing(facing);
@@ -129,7 +111,7 @@ public class BlockMoreFurnaces extends BlockContainer
 
     @Override
     @SideOnly(Side.CLIENT)
-    public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side)
+    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side)
     {
         int meta = world.getBlockMetadata(x, y, z);
         if (meta < FurnaceType.values().length)
@@ -139,7 +121,7 @@ public class BlockMoreFurnaces extends BlockContainer
                 return type.icons[0];
             if (side == 1)
                 return type.icons[1];
-            TileEntity te = world.getBlockTileEntity(x, y, z);
+            TileEntity te = world.getTileEntity(x, y, z);
             if (te != null && te instanceof TileEntityIronFurnace)
             {
                 TileEntityIronFurnace furnace = (TileEntityIronFurnace) te;
@@ -155,7 +137,7 @@ public class BlockMoreFurnaces extends BlockContainer
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random random)
     {
-        TileEntity te = world.getBlockTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
         if (te != null && te instanceof TileEntityIronFurnace)
         {
             TileEntityIronFurnace tef = (TileEntityIronFurnace) te;
@@ -172,18 +154,15 @@ public class BlockMoreFurnaces extends BlockContainer
                 {
                     world.spawnParticle("smoke", var7 - var10, var8, var9 + var11, 0.0D, 0.0D, 0.0D);
                     world.spawnParticle("flame", var7 - var10, var8, var9 + var11, 0.0D, 0.0D, 0.0D);
-                }
-                else if (facing == 5)
+                } else if (facing == 5)
                 {
                     world.spawnParticle("smoke", var7 + var10, var8, var9 + var11, 0.0D, 0.0D, 0.0D);
                     world.spawnParticle("flame", var7 + var10, var8, var9 + var11, 0.0D, 0.0D, 0.0D);
-                }
-                else if (facing == 2)
+                } else if (facing == 2)
                 {
                     world.spawnParticle("smoke", var7 + var11, var8, var9 - var10, 0.0D, 0.0D, 0.0D);
                     world.spawnParticle("flame", var7 + var11, var8, var9 - var10, 0.0D, 0.0D, 0.0D);
-                }
-                else if (facing == 3)
+                } else if (facing == 3)
                 {
                     world.spawnParticle("smoke", var7 + var11, var8, var9 + var10, 0.0D, 0.0D, 0.0D);
                     world.spawnParticle("flame", var7 + var11, var8, var9 + var10, 0.0D, 0.0D, 0.0D);
@@ -193,7 +172,7 @@ public class BlockMoreFurnaces extends BlockContainer
     }
 
     @Override
-    public Icon getIcon(int side, int meta)
+    public IIcon getIcon(int side, int meta)
     {
         if (meta < FurnaceType.values().length)
         {
@@ -215,7 +194,7 @@ public class BlockMoreFurnaces extends BlockContainer
         int meta = world.getBlockMetadata(x, y, z);
         if (meta == FurnaceType.NETHERRACK.ordinal() && ForgeDirection.getOrientation(side) == ForgeDirection.UP)
             return false;
-        TileEntity te = world.getBlockTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
 
         if (te == null || !(te instanceof TileEntityIronFurnace))
             return true;
@@ -253,7 +232,7 @@ public class BlockMoreFurnaces extends BlockContainer
             furnaceFacing = 4;
         }
 
-        TileEntity te = world.getBlockTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
         if (te != null && te instanceof TileEntityIronFurnace)
         {
             ((TileEntityIronFurnace) te).setFacing(furnaceFacing);
@@ -262,9 +241,9 @@ public class BlockMoreFurnaces extends BlockContainer
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, int par5, int par6)
+    public void breakBlock(World world, int x, int y, int z, Block block, int meta)
     {
-        TileEntity te = world.getBlockTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
         if (te != null && te instanceof TileEntityIronFurnace)
         {
             TileEntityIronFurnace furnace = (TileEntityIronFurnace) te;
@@ -288,7 +267,7 @@ public class BlockMoreFurnaces extends BlockContainer
                         }
 
                         stack.stackSize -= var13;
-                        EntityItem var14 = new EntityItem(world, x + var10, y + var11, z + var12, new ItemStack(stack.itemID, var13, stack.getItemDamage()));
+                        EntityItem var14 = new EntityItem(world, x + var10, y + var11, z + var12, new ItemStack(stack.getItem(), var13, stack.getItemDamage()));
 
                         if (stack.hasTagCompound())
                         {
@@ -304,12 +283,12 @@ public class BlockMoreFurnaces extends BlockContainer
                 }
             }
         }
-        super.breakBlock(world, x, y, z, par5, par6);
+        super.breakBlock(world, x, y, z, block, meta);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(int i, CreativeTabs tabs, List list)
+    public void getSubBlocks(Item item, CreativeTabs tabs, List list)
     {
         for (FurnaceType type : FurnaceType.values())
         {
@@ -318,21 +297,23 @@ public class BlockMoreFurnaces extends BlockContainer
     }
 
     @Override
-    public boolean isFireSource(World world, int x, int y, int z, int metadata, ForgeDirection side)
+    public boolean isFireSource(World world, int x, int y, int z, ForgeDirection side)
     {
-        if (metadata == FurnaceType.NETHERRACK.ordinal() && side == UP)
+        int metadata = world.getBlockMetadata(x, y, z);
+        if (metadata == FurnaceType.NETHERRACK.ordinal() && side == ForgeDirection.UP)
             return true;
         return false;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister iconRegister)
+    public void registerBlockIcons(IIconRegister iconRegister)
     {
         for (FurnaceType type : FurnaceType.values())
         {
             type.makeIcons(iconRegister);
         }
     }
+
 
 }
