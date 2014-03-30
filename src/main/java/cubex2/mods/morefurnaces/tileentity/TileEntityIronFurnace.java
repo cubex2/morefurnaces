@@ -251,7 +251,8 @@ public class TileEntityIronFurnace extends TileEntity implements
                     MoreFurnaces.blockFurnaces, 1, facing & 0xFF);
             worldObj.addBlockEvent(xCoord, yCoord, zCoord,
                     MoreFurnaces.blockFurnaces, 2, (byte) (isActive ? 1
-                    : 0));
+                            : 0)
+            );
         }
         boolean var1 = this.isBurning();
         boolean inventoryChanged = false;
@@ -377,7 +378,7 @@ public class TileEntityIronFurnace extends TileEntity implements
             ItemStack result = null;
             if (furnaceContents[type.getFirstInputSlot(id)] != null)
             {
-                FurnaceRecipes.smelting().getSmeltingResult(furnaceContents[type.getFirstInputSlot(id)]);
+                result = FurnaceRecipes.smelting().getSmeltingResult(furnaceContents[type.getFirstInputSlot(id)]);
             }
             if (result != null)
             {
@@ -387,22 +388,15 @@ public class TileEntityIronFurnace extends TileEntity implements
                     {
                         if (furnaceContents[i] == null)
                         {
-                            furnaceContents[i] = furnaceContents[startSlot]
-                                    .copy();
+                            furnaceContents[i] = furnaceContents[startSlot].copy();
                             furnaceContents[startSlot] = null;
                             invChanged = true;
-                        } else if (furnaceContents[i]
-                                .isItemEqual(furnaceContents[startSlot])
-                                && furnaceContents[i].stackSize < furnaceContents[i]
-                                .getMaxStackSize()
+                        } else if (furnaceContents[i].isItemEqual(furnaceContents[startSlot])
+                                && furnaceContents[i].stackSize < furnaceContents[i].getMaxStackSize()
                                 && furnaceContents[startSlot].stackSize > 0)
                         {
-                            int emptySlots = furnaceContents[i]
-                                    .getMaxStackSize()
-                                    - furnaceContents[i].stackSize;
-                            int adding = Math.min(
-                                    furnaceContents[startSlot].stackSize,
-                                    emptySlots);
+                            int emptySlots = furnaceContents[i].getMaxStackSize() - furnaceContents[i].stackSize;
+                            int adding = Math.min(furnaceContents[startSlot].stackSize, emptySlots);
                             furnaceContents[i].stackSize += adding;
                             furnaceContents[startSlot].stackSize -= adding;
                             if (furnaceContents[i].stackSize == 0)

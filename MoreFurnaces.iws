@@ -18,7 +18,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
+    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true" converted="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
         <option name="NOTIFY_UNCAUGHT" value="true" />
@@ -54,8 +54,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" converted="true" />
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" converted="true">
       <breakpoint url="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/blocks/BlockMoreFurnaces.java" line="2" class="BlockMoreFurnaces.java" package="">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
@@ -72,8 +72,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </line_breakpoints>
-    <breakpoint_rules />
-    <ui_properties />
+    <breakpoint_rules converted="true" />
+    <ui_properties converted="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -81,10 +81,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TileEntityIronFurnace.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="TileEntityIronFurnace.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/tileentity/TileEntityIronFurnace.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="394" column="64" selection-start="11938" selection-end="11938" vertical-scroll-proportion="0.0" vertical-offset="8063" max-vertical-offset="9843">
+            <state vertical-scroll-proportion="1.1346154" vertical-offset="4930" max-vertical-offset="9231">
+              <caret line="403" column="53" selection-start-line="403" selection-start-column="53" selection-end-line="403" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -93,10 +94,9 @@
       <file leaf-file-name="BlockMoreFurnaces.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/blocks/BlockMoreFurnaces.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="11" selection-start="1146" selection-end="1146" vertical-scroll-proportion="0.0" vertical-offset="265" max-vertical-offset="5525">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="5525">
+              <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -104,7 +104,8 @@
       <file leaf-file-name="MoreFurnaces.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/MoreFurnaces.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="89" selection-start="697" selection-end="697" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680">
+            <state vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="884">
+              <caret line="16" column="89" selection-start-line="16" selection-start-column="89" selection-end-line="16" selection-end-column="89" />
               <folding />
             </state>
           </provider>
@@ -113,7 +114,8 @@
       <file leaf-file-name="ModInformation.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/ModInformation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="47" selection-start="219" selection-end="219" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+            <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="255">
+              <caret line="6" column="47" selection-start-line="6" selection-start-column="47" selection-end-line="6" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -122,16 +124,18 @@
       <file leaf-file-name="mcmod.info" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/mcmod.info">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="30" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+            <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="374">
+              <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="32" selection-start="576" selection-end="576" vertical-scroll-proportion="0.6723164" vertical-offset="0" max-vertical-offset="816">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
+              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -155,10 +159,10 @@
         <option value="$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/proxies/CommonProxy.java" />
         <option value="$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/cpw/mods/fml/common/network/simpleimpl/SimpleNetworkWrapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/network/PacketHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/tileentity/TileEntityIronFurnace.java" />
         <option value="$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/MoreFurnaces.java" />
         <option value="$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/ModInformation.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/tileentity/TileEntityIronFurnace.java" />
       </list>
     </option>
   </component>
@@ -169,7 +173,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1932" />
+    <option name="width" value="1936" />
     <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -191,7 +195,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -203,6 +207,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -221,10 +227,82 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MoreFurnaces" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MoreFurnaces" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MoreFurnaces" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MoreFurnaces" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="morefurnaces" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MoreFurnaces" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MoreFurnaces" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="morefurnaces" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tileentity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -259,6 +337,15 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
       <method />
     </configuration>
     <configuration default="true" type="Specs2RunConfiguration" factoryName="Specs2">
@@ -274,12 +361,17 @@
       <setting name="showProgressMessages" value="true" />
       <method />
     </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -307,19 +399,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -358,6 +437,19 @@
       <patterns />
       <method />
     </configuration>
+    <configuration default="true" type="ScalaTestRunConfiguration" factoryName="ScalaTest">
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <method />
+    </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="" />
       <option name="ACTIVITY_CLASS" value="" />
@@ -375,19 +467,7 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
-      <method />
-    </configuration>
-    <configuration default="true" type="ScalaTestRunConfiguration" factoryName="ScalaTest">
-      <module name="" />
-      <setting name="path" value="" />
-      <setting name="package" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="$PROJECT_DIR$" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="testName" value="" />
-      <setting name="testKind" value="Class" />
-      <setting name="showProgressMessages" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
     <configuration default="false" name="Minecraft Client" type="Application" factoryName="Application">
@@ -446,19 +526,8 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component maxAnnotateRevisions="500" name="SvnConfiguration">
-    <option name="USER" value="" />
-    <option name="PASSWORD" value="" />
-    <option name="LAST_MERGED_REVISION" />
-    <option name="UPDATE_RUN_STATUS" value="false" />
-    <option name="MERGE_DRY_RUN" value="false" />
-    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
-    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
-    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
-    <option name="DETECT_NESTED_COPIES" value="true" />
-    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
-    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
-    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  <component name="SvnConfiguration">
+    <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -489,7 +558,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1932" height="1056" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -498,9 +567,10 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.399137" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39891893" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="ASM" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901832" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901832" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -508,7 +578,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2497332" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2496" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -519,6 +589,9 @@
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
       <collection />
     </option>
   </component>
@@ -532,329 +605,384 @@
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/blocks/BlockMoreFurnaces.java</url>
+          <line>2</line>
+          <properties />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="816">
+          <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/network/play/server/S35PacketUpdateTileEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="27" selection-start="550" selection-end="550" vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="1802">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="1802">
+          <caret line="16" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/tileentity/TileEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="359" column="4" selection-start="11352" selection-end="11439" vertical-scroll-proportion="0.0" vertical-offset="6103" max-vertical-offset="7378">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="6103" max-vertical-offset="7378">
+          <caret line="359" column="4" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/tileentity/TileEntityIronFurnace.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="562" column="21" selection-start="17794" selection-end="17794" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10268">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10268">
+          <caret line="562" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/entity/player/EntityPlayerMP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="619" column="49" selection-start="23740" selection-end="23740" vertical-scroll-proportion="0.0" vertical-offset="10523" max-vertical-offset="20162" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="10523" max-vertical-offset="20162">
+          <caret line="619" column="49" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/network/NetHandlerPlayServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1058" column="28" selection-start="44383" selection-end="44383" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="23732" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="23732">
+          <caret line="1058" column="28" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/cpw/mods/fml/common/network/simpleimpl/SimpleNetworkWrapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="45" selection-start="4850" selection-end="4850" vertical-scroll-proportion="0.0" vertical-offset="1632" max-vertical-offset="2720" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1632" max-vertical-offset="2720">
+          <caret line="96" column="45" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/cpw/mods/fml/common/network/FMLEmbeddedChannel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="18" selection-start="1878" selection-end="1878" vertical-scroll-proportion="0.0" vertical-offset="748" max-vertical-offset="1224" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="748" max-vertical-offset="1224">
+          <caret line="44" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/network/Packet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="22" selection-start="239" selection-end="239" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="1734" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="1734">
+          <caret line="8" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraftforge/common/ForgeHooks.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="419" column="60" selection-start="14874" selection-end="14874" vertical-scroll-proportion="0.0" vertical-offset="7123" max-vertical-offset="7327" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="7123" max-vertical-offset="7327">
+          <caret line="419" column="60" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/world/World.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="699" column="16" selection-start="24523" selection-end="24523" vertical-scroll-proportion="0.0" vertical-offset="11883" max-vertical-offset="76092">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="11883" max-vertical-offset="76092">
+          <caret line="699" column="16" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/block/Block.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="206" column="22" selection-start="7105" selection-end="7105" vertical-scroll-proportion="0.0" vertical-offset="3502" max-vertical-offset="44506">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3502" max-vertical-offset="44506">
+          <caret line="206" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/block/BlockFurnace.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="177" column="9" selection-start="6252" selection-end="6252" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5372" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5372">
+          <caret line="177" column="9" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/tileentity/TileEntityFurnace.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="44" selection-start="836" selection-end="836" vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="7769">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="7769">
+          <caret line="22" column="44" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/tileentity/TileEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="222" column="5" selection-start="6442" selection-end="6442" vertical-scroll-proportion="0.0" vertical-offset="3774" max-vertical-offset="7378">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3774" max-vertical-offset="7378">
+          <caret line="222" column="5" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/tileentity/TileEntityNetherrackFurnace.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="79" selection-start="487" selection-end="487" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="476">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="476">
+          <caret line="18" column="79" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/MoreFurnaces.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="46" selection-start="1340" selection-end="1340" vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="952">
+        <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="952">
+          <caret line="39" column="46" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/proxies/CommonProxy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="33" selection-start="1119" selection-end="1119" vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="918">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="918">
+          <caret line="32" column="33" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/client/gui/GuiMoreFurnace.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="13" selection-start="450" selection-end="450" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1768">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1768">
+          <caret line="11" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/inventory/ContainerIronFurnace.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="13" selection-start="499" selection-end="499" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="4046">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="4046">
+          <caret line="14" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/cpw/mods/fml/common/registry/GameRegistry.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="157" column="24" selection-start="5750" selection-end="5750" vertical-scroll-proportion="0.0" vertical-offset="1625" max-vertical-offset="6222">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1625" max-vertical-offset="6222">
+          <caret line="157" column="24" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/FurnaceType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="254" column="21" selection-start="8562" selection-end="8562" vertical-scroll-proportion="0.0" vertical-offset="3413" max-vertical-offset="4590">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6351#6352#0" expanded="true" />
-            <element signature="e#6379#6380#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="3413" max-vertical-offset="4590">
+          <caret line="254" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/block/BlockContainer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="22" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680">
+          <caret line="6" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/item/ItemBlock.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="13" selection-start="471" selection-end="471" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4080" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4080">
+          <caret line="14" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/items/ItemMoreFurnaces.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="19" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
+          <caret line="12" column="19" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/nbt/NBTTagCompound.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="376" column="72" selection-start="11043" selection-end="11043" vertical-scroll-proportion="0.0" vertical-offset="5712" max-vertical-offset="8806">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="5712" max-vertical-offset="8806">
+          <caret line="376" column="72" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/nbt/NBTTagList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="17" selection-start="475" selection-end="475" vertical-scroll-proportion="0.0" vertical-offset="2193" max-vertical-offset="4454">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2193" max-vertical-offset="4454">
+          <caret line="18" column="17" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraftforge/common/util/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="41" selection-start="1104" selection-end="1104" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+          <caret line="27" column="41" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/block/BlockFurnace.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="177" column="9" selection-start="6252" selection-end="6252" vertical-scroll-proportion="0.0" vertical-offset="2448" max-vertical-offset="5066" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2448" max-vertical-offset="5066">
+          <caret line="177" column="9" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/block/Block.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="206" column="22" selection-start="7105" selection-end="7105" vertical-scroll-proportion="0.0" vertical-offset="3502" max-vertical-offset="44506">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3502" max-vertical-offset="44506">
+          <caret line="206" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/tileentity/TileEntityNetherrackFurnace.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="79" selection-start="487" selection-end="487" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
+          <caret line="18" column="79" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/proxies/CommonProxy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="33" selection-start="1119" selection-end="1119" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="799">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="799">
+          <caret line="32" column="33" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/client/gui/GuiMoreFurnace.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="13" selection-start="450" selection-end="450" vertical-scroll-proportion="0.0" vertical-offset="680" max-vertical-offset="1649">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="680" max-vertical-offset="1649">
+          <caret line="11" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/world/World.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="699" column="16" selection-start="24523" selection-end="24523" vertical-scroll-proportion="0.0" vertical-offset="10554" max-vertical-offset="74579">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="10554" max-vertical-offset="74579">
+          <caret line="699" column="16" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/entity/player/EntityPlayerMP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="619" column="49" selection-start="23740" selection-end="23740" vertical-scroll-proportion="0.0" vertical-offset="8524" max-vertical-offset="18411" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="8524" max-vertical-offset="18411">
+          <caret line="619" column="49" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraftforge/common/ForgeHooks.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="419" column="60" selection-start="14874" selection-end="14874" vertical-scroll-proportion="0.7702703" vertical-offset="6439" max-vertical-offset="7327" />
+        <state vertical-scroll-proportion="0.7702703" vertical-offset="6439" max-vertical-offset="7327">
+          <caret line="419" column="60" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/network/NetHandlerPlayServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1058" column="28" selection-start="44383" selection-end="44383" vertical-scroll-proportion="0.0" vertical-offset="17986" max-vertical-offset="23732" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="17986" max-vertical-offset="23732">
+          <caret line="1058" column="28" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/network/Packet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="22" selection-start="239" selection-end="239" vertical-scroll-proportion="0.0" vertical-offset="1091" max-vertical-offset="1666" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1091" max-vertical-offset="1666">
+          <caret line="8" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/cpw/mods/fml/common/network/FMLEmbeddedChannel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="18" selection-start="1878" selection-end="1878" vertical-scroll-proportion="0.4716981" vertical-offset="323" max-vertical-offset="1224" />
+        <state vertical-scroll-proportion="0.4716981" vertical-offset="323" max-vertical-offset="1224">
+          <caret line="44" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/cpw/mods/fml/common/network/simpleimpl/SimpleNetworkWrapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="45" selection-start="4850" selection-end="4850" vertical-scroll-proportion="-0.19607843" vertical-offset="1632" max-vertical-offset="2720" />
+        <state vertical-scroll-proportion="-0.19607843" vertical-offset="1632" max-vertical-offset="2720">
+          <caret line="96" column="45" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/inventory/ContainerIronFurnace.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="13" selection-start="499" selection-end="499" vertical-scroll-proportion="-0.18867925" vertical-offset="238" max-vertical-offset="3876">
-          <folding />
+        <state vertical-scroll-proportion="-0.18867925" vertical-offset="238" max-vertical-offset="3876">
+          <caret line="14" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/tileentity/TileEntityFurnace.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="44" selection-start="836" selection-end="836" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="7412">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="7412">
+          <caret line="22" column="44" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/network/play/server/S35PacketUpdateTileEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="27" selection-start="550" selection-end="550" vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1683">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1683">
+          <caret line="16" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/tileentity/TileEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="359" column="4" selection-start="11352" selection-end="11439" vertical-scroll-proportion="0.0" vertical-offset="5151" max-vertical-offset="6885">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/tileentity/TileEntityIronFurnace.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="394" column="64" selection-start="11938" selection-end="11938" vertical-scroll-proportion="0.0" vertical-offset="8063" max-vertical-offset="9843">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="5151" max-vertical-offset="6885">
+          <caret line="359" column="4" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/item/crafting/FurnaceRecipes.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="0" selection-start="4227" selection-end="4227" vertical-scroll-proportion="0.33333334" vertical-offset="1506" max-vertical-offset="2227">
-          <folding />
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="1506" max-vertical-offset="2227">
+          <caret line="108" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/blocks/BlockMoreFurnaces.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="11" selection-start="1146" selection-end="1146" vertical-scroll-proportion="0.0" vertical-offset="265" max-vertical-offset="5525">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="5525">
+          <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/MoreFurnaces.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="89" selection-start="697" selection-end="697" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680">
+        <state vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="884">
+          <caret line="16" column="89" selection-start-line="16" selection-start-column="89" selection-end-line="16" selection-end-column="89" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/ModInformation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="47" selection-start="219" selection-end="219" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="255">
+          <caret line="6" column="47" selection-start-line="6" selection-start-column="47" selection-end-line="6" selection-end-column="47" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/mcmod.info">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="30" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="374">
+          <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="32" selection-start="576" selection-end="576" vertical-scroll-proportion="0.6723164" vertical-offset="0" max-vertical-offset="816">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cubex2/mods/morefurnaces/tileentity/TileEntityIronFurnace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1346154" vertical-offset="4930" max-vertical-offset="9231">
+          <caret line="403" column="53" selection-start-line="403" selection-start-column="53" selection-end-line="403" selection-end-column="54" />
           <folding />
         </state>
       </provider>
