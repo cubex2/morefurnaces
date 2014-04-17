@@ -14,11 +14,11 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public enum FurnaceType
 {
-    IRON(2, 2, 2, 1, 150, 56, 17, 38, 17, 56, 53, 38, 53, 116, 35, 138, 39, 8, 84, "Iron Furnace", TileEntityIronFurnace.class, "III", "IPI", "III"),
-    GOLD(4, 5, 4, 1, 80, 62, 17, 8, 17, 62, 53, 8, 53, 116, 35, 138, 39, 28, 84, "Gold Furnace", TileEntityGoldFurnace.class, "GGG", "GPG", "GGG"),
-    DIAMOND(7, 9, 7, 1, 40, 62, 35, 8, 17, 62, 71, 8, 71, 116, 53, 138, 39, 28, 120, "Diamond Furnace", TileEntityDiamondFurnace.class, "DDD", "DPD", "DDD"),
-    OBSIDIAN(2, 2, 2, 2, 150, new int[]{56, 56}, new int[]{17, 43}, new int[]{38, 38}, new int[]{17, 43}, 56, 83, 38, 83, new int[]{116, 116}, new int[]{18, 44}, new int[]{138, 138}, new int[]{22, 48}, 8, 114, "Obsidian Furnace", TileEntityObsidianFurnace.class, "OOO", "O1O", "OOO"),
-    NETHERRACK(1, 1, 0, 1, 1800, 56, 17, -1, -1, -1, -1, -1, -1, 116, 35, -1, -1, 8, 84, "Netherrack Furnace", TileEntityNetherrackFurnace.class, "NNN", "NFN", "NNN");
+    IRON(2, 2, 2, 1, 150, 1.25f, 56, 17, 38, 17, 56, 53, 38, 53, 116, 35, 138, 39, 8, 84, "Iron Furnace", TileEntityIronFurnace.class, "III", "IPI", "III"),
+    GOLD(4, 5, 4, 1, 80, 2.0f, 62, 17, 8, 17, 62, 53, 8, 53, 116, 35, 138, 39, 28, 84, "Gold Furnace", TileEntityGoldFurnace.class, "GGG", "GPG", "GGG"),
+    DIAMOND(7, 9, 7, 1, 40, 4.0f, 62, 35, 8, 17, 62, 71, 8, 71, 116, 53, 138, 39, 28, 120, "Diamond Furnace", TileEntityDiamondFurnace.class, "DDD", "DPD", "DDD"),
+    OBSIDIAN(2, 2, 2, 2, 150, 2.0f, new int[]{56, 56}, new int[]{17, 43}, new int[]{38, 38}, new int[]{17, 43}, 56, 83, 38, 83, new int[]{116, 116}, new int[]{18, 44}, new int[]{138, 138}, new int[]{22, 48}, 8, 114, "Obsidian Furnace", TileEntityObsidianFurnace.class, "OOO", "O1O", "OOO"),
+    NETHERRACK(1, 1, 0, 1, 1800, 1.0f, 56, 17, -1, -1, -1, -1, -1, -1, 116, 35, -1, -1, 8, 84, "Netherrack Furnace", TileEntityNetherrackFurnace.class, "NNN", "NFN", "NNN");
 
     final int inputSlots;
     final int outputSlots;
@@ -30,6 +30,7 @@ public enum FurnaceType
     public final int[] fuelSlotIds;
 
     public final int speed;
+    public final float consumptionRate;
     public final int[] mainInputX;
     public final int[] mainInputY;
     public final int[] inputX;
@@ -49,7 +50,7 @@ public enum FurnaceType
     private final String[] recipe;
 
     private FurnaceType(int inputSlots, int outputSlots, int fuelSlots,
-                        int parallelSmelting, int speed, int[] mainInputX,
+                        int parallelSmelting, int speed, float consumptionRate, int[] mainInputX,
                         int[] mainInputY, int[] inputX, int[] inputY, int mainFuelX,
                         int mainFuelY, int fuelX, int fuelY, int[] mainOutputX,
                         int[] mainOutputY, int[] outputX, int[] outputY, int inventoryX,
@@ -79,6 +80,7 @@ public enum FurnaceType
         }
 
         this.speed = speed;
+        this.consumptionRate = consumptionRate;
         this.mainInputX = mainInputX;
         this.mainInputY = mainInputY;
         this.inputX = inputX;
@@ -99,13 +101,13 @@ public enum FurnaceType
     }
 
     private FurnaceType(int inputSlots, int outputSlots, int fuelSlots,
-                        int parallelSmelting, int speed, int mainInputX, int mainInputY,
+                        int parallelSmelting, int speed, float consumptionRate, int mainInputX, int mainInputY,
                         int inputX, int inputY, int mainFuelX, int mainFuelY, int fuelX,
                         int fuelY, int mainOutputX, int mainOutputY, int outputX,
                         int outputY, int inventoryX, int inventoryY, String friendlyName,
                         Class<? extends TileEntityIronFurnace> clazz, String... recipe)
     {
-        this(inputSlots, outputSlots, fuelSlots, parallelSmelting, speed,
+        this(inputSlots, outputSlots, fuelSlots, parallelSmelting, speed, consumptionRate,
                 new int[]{mainInputX}, new int[]{mainInputY},
                 new int[]{inputX}, new int[]{inputY}, mainFuelX,
                 mainFuelY, fuelX, fuelY, new int[]{mainOutputX},
@@ -140,7 +142,8 @@ public enum FurnaceType
                     Items.iron_ingot, 'G', Items.gold_ingot, 'D', Items.diamond,
                     'O', Blocks.obsidian, 'N', Blocks.netherrack, 'F',
                     Blocks.furnace, '1', new ItemStack(
-                    MoreFurnaces.blockFurnaces, 0), 'P', previous);
+                    MoreFurnaces.blockFurnaces, 0), 'P', previous
+            );
             CraftingManager.getInstance().getRecipeList().add(recipe);
             previous = new ItemStack(blockResult, 1, typ.ordinal());
         }

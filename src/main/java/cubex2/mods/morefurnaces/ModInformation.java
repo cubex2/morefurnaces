@@ -4,6 +4,5 @@ public class ModInformation
 {
     public static final String ID = "MoreFurnaces";
     public static final String NAME = "More Furnaces";
-    public static final String VERSION = "1.3.6";
-    public static final String CHANNEL = "MoreFurnaces";
+    public static final String VERSION = "1.3.8";
 }
