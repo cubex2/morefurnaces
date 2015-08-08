@@ -1,0 +1,9 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "morefurnaces:blocks/netherrackTop",
+    "front": "morefurnaces:blocks/netherrackFrontOff",
+    "side": "morefurnaces:blocks/netherrackSide",
+    "down": "morefurnaces:blocks/netherrackBottom"
+  }
+}

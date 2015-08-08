@@ -1,7 +1,6 @@
 package cubex2.mods.morefurnaces.inventory;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,6 +8,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Iterator;
 
@@ -43,7 +44,7 @@ public class ContainerIronFurnace extends Container
 
         if (type.fuelSlots > 0)
         {
-            addSlotToContainer(new Slot(invFurnace, slotId++, type.mainFuelX, type.mainFuelY));
+            addSlotToContainer(new SlotFurnaceFuel(invFurnace, slotId++, type.mainFuelX, type.mainFuelY));
             for (int y = 0; y < type.getNumFuelRows(); y++)
             {
                 for (int x = type.getFuelSlotsPerRow() - 1; x >= 0; x--)
@@ -55,12 +56,12 @@ public class ContainerIronFurnace extends Container
 
         for (int i = 0; i < type.parallelSmelting; i++)
         {
-            addSlotToContainer(new SlotFurnace(player, invFurnace, slotId++, type.mainOutputX[i], type.mainOutputY[i]));
+            addSlotToContainer(new SlotFurnaceOutput(player, invFurnace, slotId++, type.mainOutputX[i], type.mainOutputY[i]));
             for (int y = type.getNumOutputRows() - 1; y >= 0; y--)
             {
                 for (int x = 0; x < type.getOutputSlotsPerRow(); x++)
                 {
-                    addSlotToContainer(new SlotFurnace(player, invFurnace, slotId++, type.outputX[i] + x * 18, type.outputY[i] + y * 18));
+                    addSlotToContainer(new SlotFurnaceOutput(player, invFurnace, slotId++, type.outputX[i] + x * 18, type.outputY[i] + y * 18));
                 }
             }
         }
@@ -188,35 +189,29 @@ public class ContainerIronFurnace extends Container
                     return null;
 
                 slot.onSlotChange(stack1, stack);
-            }
-            else if (!isInputSlot(i) && !isFuelSlot(i))
+            } else if (!isInputSlot(i) && !isFuelSlot(i))
             {
-                if (FurnaceRecipes.smelting().getSmeltingResult(stack1) != null)
+                if (FurnaceRecipes.instance().getSmeltingResult(stack1) != null)
                 {
                     if (!this.mergeItemStack(stack1, 0, type.getFirstFuelSlot(), false))
                         return null;
-                }
-                else if (TileEntityIronFurnace.isItemFuel(stack1))
+                } else if (TileEntityIronFurnace.isItemFuel(stack1))
                 {
                     if (!this.mergeItemStack(stack1, type.getFirstFuelSlot(), type.getFirstOutputSlot(0), false))
                         return null;
-                }
-                else if (i >= type.getNumSlots() && i < type.getNumSlots() + 27)
+                } else if (i >= type.getNumSlots() && i < type.getNumSlots() + 27)
                 {
                     if (!this.mergeItemStack(stack1, type.getNumSlots() + 27, type.getNumSlots() + 36, false))
                         return null;
-                }
-                else if (i >= type.getNumSlots() + 27 && i < type.getNumSlots() + 36 && !this.mergeItemStack(stack1, type.getNumSlots(), type.getNumSlots() + 27, false))
+                } else if (i >= type.getNumSlots() + 27 && i < type.getNumSlots() + 36 && !this.mergeItemStack(stack1, type.getNumSlots(), type.getNumSlots() + 27, false))
                     return null;
-            }
-            else if (!this.mergeItemStack(stack1, type.getNumSlots(), type.getNumSlots() + 36, false))
+            } else if (!this.mergeItemStack(stack1, type.getNumSlots(), type.getNumSlots() + 36, false))
                 return null;
 
             if (stack1.stackSize == 0)
             {
                 slot.putStack((ItemStack) null);
-            }
-            else
+            } else
             {
                 slot.onSlotChanged();
             }

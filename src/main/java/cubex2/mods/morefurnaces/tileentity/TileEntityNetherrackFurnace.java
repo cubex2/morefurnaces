@@ -29,7 +29,7 @@ public class TileEntityNetherrackFurnace extends TileEntityIronFurnace
     public boolean isBurning()
     {
         if (worldObj != null)
-            return worldObj.getBlock(xCoord, yCoord + 1, zCoord) == Blocks.fire;
+            return worldObj.getBlockState(pos.up()).getBlock() == Blocks.fire;
         return false;
     }
 }

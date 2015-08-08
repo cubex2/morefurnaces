@@ -1,0 +1,9 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "morefurnaces:blocks/goldTop",
+    "front": "morefurnaces:blocks/goldFrontOn",
+    "side": "morefurnaces:blocks/goldSide",
+    "down": "morefurnaces:blocks/goldBottom"
+  }
+}

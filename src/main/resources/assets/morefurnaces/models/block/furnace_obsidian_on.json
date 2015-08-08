@@ -1,0 +1,9 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "morefurnaces:blocks/obsidianTop",
+    "front": "morefurnaces:blocks/obsidianFrontOn",
+    "side": "morefurnaces:blocks/obsidianSide",
+    "down": "morefurnaces:blocks/obsidianBottom"
+  }
+}

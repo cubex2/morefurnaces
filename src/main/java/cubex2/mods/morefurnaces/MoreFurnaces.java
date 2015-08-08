@@ -1,17 +1,15 @@
 package cubex2.mods.morefurnaces;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 import cubex2.mods.morefurnaces.blocks.BlockMoreFurnaces;
 import cubex2.mods.morefurnaces.items.ItemMoreFurnaces;
 import cubex2.mods.morefurnaces.proxies.CommonProxy;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.IOException;
 
@@ -23,7 +21,7 @@ public class MoreFurnaces
     @SidedProxy(clientSide = "cubex2.mods.morefurnaces.proxies.ClientProxy", serverSide = "cubex2.mods.morefurnaces.proxies.CommonProxy")
     public static CommonProxy proxy;
 
-    @Instance(ModInformation.ID)
+    @Mod.Instance(ModInformation.ID)
     public static MoreFurnaces instance;
 
     public static int ironSpeed;
@@ -38,11 +36,10 @@ public class MoreFurnaces
     public static float netherrackConsumptionRate;
     public static float obsidianConsumptionRate;
 
-    @EventHandler
+    @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException
     {
-        blockFurnaces = new BlockMoreFurnaces();
-        GameRegistry.registerBlock(blockFurnaces, ItemMoreFurnaces.class, "furnaceBlock");
+
 
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         try
@@ -65,9 +62,12 @@ public class MoreFurnaces
         }
     }
 
-    @EventHandler
+    @Mod.EventHandler
     public void load(FMLInitializationEvent evt)
     {
+        blockFurnaces = new BlockMoreFurnaces();
+        GameRegistry.registerBlock(blockFurnaces, ItemMoreFurnaces.class, "furnaceBlock");
+
         for (FurnaceType typ : FurnaceType.values())
         {
             GameRegistry.registerTileEntity(typ.clazz, "CubeX2 " + typ.friendlyName);

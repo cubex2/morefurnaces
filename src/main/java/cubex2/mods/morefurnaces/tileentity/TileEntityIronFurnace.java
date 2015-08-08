@@ -1,8 +1,5 @@
 package cubex2.mods.morefurnaces.tileentity;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.MoreFurnaces;
 import net.minecraft.block.Block;
@@ -18,12 +15,18 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.world.EnumSkyBlock;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Arrays;
 
-public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
+public class TileEntityIronFurnace extends TileEntity implements ISidedInventory, IUpdatePlayerListBox
 {
     public int[] furnaceCookTime;
     public int furnaceBurnTime = 0;
@@ -144,9 +147,21 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public String getInventoryName()
+    public String getName()
     {
         return type.name();
+    }
+
+    @Override
+    public boolean hasCustomName()
+    {
+        return false;
+    }
+
+    @Override
+    public IChatComponent getDisplayName()
+    {
+        return null;
     }
 
     @Override
@@ -183,7 +198,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         isActive = nbtTagCompound.getBoolean("isActive");
         if (worldObj != null)
         {
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+            worldObj.markBlockForUpdate(pos);
         }
     }
 
@@ -250,13 +265,13 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public void updateEntity()
+    public void update()
     {
 
         if (++ticksSinceSync % 20 * 4 == 0)
         {
-            worldObj.addBlockEvent(xCoord, yCoord, zCoord, MoreFurnaces.blockFurnaces, 1, facing & 0xFF);
-            worldObj.addBlockEvent(xCoord, yCoord, zCoord, MoreFurnaces.blockFurnaces, 2, (byte) (isActive ? 1 : 0));
+            worldObj.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 1, facing & 0xFF);
+            worldObj.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 2, (byte) (isActive ? 1 : 0));
         }
         boolean var1 = this.isBurning();
         boolean inventoryChanged = false;
@@ -323,7 +338,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
             {
                 inventoryChanged = true;
                 isActive = this.isBurning();
-                worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                worldObj.markBlockForUpdate(pos);
             } else if (type.fuelSlots == 0)
             {
                 if (isActive != isBurning())
@@ -331,7 +346,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
                     currentItemBurnTime = furnaceBurnTime = 3600;
                     inventoryChanged = true;
                     isActive = this.isBurning();
-                    worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                    worldObj.markBlockForUpdate(pos);
                 }
             }
         }
@@ -352,7 +367,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         } else if (i == 2)
         {
             isActive = j == 1;
-            worldObj.updateLightByType(EnumSkyBlock.Block, xCoord, yCoord, zCoord);
+            worldObj.checkLightFor(EnumSkyBlock.BLOCK, pos);
             return true;
         }
         return super.receiveClientEvent(i, j);
@@ -380,7 +395,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
             ItemStack result = null;
             if (furnaceContents[type.getFirstInputSlot(id)] != null)
             {
-                result = FurnaceRecipes.smelting().getSmeltingResult(furnaceContents[type.getFirstInputSlot(id)]);
+                result = FurnaceRecipes.instance().getSmeltingResult(furnaceContents[type.getFirstInputSlot(id)]);
             }
             if (result != null)
             {
@@ -443,7 +458,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
             return false;
         else
         {
-            ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(furnaceContents[type.getFirstInputSlot(id)]);
+            ItemStack var1 = FurnaceRecipes.instance().getSmeltingResult(furnaceContents[type.getFirstInputSlot(id)]);
             if (var1 == null)
                 return false;
             if (furnaceContents[type.getFirstOutputSlot(id)] == null)
@@ -462,7 +477,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     {
         if (this.canSmelt(id))
         {
-            ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(furnaceContents[type.getFirstInputSlot(id)]);
+            ItemStack var1 = FurnaceRecipes.instance().getSmeltingResult(furnaceContents[type.getFirstInputSlot(id)]);
 
             if (furnaceContents[type.getFirstOutputSlot(id)] == null)
             {
@@ -509,7 +524,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
                 return 200;
             if (item instanceof ItemSword && ((ItemSword) item).getToolMaterialName().equals("WOOD"))
                 return 200;
-            if (item instanceof ItemHoe && ((ItemHoe) item).getToolMaterialName().equals("WOOD"))
+            if (item instanceof ItemHoe && ((ItemHoe) item).getMaterialName().equals("WOOD"))
                 return 200;
             if (item == Items.stick)
                 return 100;
@@ -533,16 +548,16 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     @Override
     public boolean isUseableByPlayer(EntityPlayer player)
     {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) != this ? false : player.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64.0D;
+        return worldObj.getTileEntity(pos) != this ? false : player.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64.0D;
     }
 
     @Override
-    public void openInventory()
+    public void openInventory(EntityPlayer player)
     {
     }
 
     @Override
-    public void closeInventory()
+    public void closeInventory(EntityPlayer player)
     {
     }
 
@@ -551,19 +566,13 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     {
         NBTTagCompound nbt = new NBTTagCompound();
         writeToNBT(nbt);
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, nbt);
+        return new S35PacketUpdateTileEntity(pos, 0, nbt);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
     {
-        readFromNBT(pkt.func_148857_g());
-    }
-
-    @Override
-    public boolean hasCustomInventoryName()
-    {
-        return true;
+        readFromNBT(pkt.getNbtCompound());
     }
 
     @Override
@@ -573,21 +582,48 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(int side)
+    public int getField(int id)
     {
-        return side == 0 ? type.outputSlotIds : side == 1 ? type.inputSlotIds : type.fuelSlotIds;
+        return 0;
     }
 
     @Override
-    public boolean canInsertItem(int slot, ItemStack itemstack, int side)
+    public void setField(int id, int value)
+    {
+
+    }
+
+    @Override
+    public int getFieldCount()
+    {
+        return 0;
+    }
+
+    @Override
+    public void clear()
+    {
+        for (int i = 0; i < furnaceContents.length; i++)
+        {
+            furnaceContents = null;
+        }
+    }
+
+    @Override
+    public int[] getSlotsForFace(EnumFacing facing)
+    {
+        return facing == EnumFacing.DOWN ? type.outputSlotIds : facing == EnumFacing.UP ? type.inputSlotIds : type.fuelSlotIds;
+    }
+
+    @Override
+    public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing facing)
     {
         return isItemValidForSlot(slot, itemstack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack itemstack, int side)
+    public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing facing)
     {
-        return side != 0 || !type.isFuelSlot(slot) || itemstack.getItem() == Items.bucket;
+        return facing != EnumFacing.DOWN || !type.isFuelSlot(slot) || itemstack.getItem() == Items.bucket;
     }
 
 }

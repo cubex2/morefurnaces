@@ -1,18 +1,15 @@
 package cubex2.mods.morefurnaces;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import cubex2.mods.morefurnaces.blocks.BlockMoreFurnaces;
 import cubex2.mods.morefurnaces.tileentity.*;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.IStringSerializable;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-public enum FurnaceType
+public enum FurnaceType implements IStringSerializable
 {
     IRON(2, 2, 2, 1, 150, 1.25f, 56, 17, 38, 17, 56, 53, 38, 53, 116, 35, 138, 39, 8, 84, "Iron Furnace", TileEntityIronFurnace.class, "III", "IPI", "III"),
     GOLD(4, 5, 4, 1, 80, 2.0f, 62, 17, 8, 17, 62, 53, 8, 53, 116, 35, 138, 39, 28, 84, "Gold Furnace", TileEntityGoldFurnace.class, "GGG", "GPG", "GGG"),
@@ -115,6 +112,7 @@ public enum FurnaceType
                 new int[]{outputY}, inventoryX, inventoryY, friendlyName,
                 clazz, recipe);
     }
+
 
     public static TileEntityIronFurnace makeEntity(int meta)
     {
@@ -250,18 +248,11 @@ public enum FurnaceType
         return (numSlots - 1) / getNumOutputRows();
     }
 
-    @SideOnly(Side.CLIENT)
-    public IIcon[] icons;
-
-    public void makeIcons(IIconRegister iconRegister)
-    {
-        icons = new IIcon[5];
-        for (int i = 0; i < icons.length; i++)
-        {
-            icons[i] = iconRegister.registerIcon("morefurnaces:" + name().toLowerCase() + postFixMap[i]);
-        }
-    }
-
     private static String[] postFixMap = new String[]{"Bottom", "Top", "Side", "FrontOn", "FrontOff"};
 
+    @Override
+    public String getName()
+    {
+        return name();
+    }
 }
