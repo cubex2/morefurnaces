@@ -39,6 +39,8 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
 
     private int ticksSinceSync = 0;
 
+    private boolean updateLight = false;
+
     public TileEntityIronFurnace()
     {
         this(FurnaceType.IRON);
@@ -281,6 +283,12 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
             --furnaceBurnTime;
         }
 
+        if (updateLight && worldObj != null)
+        {
+            worldObj.checkLightFor(EnumSkyBlock.SKY, pos);
+            updateLight = false;
+        }
+
         if (!worldObj.isRemote)
         {
             if (updateStacks())
@@ -367,7 +375,10 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         } else if (i == 2)
         {
             isActive = j == 1;
-            worldObj.checkLightFor(EnumSkyBlock.BLOCK, pos);
+            if (worldObj != null)
+                worldObj.checkLightFor(EnumSkyBlock.BLOCK, pos);
+            else
+                updateLight = true;
             return true;
         }
         return super.receiveClientEvent(i, j);
