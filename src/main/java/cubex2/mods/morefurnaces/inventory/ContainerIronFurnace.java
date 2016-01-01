@@ -81,17 +81,18 @@ public class ContainerIronFurnace extends Container
     }
 
     @Override
-    public void addCraftingToCrafters(ICrafting icrafting)
+    public void onCraftGuiOpened(ICrafting icrafting)
     {
-        super.addCraftingToCrafters(icrafting);
+        super.onCraftGuiOpened(icrafting);
+        icrafting.func_175173_a(this, furnace);
 
-        for (int i = 0; i < type.parallelSmelting; i++)
+        /*for (int i = 0; i < type.parallelSmelting; i++)
         {
             icrafting.sendProgressBarUpdate(this, i, furnace.furnaceCookTime[i]);
         }
 
         icrafting.sendProgressBarUpdate(this, type.parallelSmelting, furnace.furnaceBurnTime);
-        icrafting.sendProgressBarUpdate(this, type.parallelSmelting + 1, furnace.currentItemBurnTime);
+        icrafting.sendProgressBarUpdate(this, type.parallelSmelting + 1, furnace.currentItemBurnTime);*/
     }
 
     @Override

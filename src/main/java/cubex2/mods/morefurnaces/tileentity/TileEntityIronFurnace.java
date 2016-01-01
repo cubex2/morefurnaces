@@ -15,10 +15,10 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ITickable;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -26,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Arrays;
 
-public class TileEntityIronFurnace extends TileEntity implements ISidedInventory, IUpdatePlayerListBox
+public class TileEntityIronFurnace extends TileEntity implements ISidedInventory, ITickable
 {
     public int[] furnaceCookTime;
     public int furnaceBurnTime = 0;
@@ -149,7 +149,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public String getName()
+    public String getCommandSenderName()
     {
         return type.name();
     }
