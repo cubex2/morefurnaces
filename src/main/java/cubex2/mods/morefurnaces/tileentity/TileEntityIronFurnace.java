@@ -125,7 +125,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int i)
+    public ItemStack removeStackFromSlot(int i)
     {
         if (furnaceContents[i] != null)
         {
@@ -149,7 +149,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public String getCommandSenderName()
+    public String getName()
     {
         return type.name();
     }

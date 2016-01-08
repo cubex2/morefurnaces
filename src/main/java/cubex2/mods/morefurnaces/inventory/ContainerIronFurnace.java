@@ -84,7 +84,7 @@ public class ContainerIronFurnace extends Container
     public void onCraftGuiOpened(ICrafting icrafting)
     {
         super.onCraftGuiOpened(icrafting);
-        icrafting.func_175173_a(this, furnace);
+        icrafting.sendAllWindowProperties(this, furnace);
 
         /*for (int i = 0; i < type.parallelSmelting; i++)
         {
