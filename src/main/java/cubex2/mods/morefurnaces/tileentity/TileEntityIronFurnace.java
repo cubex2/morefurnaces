@@ -4,6 +4,7 @@ import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.MoreFurnaces;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -14,11 +15,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -161,7 +162,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public IChatComponent getDisplayName()
+    public ITextComponent getDisplayName()
     {
         return null;
     }
@@ -200,7 +201,8 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         isActive = nbtTagCompound.getBoolean("isActive");
         if (worldObj != null)
         {
-            worldObj.markBlockForUpdate(pos);
+            IBlockState state = worldObj.getBlockState(pos);
+            worldObj.notifyBlockUpdate(pos, state, state, 3);
         }
     }
 
@@ -346,7 +348,9 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
             {
                 inventoryChanged = true;
                 isActive = this.isBurning();
-                worldObj.markBlockForUpdate(pos);
+
+                IBlockState state = worldObj.getBlockState(pos);
+                worldObj.notifyBlockUpdate(pos, state, state, 3);
             } else if (type.fuelSlots == 0)
             {
                 if (isActive != isBurning())
@@ -354,7 +358,9 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
                     currentItemBurnTime = furnaceBurnTime = 3600;
                     inventoryChanged = true;
                     isActive = this.isBurning();
-                    worldObj.markBlockForUpdate(pos);
+
+                    IBlockState state = worldObj.getBlockState(pos);
+                    worldObj.notifyBlockUpdate(pos, state, state, 3);
                 }
             }
         }
@@ -525,7 +531,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
                 if (block == Blocks.wooden_slab)
                     return 150;
 
-                if (block.getMaterial() == Material.wood)
+                if (block.getDefaultState().getMaterial() == Material.wood)
                     return 300;
 
                 if (block == Blocks.coal_block)
@@ -577,11 +583,11 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     {
         NBTTagCompound nbt = new NBTTagCompound();
         writeToNBT(nbt);
-        return new S35PacketUpdateTileEntity(pos, 0, nbt);
+        return new SPacketUpdateTileEntity(pos, 0, nbt);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
     {
         readFromNBT(pkt.getNbtCompound());
     }

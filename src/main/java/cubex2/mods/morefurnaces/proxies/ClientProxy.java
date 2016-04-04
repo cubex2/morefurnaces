@@ -2,20 +2,24 @@ package cubex2.mods.morefurnaces.proxies;
 
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ClientProxy extends CommonProxy
 {
     @Override
     public void registerRenderInformation()
     {
-        Item item = GameRegistry.findItem("morefurnaces", "furnaceBlock");
-        ModelBakery.addVariantName(item, "morefurnaces:furnace_iron", "morefurnaces:furnace_gold", "morefurnaces:furnace_diamond", "morefurnaces:furnace_netherrack", "morefurnaces:furnace_obsidian");
+        Item item = Item.getByNameOrId("morefurnaces:furnaceBlock");
+        ModelBakery.registerItemVariants(item, new ResourceLocation("morefurnaces:furnace_iron"),
+                                         new ResourceLocation("morefurnaces:furnace_gold"),
+                                         new ResourceLocation("morefurnaces:furnace_diamond"),
+                                         new ResourceLocation("morefurnaces:furnace_netherrack"),
+                                         new ResourceLocation("morefurnaces:furnace_obsidian"));
 
         ModelResourceLocation l = new ModelResourceLocation("morefurnaces:furnace_iron", "inventory");
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, l);

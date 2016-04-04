@@ -105,12 +105,12 @@ public enum FurnaceType implements IStringSerializable
                         Class<? extends TileEntityIronFurnace> clazz, String... recipe)
     {
         this(inputSlots, outputSlots, fuelSlots, parallelSmelting, speed, consumptionRate,
-                new int[]{mainInputX}, new int[]{mainInputY},
-                new int[]{inputX}, new int[]{inputY}, mainFuelX,
-                mainFuelY, fuelX, fuelY, new int[]{mainOutputX},
-                new int[]{mainOutputY}, new int[]{outputX},
-                new int[]{outputY}, inventoryX, inventoryY, friendlyName,
-                clazz, recipe);
+             new int[]{mainInputX}, new int[]{mainInputY},
+             new int[]{inputX}, new int[]{inputY}, mainFuelX,
+             mainFuelY, fuelX, fuelY, new int[]{mainOutputX},
+             new int[]{mainOutputY}, new int[]{outputX},
+             new int[]{outputY}, inventoryX, inventoryY, friendlyName,
+             clazz, recipe);
     }
 
 
@@ -137,9 +137,9 @@ public enum FurnaceType implements IStringSerializable
         {
             ShapedOreRecipe recipe = new ShapedOreRecipe(new ItemStack(
                     blockResult, 1, typ.ordinal()), typ.recipe, 'I',
-                    Items.iron_ingot, 'G', Items.gold_ingot, 'D', Items.diamond,
-                    'O', Blocks.obsidian, 'N', Blocks.netherrack, 'F',
-                    Blocks.furnace, '1', new ItemStack(
+                                                         Items.iron_ingot, 'G', Items.gold_ingot, 'D', Items.diamond,
+                                                         'O', Blocks.obsidian, 'N', Blocks.netherrack, 'F',
+                                                         Blocks.furnace, '1', new ItemStack(
                     MoreFurnaces.blockFurnaces, 0), 'P', previous
             );
             CraftingManager.getInstance().getRecipeList().add(recipe);
@@ -253,6 +253,6 @@ public enum FurnaceType implements IStringSerializable
     @Override
     public String getName()
     {
-        return name();
+        return name().toLowerCase();
     }
 }
