@@ -1,17 +1,18 @@
 package cubex2.mods.morefurnaces.inventory;
 
 
+import cubex2.cxlibrary.inventory.SlotCX;
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.Iterator;
 
 public class ContainerIronFurnace extends Container
 {
@@ -22,61 +23,32 @@ public class ContainerIronFurnace extends Container
     private int lastBurnTime = 0;
     private int lastItemBurnTime = 0;
 
-    public ContainerIronFurnace(IInventory invPlayer, TileEntityIronFurnace invFurnace, FurnaceType type)
+    public ContainerIronFurnace(InventoryPlayer invPlayer, TileEntityIronFurnace invFurnace, FurnaceType type)
     {
         furnace = invFurnace;
-        player = ((InventoryPlayer) invPlayer).player;
+        player = invPlayer.player;
         this.type = type;
         lastCookTime = new int[type.parallelSmelting];
 
         int slotId = 0;
-        for (int i = 0; i < type.parallelSmelting; i++)
+        for (int i = 0; i < type.getNumInputSlots(); i++)
         {
-            addSlotToContainer(new Slot(invFurnace, slotId++, type.mainInputX[i], type.mainInputY[i]));
-            for (int y = type.getNumInputRows() - 1; y >= 0; y--)
-            {
-                for (int x = type.getInputSlotsPerRow() - 1; x >= 0; x--)
-                {
-                    addSlotToContainer(new Slot(invFurnace, slotId++, type.inputX[i] + x * 18, type.inputY[i] + y * 18));
-                }
-            }
+            addSlotToContainer(new SlotCX("furnace", invFurnace, slotId++));
         }
 
-        if (type.fuelSlots > 0)
+        for (int i = 0; i < type.getNumFuelSlots(); i++)
         {
-            addSlotToContainer(new SlotFurnaceFuel(invFurnace, slotId++, type.mainFuelX, type.mainFuelY));
-            for (int y = 0; y < type.getNumFuelRows(); y++)
-            {
-                for (int x = type.getFuelSlotsPerRow() - 1; x >= 0; x--)
-                {
-                    addSlotToContainer(new Slot(invFurnace, slotId++, type.fuelX + x * 18, type.fuelY + y * 18));
-                }
-            }
+            addSlotToContainer(new SlotFuel("furnace", invFurnace, slotId++));
         }
 
-        for (int i = 0; i < type.parallelSmelting; i++)
+        for (int i = 0; i < type.getNumOutputSlots(); i++)
         {
-            addSlotToContainer(new SlotFurnaceOutput(player, invFurnace, slotId++, type.mainOutputX[i], type.mainOutputY[i]));
-            for (int y = type.getNumOutputRows() - 1; y >= 0; y--)
-            {
-                for (int x = 0; x < type.getOutputSlotsPerRow(); x++)
-                {
-                    addSlotToContainer(new SlotFurnaceOutput(player, invFurnace, slotId++, type.outputX[i] + x * 18, type.outputY[i] + y * 18));
-                }
-            }
+            addSlotToContainer(new SlotOutput("furnace", player, invFurnace, slotId++));
         }
 
-        for (int row = 0; row < 3; row++)
+        for (int i = 0; i < invPlayer.mainInventory.length; i++)
         {
-            for (int column = 0; column < 9; column++)
-            {
-                addSlotToContainer(new Slot(invPlayer, column + row * 9 + 9, type.inventoryX + column * 18, type.inventoryY + row * 18));
-            }
-        }
-
-        for (int column = 0; column < 9; column++)
-        {
-            addSlotToContainer(new Slot(invPlayer, column, type.inventoryX + column * 18, type.inventoryY + 58));
+            addSlotToContainer(new SlotCX("player", invPlayer, i));
         }
     }
 
@@ -99,35 +71,29 @@ public class ContainerIronFurnace extends Container
     public void detectAndSendChanges()
     {
         super.detectAndSendChanges();
-        Iterator iterator = crafters.iterator();
 
-        while (iterator.hasNext())
+        for (ICrafting crafting : crafters)
         {
-            ICrafting var2 = (ICrafting) iterator.next();
-
             for (int i = 0; i < type.parallelSmelting; i++)
             {
                 if (lastCookTime[i] != furnace.furnaceCookTime[i])
                 {
-                    var2.sendProgressBarUpdate(this, i, furnace.furnaceCookTime[i]);
+                    crafting.sendProgressBarUpdate(this, i, furnace.furnaceCookTime[i]);
                 }
             }
 
             if (lastBurnTime != furnace.furnaceBurnTime)
             {
-                var2.sendProgressBarUpdate(this, type.parallelSmelting, furnace.furnaceBurnTime);
+                crafting.sendProgressBarUpdate(this, type.parallelSmelting, furnace.furnaceBurnTime);
             }
 
             if (lastItemBurnTime != furnace.currentItemBurnTime)
             {
-                var2.sendProgressBarUpdate(this, type.parallelSmelting + 1, furnace.currentItemBurnTime);
+                crafting.sendProgressBarUpdate(this, type.parallelSmelting + 1, furnace.currentItemBurnTime);
             }
         }
 
-        for (int i = 0; i < type.parallelSmelting; i++)
-        {
-            lastCookTime[i] = furnace.furnaceCookTime[i];
-        }
+        System.arraycopy(furnace.furnaceCookTime, 0, lastCookTime, 0, type.parallelSmelting);
         lastBurnTime = furnace.furnaceBurnTime;
         lastItemBurnTime = furnace.currentItemBurnTime;
     }
@@ -177,7 +143,7 @@ public class ContainerIronFurnace extends Container
     public ItemStack transferStackInSlot(EntityPlayer player, int i)
     {
         ItemStack stack = null;
-        Slot slot = (Slot) inventorySlots.get(i);
+        Slot slot = inventorySlots.get(i);
 
         if (slot != null && slot.getHasStack())
         {
@@ -211,7 +177,7 @@ public class ContainerIronFurnace extends Container
 
             if (stack1.stackSize == 0)
             {
-                slot.putStack((ItemStack) null);
+                slot.putStack(null);
             } else
             {
                 slot.onSlotChanged();

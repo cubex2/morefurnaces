@@ -246,21 +246,20 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         return 64;
     }
 
-    @SideOnly(Side.CLIENT)
-    public int getCookProgressScaled(int id, int i)
+    public float getCookProgress(int id)
     {
-        return furnaceCookTime[id] * i / getSpeed();
+        return furnaceCookTime[id] / (float) getSpeed();
     }
 
     @SideOnly(Side.CLIENT)
-    public int getBurnTimeRemainingScaled(int i)
+    public float getBurnTimeRemaining()
     {
         if (currentItemBurnTime == 0)
         {
             currentItemBurnTime = getSpeed();
         }
 
-        return furnaceBurnTime * i / currentItemBurnTime;
+        return furnaceBurnTime / (float) currentItemBurnTime;
     }
 
     public boolean isBurning()
@@ -271,7 +270,6 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     @Override
     public void update()
     {
-
         if (++ticksSinceSync % 20 * 4 == 0)
         {
             worldObj.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 1, facing & 0xFF);
@@ -619,10 +617,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     @Override
     public void clear()
     {
-        for (int i = 0; i < furnaceContents.length; i++)
-        {
-            furnaceContents = null;
-        }
+        Arrays.fill(furnaceContents, null);
     }
 
     @Override

@@ -1,0 +1,54 @@
+{
+  "slots": {
+    "player": [
+      {
+        "from": 0, "to": 8,
+        "x": 28, "y": 142
+      },
+      {
+        "from": 9, "to": 35, "rows": 3,
+        "x": 28, "y": 84
+      }
+    ],
+    "furnace": [
+      {
+        "from": 3, "to": 0,
+        "x": 8, "y": 17
+      },
+      {
+        "from": 7, "to": 4,
+        "x": 8, "y": 53
+      },
+      {
+        "from": 8, "to": 8,
+        "x": 116, "y": 35
+      },
+      {
+        "from": 9, "to": 12,
+        "x": 138, "y": 39
+      }
+    ]
+  },
+  "controls": [
+    {
+      "name": "bg",
+      "width": 216,
+      "height": 166,
+      "center": true
+    },
+    {
+      "name": "cook0",
+      "width": 24,
+      "height": 16,
+      "left": 79,
+      "top": 34
+    },
+    {
+      "name": "fuel",
+      "width": 14,
+      "height": 13,
+      "left": 63,
+      "top": 36
+    }
+  ]
+}

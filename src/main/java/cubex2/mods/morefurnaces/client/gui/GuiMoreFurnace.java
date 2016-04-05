@@ -1,98 +1,87 @@
 package cubex2.mods.morefurnaces.client.gui;
 
+import cubex2.cxlibrary.gui.GuiCX;
+import cubex2.cxlibrary.gui.GuiTexture;
+import cubex2.cxlibrary.gui.control.HorizontalProgressBar;
+import cubex2.cxlibrary.gui.control.ScreenContainer;
+import cubex2.cxlibrary.gui.control.VerticalProgressBar;
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.inventory.ContainerIronFurnace;
+import cubex2.mods.morefurnaces.lib.Textures;
 import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 
-public class GuiMoreFurnace extends GuiContainer
+public class GuiMoreFurnace extends ScreenContainer
 {
+    public static ResourceLocation DATA_IRON = new ResourceLocation("morefurnaces", "gui/iron.json");
+    public static ResourceLocation DATA_GOLD = new ResourceLocation("morefurnaces", "gui/gold.json");
+    public static ResourceLocation DATA_DIAMOND = new ResourceLocation("morefurnaces", "gui/diamond.json");
+    public static ResourceLocation DATA_OBSIDIAN = new ResourceLocation("morefurnaces", "gui/obsidian.json");
+    public static ResourceLocation DATA_NETHERRACK = new ResourceLocation("morefurnaces", "gui/netherrack.json");
+
     public enum GUI
     {
-        IRON(176, 166, 56, 36, 176, 12, new int[] { 79 }, new int[] { 34 }, 176, 14, "ironfurnace.png", FurnaceType.IRON),
-        GOLD(216, 166, 63, 36, 216, 12, new int[] { 79 }, new int[] { 34 }, 216, 14, "goldfurnace.png", FurnaceType.GOLD),
-        DIAMOND(216, 202, 63, 54, 216, 12, new int[] { 79 }, new int[] { 52 }, 216, 14, "diamondfurnace.png", FurnaceType.DIAMOND),
-        OBSIDIAN(176, 196, 56, 66, 176, 12, new int[] {
-                79,
-                79 }, new int[] { 17, 43 }, 176, 14, "obsidianfurnace.png", FurnaceType.OBSIDIAN),
-        NETHERRACK(176, 166, 56, 36, 176, 12, new int[] { 79 }, new int[] { 34 }, 176, 14, "netherrackfurnace.png", FurnaceType.NETHERRACK);
-        private int xSize;
-        private int ySize;
-        private int burnDestX;
-        private int burnDestY;
-        private int burnSrcX;
-        private int burnSrcY;
-        private int[] cookDestX;
-        private int[] cookDestY;
-        private int cookSrcX;
-        private int cookSrcY;
-        private ResourceLocation guiLocation;
-        private FurnaceType mainType;
+        IRON(Textures.IRON, FurnaceType.IRON, DATA_IRON),
+        GOLD(Textures.GOLD, FurnaceType.GOLD, DATA_GOLD),
+        DIAMOND(Textures.DIAMOND, FurnaceType.DIAMOND, DATA_DIAMOND),
+        OBSIDIAN(Textures.OBSIDIAN, FurnaceType.OBSIDIAN, DATA_OBSIDIAN),
+        NETHERRACK(Textures.NETHERRACK, FurnaceType.NETHERRACK, DATA_NETHERRACK);
 
-        private GUI(int xSize, int ySize, int burnDestX, int burnDestY, int burnSrcX, int burnSrcY, int[] cookDestX, int[] cookDestY, int cookSrcX, int cookSrcY, String guiTexture, FurnaceType mainType)
+        private GuiTexture texture;
+        private FurnaceType mainType;
+        private ResourceLocation dataLocation;
+
+        GUI(GuiTexture texture, FurnaceType mainType, ResourceLocation dataLocation)
         {
-            this.xSize = xSize;
-            this.ySize = ySize;
-            this.burnDestX = burnDestX;
-            this.burnDestY = burnDestY;
-            this.burnSrcX = burnSrcX;
-            this.burnSrcY = burnSrcY;
-            this.cookDestX = cookDestX;
-            this.cookDestY = cookDestY;
-            this.cookSrcX = cookSrcX;
-            this.cookSrcY = cookSrcY;
-            guiLocation = new ResourceLocation("morefurnaces", "textures/gui/" + guiTexture);
+            this.texture = texture;
             this.mainType = mainType;
+            this.dataLocation = dataLocation;
         }
 
-        protected Container makeContainer(IInventory player, TileEntityIronFurnace furnace)
+        protected Container makeContainer(InventoryPlayer player, TileEntityIronFurnace furnace)
         {
             return new ContainerIronFurnace(player, furnace, mainType);
         }
 
-        public static GuiMoreFurnace buildGui(FurnaceType type, IInventory invPlayer, TileEntityIronFurnace invFurnace)
+        public static GuiScreen buildGui(InventoryPlayer invPlayer, TileEntityIronFurnace invFurnace)
         {
-            return new GuiMoreFurnace(values()[invFurnace.getType().ordinal()], invPlayer, invFurnace);
+            return new GuiCX(new GuiMoreFurnace(values()[invFurnace.getType().ordinal()], invPlayer, invFurnace));
         }
     }
 
-    private GUI type;
     private TileEntityIronFurnace furnace;
 
-    public GuiMoreFurnace(GUI type, IInventory invPlayer, TileEntityIronFurnace invFurnace)
+    private final HorizontalProgressBar[] cookBars;
+    private final VerticalProgressBar fuelBar;
+
+    public GuiMoreFurnace(GUI type, InventoryPlayer invPlayer, TileEntityIronFurnace invFurnace)
     {
-        super(type.makeContainer(invPlayer, invFurnace));
-        this.type = type;
-        xSize = type.xSize;
-        ySize = type.ySize;
+        super(type.makeContainer(invPlayer, invFurnace), type.dataLocation);
         furnace = invFurnace;
+
+        window.pictureBox("bg", type.texture, "bg").add();
+
+        cookBars = new HorizontalProgressBar[type.mainType.parallelSmelting];
+        for (int i = 0; i < cookBars.length; i++)
+        {
+            cookBars[i] = window.horizontalBar("cook" + i, type.texture, "cook").add();
+        }
+        fuelBar = window.verticalBar("fuel", type.texture, "fuel").add();
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float f, int i, int j)
+    public void draw(int mouseX, int mouseY, float partialTicks)
     {
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        // TODO
-        mc.renderEngine.bindTexture(type.guiLocation);
-        int x = (width - xSize) / 2;
-        int y = (height - ySize) / 2;
-        this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-        int var7;
-
-        if (furnace.isBurning())
+        for (int i = 0; i < cookBars.length; i++)
         {
-            var7 = furnace.getBurnTimeRemainingScaled(12);
-            this.drawTexturedModalRect(x + type.burnDestX, y + type.burnDestY + 12 - var7, type.burnSrcX, type.burnSrcY - var7, 14, var7 + 2);
+            cookBars[i].setProgress(furnace.getCookProgress(i));
         }
+        fuelBar.setProgress(-1f + furnace.getBurnTimeRemaining());
 
-        for (int id = 0; id < type.cookDestX.length; id++)
-        {
-            var7 = furnace.getCookProgressScaled(id, 24);
-            this.drawTexturedModalRect(x + type.cookDestX[id], y + type.cookDestY[id], type.cookSrcX, type.cookSrcY, var7 + 1, 16);
-        }
+        super.draw(mouseX, mouseY, partialTicks);
     }
 }

@@ -38,8 +38,6 @@ public class MoreFurnaces
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException
     {
-
-
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         try
         {

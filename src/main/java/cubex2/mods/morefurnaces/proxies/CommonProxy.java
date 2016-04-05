@@ -1,6 +1,5 @@
 package cubex2.mods.morefurnaces.proxies;
 
-import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.client.gui.GuiMoreFurnace;
 import cubex2.mods.morefurnaces.inventory.ContainerIronFurnace;
 import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
@@ -23,7 +22,7 @@ public class CommonProxy implements IGuiHandler
     {
         TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
         if (te != null && te instanceof TileEntityIronFurnace)
-            return GuiMoreFurnace.GUI.buildGui(FurnaceType.values()[ID], player.inventory, (TileEntityIronFurnace) te);
+            return GuiMoreFurnace.GUI.buildGui(player.inventory, (TileEntityIronFurnace) te);
         else
             return null;
     }

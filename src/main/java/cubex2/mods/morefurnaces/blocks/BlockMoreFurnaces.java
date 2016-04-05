@@ -252,7 +252,7 @@ public class BlockMoreFurnaces extends BlockContainer
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tabs, List list)
+    public void getSubBlocks(Item item, CreativeTabs tabs, List<ItemStack> list)
     {
         for (FurnaceType type : FurnaceType.values())
         {
