@@ -34,8 +34,7 @@
       "name": "bg",
       "width": 176,
       "height": 166,
-      "left": 0,
-      "top": 0
+      "center": true
     },
     {
       "name": "cook0",
