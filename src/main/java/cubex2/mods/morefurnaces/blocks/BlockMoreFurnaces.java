@@ -90,6 +90,8 @@ public class BlockMoreFurnaces extends BlockContainer
         {
             TileEntityIronFurnace furnace = (TileEntityIronFurnace) te;
             facing = EnumFacing.values()[furnace.getFacing()];
+            if (facing == EnumFacing.DOWN || facing == EnumFacing.UP)
+                facing = EnumFacing.NORTH;
             active = furnace.isActive();
         }
 
