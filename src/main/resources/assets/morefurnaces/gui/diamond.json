@@ -37,26 +37,23 @@
       }
     ]
   },
-  "controls": [
-    {
-      "name": "bg",
+  "controls": {
+    "bg": {
       "width": 216,
       "height": 202,
       "center": true
     },
-    {
-      "name": "cook0",
+    "cook0": {
       "width": 24,
       "height": 16,
       "left": 79,
       "top": 52
     },
-    {
-      "name": "fuel",
+    "fuel": {
       "width": 14,
       "height": 13,
       "left": 63,
       "top": 54
     }
-  ]
+  }
 }
