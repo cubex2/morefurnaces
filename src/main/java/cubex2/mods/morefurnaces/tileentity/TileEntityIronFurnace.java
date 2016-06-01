@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -80,6 +81,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     public void setFacing(byte value)
     {
         facing = value;
+        worldObj.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 1, facing & 0xFF);
     }
 
     public boolean isActive()
@@ -207,7 +209,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbtTagCompound)
+    public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound)
     {
         super.writeToNBT(nbtTagCompound);
         nbtTagCompound.setShort("BurnTime", (short) furnaceBurnTime);
@@ -238,6 +240,8 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         }
 
         nbtTagCompound.setTag("Items", var2);
+
+        return nbtTagCompound;
     }
 
     @Override
@@ -372,6 +376,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     @Override
     public boolean receiveClientEvent(int i, int j)
     {
+        if (worldObj != null && !worldObj.isRemote) return true;
         if (i == 1)
         {
             facing = (byte) j;
@@ -522,35 +527,27 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         {
             Item item = stack.getItem();
 
-            if (stack.getItem() instanceof ItemBlock && Block.getBlockFromItem(item) != Blocks.air)
+            if (stack.getItem() instanceof ItemBlock && Block.getBlockFromItem(item) != Blocks.AIR)
             {
                 Block block = Block.getBlockFromItem(item);
 
-                if (block == Blocks.wooden_slab)
+                if (block == Blocks.WOODEN_SLAB)
                     return 150;
 
-                if (block.getDefaultState().getMaterial() == Material.wood)
+                if (block.getDefaultState().getMaterial() == Material.WOOD)
                     return 300;
 
-                if (block == Blocks.coal_block)
+                if (block == Blocks.COAL_BLOCK)
                     return 16000;
             }
-            if (item instanceof ItemTool && ((ItemTool) item).getToolMaterialName().equals("WOOD"))
-                return 200;
-            if (item instanceof ItemSword && ((ItemSword) item).getToolMaterialName().equals("WOOD"))
-                return 200;
-            if (item instanceof ItemHoe && ((ItemHoe) item).getMaterialName().equals("WOOD"))
-                return 200;
-            if (item == Items.stick)
-                return 100;
-            if (item == Items.coal)
-                return 1600;
-            if (item == Items.lava_bucket)
-                return 20000;
-            if (item == Item.getItemFromBlock(Blocks.sapling))
-                return 100;
-            if (item == Items.blaze_rod)
-                return 2400;
+            if (item instanceof ItemTool && ((ItemTool) item).getToolMaterialName().equals("WOOD")) return 200;
+            if (item instanceof ItemSword && ((ItemSword) item).getToolMaterialName().equals("WOOD")) return 200;
+            if (item instanceof ItemHoe && ((ItemHoe) item).getMaterialName().equals("WOOD")) return 200;
+            if (item == Items.STICK) return 100;
+            if (item == Items.COAL) return 1600;
+            if (item == Items.LAVA_BUCKET) return 20000;
+            if (item == Item.getItemFromBlock(Blocks.SAPLING)) return 100;
+            if (item == Items.BLAZE_ROD) return 2400;
             return GameRegistry.getFuelValue(stack);
         }
     }
@@ -577,11 +574,9 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public Packet getDescriptionPacket()
+    public SPacketUpdateTileEntity getUpdatePacket()
     {
-        NBTTagCompound nbt = new NBTTagCompound();
-        writeToNBT(nbt);
-        return new SPacketUpdateTileEntity(pos, 0, nbt);
+        return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
     }
 
     @Override
@@ -591,9 +586,21 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public boolean isItemValidForSlot(int slot, ItemStack itemstack)
+    public boolean isItemValidForSlot(int index, ItemStack stack)
     {
-        return type.isOutputSlot(slot) ? false : type.isFuelSlot(slot) ? isItemFuel(itemstack) : true;
+        if (index == 2)
+        {
+            return false;
+        }
+        else if (index != 1)
+        {
+            return true;
+        }
+        else
+        {
+            ItemStack itemstack = this.furnaceContents[1];
+            return isItemFuel(stack) || SlotFurnaceFuel.isBucket(stack) && (itemstack == null || itemstack.getItem() != Items.BUCKET);
+        }
     }
 
     @Override
@@ -633,9 +640,19 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack itemstack, EnumFacing facing)
+    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
     {
-        return facing != EnumFacing.DOWN || !type.isFuelSlot(slot) || itemstack.getItem() == Items.bucket;
+        if (direction == EnumFacing.DOWN && index == 1)
+        {
+            Item item = stack.getItem();
+
+            if (item != Items.WATER_BUCKET && item != Items.BUCKET)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }

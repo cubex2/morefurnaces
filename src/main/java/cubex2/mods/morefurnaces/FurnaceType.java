@@ -84,14 +84,14 @@ public enum FurnaceType implements IStringSerializable
 
     public static void generateRecipes(BlockMoreFurnaces blockResult)
     {
-        ItemStack previous = new ItemStack(Blocks.furnace);
+        ItemStack previous = new ItemStack(Blocks.FURNACE);
         for (FurnaceType typ : values())
         {
             ShapedOreRecipe recipe = new ShapedOreRecipe(new ItemStack(
                     blockResult, 1, typ.ordinal()), typ.recipe, 'I',
-                                                         Items.iron_ingot, 'G', Items.gold_ingot, 'D', Items.diamond,
-                                                         'O', Blocks.obsidian, 'N', Blocks.netherrack, 'F',
-                                                         Blocks.furnace, '1', new ItemStack(
+                                                         Items.IRON_INGOT, 'G', Items.GOLD_INGOT, 'D', Items.DIAMOND,
+                                                         'O', Blocks.OBSIDIAN, 'N', Blocks.NETHERRACK, 'F',
+                                                         Blocks.FURNACE, '1', new ItemStack(
                     MoreFurnaces.blockFurnaces, 0), 'P', previous
             );
             CraftingManager.getInstance().getRecipeList().add(recipe);

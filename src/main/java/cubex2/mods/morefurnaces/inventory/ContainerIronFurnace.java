@@ -7,7 +7,7 @@ import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -50,10 +50,10 @@ public class ContainerIronFurnace extends ContainerCX
     }
 
     @Override
-    public void onCraftGuiOpened(ICrafting icrafting)
+    public void addListener(IContainerListener listener)
     {
-        super.onCraftGuiOpened(icrafting);
-        icrafting.sendAllWindowProperties(this, furnace);
+        super.addListener(listener);
+        listener.sendAllWindowProperties(this, furnace);
 
         /*for (int i = 0; i < type.parallelSmelting; i++)
         {
@@ -69,24 +69,24 @@ public class ContainerIronFurnace extends ContainerCX
     {
         super.detectAndSendChanges();
 
-        for (ICrafting crafting : crafters)
+        for (IContainerListener listener : listeners)
         {
             for (int i = 0; i < type.parallelSmelting; i++)
             {
                 if (lastCookTime[i] != furnace.furnaceCookTime[i])
                 {
-                    crafting.sendProgressBarUpdate(this, i, furnace.furnaceCookTime[i]);
+                    listener.sendProgressBarUpdate(this, i, furnace.furnaceCookTime[i]);
                 }
             }
 
             if (lastBurnTime != furnace.furnaceBurnTime)
             {
-                crafting.sendProgressBarUpdate(this, type.parallelSmelting, furnace.furnaceBurnTime);
+                listener.sendProgressBarUpdate(this, type.parallelSmelting, furnace.furnaceBurnTime);
             }
 
             if (lastItemBurnTime != furnace.currentItemBurnTime)
             {
-                crafting.sendProgressBarUpdate(this, type.parallelSmelting + 1, furnace.currentItemBurnTime);
+                listener.sendProgressBarUpdate(this, type.parallelSmelting + 1, furnace.currentItemBurnTime);
             }
         }
 

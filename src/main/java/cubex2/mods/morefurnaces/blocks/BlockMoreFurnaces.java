@@ -7,12 +7,12 @@ import cubex2.mods.morefurnaces.MoreFurnaces;
 import cubex2.mods.morefurnaces.items.ItemMoreFurnaces;
 import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -35,22 +35,22 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
 
-public class BlockMoreFurnaces extends BlockContainer
+public class BlockMoreFurnaces extends Block implements ITileEntityProvider
 {
     public static final PropertyEnum VARIANT = PropertyEnum.create("variant", FurnaceType.class);
-    public static final PropertyEnum FACING = PropertyDirection.create("facing", EnumFacing.class, EnumFacing.HORIZONTALS);
+    public static final PropertyEnum FACING = BlockHorizontal.FACING;
     public static final PropertyBool ACTIVE = PropertyBool.create("active");
 
     public BlockMoreFurnaces()
     {
-        super(Material.iron);
+        super(Material.IRON);
 
-        setDefaultState(blockState.getBaseState().withProperty(VARIANT, FurnaceType.IRON).withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false));
+        setDefaultState(blockState.getBaseState().withProperty(VARIANT, FurnaceType.IRON).withProperty(ACTIVE, false));
 
         setUnlocalizedName("furnaceBlock");
         setHardness(2.5F);
         setSoundType(SoundType.METAL);
-        setCreativeTab(CreativeTabs.tabDecorations);
+        setCreativeTab(CreativeTabs.DECORATIONS);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class BlockMoreFurnaces extends BlockContainer
         if (te != null && te instanceof TileEntityIronFurnace)
         {
             TileEntityIronFurnace furnace = (TileEntityIronFurnace) te;
-            facing = EnumFacing.values()[furnace.getFacing()];
+            facing = EnumFacing.getFront(furnace.getFacing());
             if (facing == EnumFacing.DOWN || facing == EnumFacing.UP)
                 facing = EnumFacing.NORTH;
             active = furnace.isActive();
@@ -134,18 +134,25 @@ public class BlockMoreFurnaces extends BlockContainer
     {
         super.onBlockAdded(world, pos, state);
         this.setDefaultDirection(world, pos, state);
-        world.notifyBlockUpdate(pos, state, state, 3);
     }
 
     private void setDefaultDirection(World world, BlockPos pos, IBlockState state)
     {
         if (!world.isRemote)
         {
+            EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
+
+            TileEntity te = world.getTileEntity(pos);
+            if (te != null && te instanceof TileEntityIronFurnace)
+            {
+                enumfacing = EnumFacing.getFront(((TileEntityIronFurnace) te).getFacing());
+            }
+
             IBlockState iblockstate = world.getBlockState(pos.north());
             IBlockState iblockstate1 = world.getBlockState(pos.south());
             IBlockState iblockstate2 = world.getBlockState(pos.west());
             IBlockState iblockstate3 = world.getBlockState(pos.east());
-            EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
+
 
             if (enumfacing == EnumFacing.NORTH && iblockstate.isFullBlock() && !iblockstate1.isFullBlock())
             {
@@ -161,10 +168,9 @@ public class BlockMoreFurnaces extends BlockContainer
                 enumfacing = EnumFacing.WEST;
             }
 
-            TileEntity te = world.getTileEntity(pos);
             if (te != null && te instanceof TileEntityIronFurnace)
             {
-                ((TileEntityIronFurnace) te).setFacing((byte) enumfacing.getIndex());
+                ((TileEntityIronFurnace) te).setFacing((byte) enumfacing.ordinal());
                 world.notifyBlockUpdate(pos, state, state, 3);
             }
         }
@@ -227,6 +233,12 @@ public class BlockMoreFurnaces extends BlockContainer
     }
 
     @Override
+    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+    {
+        return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+    }
+
+    @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase living, ItemStack stack)
     {
         EnumFacing facing = living.getHorizontalFacing().getOpposite();
@@ -269,5 +281,12 @@ public class BlockMoreFurnaces extends BlockContainer
         if (type == FurnaceType.NETHERRACK && side == EnumFacing.UP)
             return true;
         return false;
+    }
+
+    public boolean eventReceived(IBlockState state, World worldIn, BlockPos pos, int id, int param)
+    {
+        super.eventReceived(state, worldIn, pos, id, param);
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+        return tileentity == null ? false : tileentity.receiveClientEvent(id, param);
     }
 }
