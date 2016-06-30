@@ -32,4 +32,10 @@ public class TileEntityNetherrackFurnace extends TileEntityIronFurnace
             return worldObj.getBlockState(pos.up()).getBlock() == Blocks.FIRE;
         return false;
     }
+
+    @Override
+    public float getBurnTimeRemaining()
+    {
+        return isBurning() ? 0.99f : 0f;
+    }
 }
