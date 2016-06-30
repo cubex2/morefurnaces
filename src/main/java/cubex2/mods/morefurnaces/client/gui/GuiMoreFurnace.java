@@ -12,7 +12,6 @@ import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiMoreFurnace extends ScreenContainer

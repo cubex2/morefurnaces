@@ -54,14 +54,6 @@ public class ContainerIronFurnace extends ContainerCX
     {
         super.addListener(listener);
         listener.sendAllWindowProperties(this, furnace);
-
-        /*for (int i = 0; i < type.parallelSmelting; i++)
-        {
-            icrafting.sendProgressBarUpdate(this, i, furnace.furnaceCookTime[i]);
-        }
-
-        icrafting.sendProgressBarUpdate(this, type.parallelSmelting, furnace.furnaceBurnTime);
-        icrafting.sendProgressBarUpdate(this, type.parallelSmelting + 1, furnace.currentItemBurnTime);*/
     }
 
     @Override

@@ -9,13 +9,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -34,7 +34,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     public int furnaceBurnTime = 0;
     public int currentItemBurnTime = 0;
 
-    private FurnaceType type;
+    private final FurnaceType type;
     private ItemStack[] furnaceContents;
     private byte facing;
     private boolean isActive = false;
@@ -101,54 +101,33 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public ItemStack decrStackSize(int i, int j)
+    public ItemStack decrStackSize(int index, int count)
     {
-        if (furnaceContents[i] != null)
-        {
-            ItemStack itemstack;
-
-            if (furnaceContents[i].stackSize <= j)
-            {
-                itemstack = furnaceContents[i];
-                furnaceContents[i] = null;
-                return itemstack;
-            } else
-            {
-                itemstack = furnaceContents[i].splitStack(j);
-
-                if (furnaceContents[i].stackSize == 0)
-                {
-                    furnaceContents[i] = null;
-                }
-
-                return itemstack;
-            }
-        } else
-            return null;
+        return ItemStackHelper.getAndSplit(furnaceContents, index, count);
     }
 
     @Override
-    public ItemStack removeStackFromSlot(int i)
+    public ItemStack removeStackFromSlot(int index)
     {
-        if (furnaceContents[i] != null)
-        {
-            ItemStack stack = furnaceContents[i];
-            furnaceContents[i] = null;
-            return stack;
-        } else
-            return null;
+        return ItemStackHelper.getAndRemove(furnaceContents, index);
     }
 
     @Override
-    public void setInventorySlotContents(int i, ItemStack stack)
+    public void setInventorySlotContents(int index, ItemStack stack)
     {
-        furnaceContents[i] = stack;
+        boolean flag = stack != null && stack.isItemEqual(this.furnaceContents[index]) && ItemStack.areItemStackTagsEqual(stack, this.furnaceContents[index]);
+        this.furnaceContents[index] = stack;
 
         if (stack != null && stack.stackSize > this.getInventoryStackLimit())
         {
             stack.stackSize = this.getInventoryStackLimit();
         }
 
+        if (!flag && index < type.parallelSmelting)
+        {
+            furnaceCookTime[index] = 0;
+            markDirty();
+        }
     }
 
     @Override
@@ -279,6 +258,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
             worldObj.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 1, facing & 0xFF);
             worldObj.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 2, (byte) (isActive ? 1 : 0));
         }
+
         boolean var1 = this.isBurning();
         boolean inventoryChanged = false;
 
@@ -586,17 +566,22 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
+    public NBTTagCompound getUpdateTag()
+    {
+        NBTTagCompound nbttagcompound = this.writeToNBT(new NBTTagCompound());
+        return nbttagcompound;
+    }
+
+    @Override
     public boolean isItemValidForSlot(int index, ItemStack stack)
     {
         if (index == 2)
         {
             return false;
-        }
-        else if (index != 1)
+        } else if (index != 1)
         {
             return true;
-        }
-        else
+        } else
         {
             ItemStack itemstack = this.furnaceContents[1];
             return isItemFuel(stack) || SlotFurnaceFuel.isBucket(stack) && (itemstack == null || itemstack.getItem() != Items.BUCKET);
