@@ -2,7 +2,6 @@ package cubex2.mods.morefurnaces.tileentity;
 
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.MoreFurnaces;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
 public class TileEntityNetherrackFurnace extends TileEntityIronFurnace
@@ -31,5 +30,11 @@ public class TileEntityNetherrackFurnace extends TileEntityIronFurnace
         if (worldObj != null)
             return worldObj.getBlockState(pos.up()).getBlock() == Blocks.FIRE;
         return false;
+    }
+
+    @Override
+    public float getBurnTimeRemaining()
+    {
+        return isBurning() ? 0.99f : 0f;
     }
 }
