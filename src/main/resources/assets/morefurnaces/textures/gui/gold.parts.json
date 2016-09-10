@@ -2,17 +2,17 @@
   "bg": {
     "x": 0,
     "y": 0,
-    "width": 216,
+    "width": 176,
     "height": 166
   },
   "fuel": {
-    "x": 216,
+    "x": 176,
     "y": 0,
     "width": 14,
     "height": 13
   },
   "cook": {
-    "x": 216,
+    "x": 176,
     "y": 14,
     "width": 24,
     "height": 16
