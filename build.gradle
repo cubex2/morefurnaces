@@ -20,12 +20,12 @@ plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.5.1"
+version = "1.5.2"
 group = "cubex2.morefurnaces" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "MoreFurnaces"
 
 minecraft {
-    version = "1.8.9-11.15.0.1688"
+    version = "1.8.9-11.15.1.1902-1.8.9"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
