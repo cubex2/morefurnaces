@@ -1,9 +1,9 @@
 package cubex2.mods.morefurnaces.client.gui;
 
-import cubex2.cxlibrary.gui.GuiCX;
+import cubex2.cxlibrary.gui.GuiContainerCX;
 import cubex2.cxlibrary.gui.GuiTexture;
 import cubex2.cxlibrary.gui.control.HorizontalProgressBar;
-import cubex2.cxlibrary.gui.control.ScreenContainer;
+import cubex2.cxlibrary.gui.control.ScreenCenter;
 import cubex2.cxlibrary.gui.control.VerticalProgressBar;
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.inventory.ContainerIronFurnace;
@@ -13,14 +13,15 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.util.Rectangle;
 
-public class GuiMoreFurnace extends ScreenContainer
+public class GuiMoreFurnace extends ScreenCenter
 {
-    public static ResourceLocation DATA_IRON = new ResourceLocation("morefurnaces", "gui/iron.json");
-    public static ResourceLocation DATA_GOLD = new ResourceLocation("morefurnaces", "gui/gold.json");
-    public static ResourceLocation DATA_DIAMOND = new ResourceLocation("morefurnaces", "gui/diamond.json");
-    public static ResourceLocation DATA_OBSIDIAN = new ResourceLocation("morefurnaces", "gui/obsidian.json");
-    public static ResourceLocation DATA_NETHERRACK = new ResourceLocation("morefurnaces", "gui/netherrack.json");
+    static ResourceLocation DATA_IRON = new ResourceLocation("morefurnaces", "gui/iron.json");
+    static ResourceLocation DATA_GOLD = new ResourceLocation("morefurnaces", "gui/gold.json");
+    static ResourceLocation DATA_DIAMOND = new ResourceLocation("morefurnaces", "gui/diamond.json");
+    static ResourceLocation DATA_OBSIDIAN = new ResourceLocation("morefurnaces", "gui/obsidian.json");
+    static ResourceLocation DATA_NETHERRACK = new ResourceLocation("morefurnaces", "gui/netherrack.json");
 
     public enum GUI
     {
@@ -48,7 +49,12 @@ public class GuiMoreFurnace extends ScreenContainer
 
         public static GuiScreen buildGui(InventoryPlayer invPlayer, TileEntityIronFurnace invFurnace)
         {
-            return new GuiCX(new GuiMoreFurnace(values()[invFurnace.getType().ordinal()], invPlayer, invFurnace));
+            GUI type = values()[invFurnace.getType().ordinal()];
+            Container container = type.makeContainer(invPlayer, invFurnace);
+            GuiContainerCX gui = new GuiContainerCX(new GuiMoreFurnace(type, invFurnace), container);
+            Rectangle bg = type.texture.getPart("bg");
+            gui.setSize(bg.getWidth(), bg.getHeight());
+            return gui;
         }
     }
 
@@ -57,9 +63,9 @@ public class GuiMoreFurnace extends ScreenContainer
     private final HorizontalProgressBar[] cookBars;
     private final VerticalProgressBar fuelBar;
 
-    public GuiMoreFurnace(GUI type, InventoryPlayer invPlayer, TileEntityIronFurnace invFurnace)
+    public GuiMoreFurnace(GUI type, TileEntityIronFurnace invFurnace)
     {
-        super(type.makeContainer(invPlayer, invFurnace), type.dataLocation);
+        super(type.dataLocation);
         furnace = invFurnace;
 
         window.pictureBox("bg", type.texture, "bg").add();
@@ -82,5 +88,11 @@ public class GuiMoreFurnace extends ScreenContainer
         fuelBar.setProgress(-1f + furnace.getBurnTimeRemaining());
 
         super.draw(mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    public boolean doesPauseGame()
+    {
+        return false;
     }
 }

@@ -1,10 +1,14 @@
 package cubex2.mods.morefurnaces.items;
 
 import cubex2.mods.morefurnaces.FurnaceType;
+import javax.annotation.ParametersAreNonnullByDefault;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class ItemMoreFurnaces extends ItemBlock
 {
 

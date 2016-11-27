@@ -5,6 +5,8 @@ import cubex2.cxlibrary.inventory.ContainerCX;
 import cubex2.cxlibrary.inventory.SlotCX;
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
+import javax.annotation.ParametersAreNonnullByDefault;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IContainerListener;
@@ -14,6 +16,8 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class ContainerIronFurnace extends ContainerCX
 {
     private FurnaceType type;
@@ -110,7 +114,7 @@ public class ContainerIronFurnace extends ContainerCX
     @Override
     public boolean canInteractWith(EntityPlayer player)
     {
-        return furnace.isUseableByPlayer(player);
+        return furnace.isUsableByPlayer(player);
     }
 
     private boolean isOutputSlot(int i)
@@ -137,23 +141,28 @@ public class ContainerIronFurnace extends ContainerCX
                 return true;
 
             slot.onSlotChange(stack1, stack);
-        } else if (!isInputSlot(index) && !isFuelSlot(index))
+        }
+        else if (!isInputSlot(index) && !isFuelSlot(index))
         {
-            if (FurnaceRecipes.instance().getSmeltingResult(stack1) != null)
+            if (!FurnaceRecipes.instance().getSmeltingResult(stack1).isEmpty())
             {
                 if (!this.mergeItemStack(stack1, 0, type.getFirstFuelSlot(), false))
                     return true;
-            } else if (TileEntityIronFurnace.isItemFuel(stack1))
+            }
+            else if (TileEntityIronFurnace.isItemFuel(stack1))
             {
                 if (!this.mergeItemStack(stack1, type.getFirstFuelSlot(), type.getFirstOutputSlot(0), false))
                     return true;
-            } else if (index >= type.getNumSlots() && index < type.getNumSlots() + 27)
+            }
+            else if (index >= type.getNumSlots() && index < type.getNumSlots() + 27)
             {
                 if (!this.mergeItemStack(stack1, type.getNumSlots() + 27, type.getNumSlots() + 36, false))
                     return true;
-            } else if (index >= type.getNumSlots() + 27 && index < type.getNumSlots() + 36 && !this.mergeItemStack(stack1, type.getNumSlots(), type.getNumSlots() + 27, false))
+            }
+            else if (index >= type.getNumSlots() + 27 && index < type.getNumSlots() + 36 && !this.mergeItemStack(stack1, type.getNumSlots(), type.getNumSlots() + 27, false))
                 return true;
-        } else if (!this.mergeItemStack(stack1, type.getNumSlots(), type.getNumSlots() + 36, false))
+        }
+        else if (!this.mergeItemStack(stack1, type.getNumSlots(), type.getNumSlots() + 36, false))
             return true;
 
         return false;
