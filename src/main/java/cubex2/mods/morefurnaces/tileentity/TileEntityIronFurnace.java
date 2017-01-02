@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
 
@@ -39,6 +40,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     public int currentItemBurnTime = 0;
 
     private final FurnaceType type;
+    private final int[] SLOTS_BOTTOM;
     private ItemStack[] furnaceContents;
     private byte facing;
     private boolean isActive = false;
@@ -56,6 +58,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     {
         super();
         this.type = type;
+        SLOTS_BOTTOM = ArrayUtils.addAll(type.outputSlotIds, type.fuelSlotIds);
         furnaceCookTime = new int[type.parallelSmelting];
         Arrays.fill(furnaceCookTime, 0);
         furnaceContents = new ItemStack[getSizeInventory()];
@@ -601,10 +604,10 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack)
     {
-        if (index == 2)
+        if (type.isOutputSlot(index))
         {
             return false;
-        } else if (index != 1)
+        } else if (!type.isInputSlot(index))
         {
             return true;
         } else
@@ -641,7 +644,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     @Override
     public int[] getSlotsForFace(EnumFacing facing)
     {
-        return facing == EnumFacing.DOWN ? type.outputSlotIds : facing == EnumFacing.UP ? type.inputSlotIds : type.fuelSlotIds;
+        return facing == EnumFacing.DOWN ? SLOTS_BOTTOM : facing == EnumFacing.UP ? type.inputSlotIds : type.fuelSlotIds;
     }
 
     @Override
@@ -653,7 +656,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     @Override
     public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
     {
-        if (direction == EnumFacing.DOWN && index == 1)
+        if (direction == EnumFacing.DOWN && type.isFuelSlot(index))
         {
             Item item = stack.getItem();
 
