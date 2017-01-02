@@ -500,11 +500,32 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
                 output.grow(result.getCount());
             }
 
+            if (input.getItem() == Item.getItemFromBlock(Blocks.SPONGE) && input.getMetadata() == 1)
+            {
+                fillBucketInFuelSlots();
+            }
+
             input.shrink(1);
 
             if (input.isEmpty())
             {
                 furnaceContents.set(inputIndex, ItemStack.EMPTY);
+            }
+        }
+    }
+
+    private void fillBucketInFuelSlots()
+    {
+        int startIndex = type.getFirstFuelSlot();
+
+        for (int i = 0; i < type.getNumFuelSlots(); i++)
+        {
+            ItemStack stack = furnaceContents.get(startIndex + i);
+
+            if (!stack.isEmpty() && stack.getItem() == Items.BUCKET)
+            {
+                furnaceContents.set(startIndex + i, new ItemStack(Items.WATER_BUCKET));
+                break;
             }
         }
     }
