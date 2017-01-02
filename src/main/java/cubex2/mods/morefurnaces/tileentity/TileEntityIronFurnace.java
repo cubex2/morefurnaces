@@ -413,8 +413,8 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
                             furnaceContents[startSlot] = null;
                             invChanged = true;
                         } else if (furnaceContents[i].isItemEqual(furnaceContents[startSlot])
-                                && furnaceContents[i].stackSize < furnaceContents[i].getMaxStackSize()
-                                && furnaceContents[startSlot].stackSize > 0)
+                                   && furnaceContents[i].stackSize < furnaceContents[i].getMaxStackSize()
+                                   && furnaceContents[startSlot].stackSize > 0)
                         {
                             int emptySlots = furnaceContents[i].getMaxStackSize() - furnaceContents[i].stackSize;
                             int adding = Math.min(furnaceContents[startSlot].stackSize, emptySlots);
@@ -491,11 +491,33 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
                 furnaceContents[type.getFirstOutputSlot(id)].stackSize += var1.stackSize;
             }
 
+            ItemStack input = furnaceContents[type.getFirstInputSlot(id)];
+            if (input.getItem() == Item.getItemFromBlock(Blocks.SPONGE) && input.getMetadata() == 1)
+            {
+                fillBucketInFuelSlots();
+            }
+
             --furnaceContents[type.getFirstInputSlot(id)].stackSize;
 
             if (furnaceContents[type.getFirstInputSlot(id)].stackSize <= 0)
             {
                 furnaceContents[type.getFirstInputSlot(id)] = null;
+            }
+        }
+    }
+
+    private void fillBucketInFuelSlots()
+    {
+        int startIndex = type.getFirstFuelSlot();
+
+        for (int i = 0; i < type.getNumFuelSlots(); i++)
+        {
+            ItemStack stack = furnaceContents[startIndex + i];
+
+            if (stack != null && stack.getItem() == Items.BUCKET)
+            {
+                furnaceContents[startIndex + i] = new ItemStack(Items.WATER_BUCKET);
+                break;
             }
         }
     }
