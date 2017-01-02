@@ -2,9 +2,6 @@ package cubex2.mods.morefurnaces.tileentity;
 
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.MoreFurnaces;
-import java.util.Arrays;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -15,12 +12,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.SlotFurnaceFuel;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.item.ItemTool;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -39,6 +31,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
+
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -178,7 +174,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
 
 
         furnaceBurnTime = nbtTagCompound.getShort("BurnTime");
-        currentItemBurnTime = (int)(getItemBurnTime(getStackInSlot(type.getFirstFuelSlot())) / getConsumptionRate());
+        currentItemBurnTime = (int) (getItemBurnTime(getStackInSlot(type.getFirstFuelSlot())) / getConsumptionRate());
         NBTTagList cookList = nbtTagCompound.getTagList("CookTimes", 10);
         furnaceCookTime = new int[type.parallelSmelting];
         for (int i = 0; i < cookList.tagCount(); ++i)
@@ -202,12 +198,12 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     public NBTTagCompound writeToNBT(NBTTagCompound nbtTagCompound)
     {
         super.writeToNBT(nbtTagCompound);
-        nbtTagCompound.setShort("BurnTime", (short)furnaceBurnTime);
+        nbtTagCompound.setShort("BurnTime", (short) furnaceBurnTime);
         NBTTagList cookList = new NBTTagList();
         for (int i = 0; i < furnaceCookTime.length; i++)
         {
             NBTTagCompound tag = new NBTTagCompound();
-            tag.setByte("Id", (byte)i);
+            tag.setByte("Id", (byte) i);
             tag.setInteger("Time", furnaceCookTime[i]);
             cookList.appendTag(tag);
         }
@@ -229,7 +225,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
 
     public float getCookProgress(int id)
     {
-        return furnaceCookTime[id] / (float)getSpeed();
+        return furnaceCookTime[id] / (float) getSpeed();
     }
 
     @SideOnly(Side.CLIENT)
@@ -240,7 +236,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
             currentItemBurnTime = getSpeed();
         }
 
-        return furnaceBurnTime / (float)currentItemBurnTime;
+        return furnaceBurnTime / (float) currentItemBurnTime;
     }
 
     public boolean isBurning()
@@ -254,7 +250,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         if (++ticksSinceSync % 20 * 4 == 0)
         {
             world.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 1, facing & 0xFF);
-            world.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 2, (byte)(isActive ? 1 : 0));
+            world.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 2, (byte) (isActive ? 1 : 0));
         }
 
         boolean var1 = this.isBurning();
@@ -291,13 +287,13 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
             {
                 int slot = type.getFirstFuelSlot();
                 ItemStack stack = getStackInSlot(slot);
-                currentItemBurnTime = furnaceBurnTime = (int)(getItemBurnTime(stack) / getConsumptionRate());
+                currentItemBurnTime = furnaceBurnTime = (int) (getItemBurnTime(stack) / getConsumptionRate());
                 if (this.isBurning())
                 {
                     inventoryChanged = true;
                     if (!stack.isEmpty())
                     {
-                        stack.setCount(stack.getCount() - 1);
+                        stack.shrink(1);
 
                         if (stack.getCount() == 0)
                         {
@@ -319,8 +315,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
                         this.smeltItem(i);
                         inventoryChanged = true;
                     }
-                }
-                else
+                } else
                 {
                     furnaceCookTime[i] = 0;
                 }
@@ -333,8 +328,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
 
                 IBlockState state = world.getBlockState(pos);
                 world.notifyBlockUpdate(pos, state, state, 3);
-            }
-            else if (type.fuelSlots == 0)
+            } else if (type.fuelSlots == 0)
             {
                 if (isActive != isBurning())
                 {
@@ -360,10 +354,9 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         if (world != null && !world.isRemote) return true;
         if (i == 1)
         {
-            facing = (byte)j;
+            facing = (byte) j;
             return true;
-        }
-        else if (i == 2)
+        } else if (i == 2)
         {
             isActive = j == 1;
             if (world != null)
@@ -414,16 +407,15 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
                             furnaceContents.set(i, start.copy());
                             furnaceContents.set(startSlot, ItemStack.EMPTY);
                             invChanged = true;
-                        }
-                        else if (stack.isItemEqual(start)
-                                && stack.getCount() < stack.getMaxStackSize()
-                                && start.getCount() > 0)
+                        } else if (stack.isItemEqual(start)
+                                   && stack.getCount() < stack.getMaxStackSize()
+                                   && start.getCount() > 0)
                         {
                             int emptySlots = stack.getMaxStackSize() - stack.getCount();
                             int adding = Math.min(start.getAnimationsToGo(), emptySlots);
 
-                            stack.setCount(stack.getCount() + adding);
-                            start.setCount(start.getCount() - adding);
+                            stack.grow(adding);
+                            start.shrink(adding);
 
                             if (stack.isEmpty())
                             {
@@ -472,8 +464,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         if (input.isEmpty())
         {
             return false;
-        }
-        else
+        } else
         {
             ItemStack res = FurnaceRecipes.instance().getSmeltingResult(input);
             if (res.isEmpty())
@@ -504,13 +495,12 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
             if (output.isEmpty())
             {
                 furnaceContents.set(outputIndex, result.copy());
-            }
-            else if (output.isItemEqual(result))
+            } else if (output.isItemEqual(result))
             {
-                output.setCount(output.getCount() + result.getCount());
+                output.grow(result.getCount());
             }
 
-            input.setCount(input.getCount() - 1);
+            input.shrink(1);
 
             if (input.isEmpty())
             {
@@ -543,9 +533,9 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
                 if (block == Blocks.COAL_BLOCK)
                     return 16000;
             }
-            if (item instanceof ItemTool && ((ItemTool)item).getToolMaterialName().equals("WOOD")) return 200;
-            if (item instanceof ItemSword && ((ItemSword)item).getToolMaterialName().equals("WOOD")) return 200;
-            if (item instanceof ItemHoe && ((ItemHoe)item).getMaterialName().equals("WOOD")) return 200;
+            if (item instanceof ItemTool && ((ItemTool) item).getToolMaterialName().equals("WOOD")) return 200;
+            if (item instanceof ItemSword && ((ItemSword) item).getToolMaterialName().equals("WOOD")) return 200;
+            if (item instanceof ItemHoe && ((ItemHoe) item).getMaterialName().equals("WOOD")) return 200;
             if (item == Items.STICK) return 100;
             if (item == Items.COAL) return 1600;
             if (item == Items.LAVA_BUCKET) return 20000;
@@ -600,12 +590,10 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         if (index == 2)
         {
             return false;
-        }
-        else if (index != 1)
+        } else if (index != 1)
         {
             return true;
-        }
-        else
+        } else
         {
             ItemStack itemstack = this.furnaceContents.get(1);
             return isItemFuel(stack) || SlotFurnaceFuel.isBucket(stack) && (itemstack.isEmpty() || itemstack.getItem() != Items.BUCKET);
@@ -674,11 +662,11 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     {
         if (facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             if (facing == EnumFacing.DOWN)
-                return (T)handlerBottom;
+                return (T) handlerBottom;
             else if (facing == EnumFacing.UP)
-                return (T)handlerTop;
+                return (T) handlerTop;
             else
-                return (T)handlerSide;
+                return (T) handlerSide;
         return super.getCapability(capability, facing);
     }
 
