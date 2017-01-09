@@ -607,7 +607,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         if (type.isOutputSlot(index))
         {
             return false;
-        } else if (!type.isInputSlot(index))
+        } else if (type.isInputSlot(index))
         {
             return true;
         } else

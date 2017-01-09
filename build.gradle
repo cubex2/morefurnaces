@@ -21,7 +21,7 @@ plugins {
 }
 */
 
-version = "1.10.2-1.8.3"
+version = "1.10.2-1.8.4"
 group = "cubex2.morefurnaces" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "MoreFurnaces"
 
