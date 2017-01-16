@@ -91,8 +91,8 @@ public enum FurnaceType implements IStringSerializable
                     blockResult, 1, typ.ordinal()), typ.recipe, 'I',
                                                          Items.IRON_INGOT, 'G', Items.GOLD_INGOT, 'D', Items.DIAMOND,
                                                          'O', Blocks.OBSIDIAN, 'N', Blocks.NETHERRACK, 'F',
-                                                         Blocks.FURNACE, '1', new ItemStack(
-                    MoreFurnaces.blockFurnaces, 0), 'P', previous
+                                                         Blocks.FURNACE, '1', new ItemStack(MoreFurnaces.blockFurnaces),
+                                                         'P', previous
             );
             CraftingManager.getInstance().getRecipeList().add(recipe);
             previous = new ItemStack(blockResult, 1, typ.ordinal());
