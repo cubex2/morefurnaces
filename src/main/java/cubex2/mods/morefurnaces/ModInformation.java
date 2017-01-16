@@ -4,5 +4,5 @@ public class ModInformation
 {
     public static final String ID = "MoreFurnaces";
     public static final String NAME = "More Furnaces";
-    public static final String VERSION = "1.8.4";
+    public static final String VERSION = "1.8.5";
 }
