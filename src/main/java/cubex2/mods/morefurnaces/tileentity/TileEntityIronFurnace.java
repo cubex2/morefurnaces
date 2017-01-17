@@ -415,7 +415,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
                                    && start.getCount() > 0)
                         {
                             int emptySlots = stack.getMaxStackSize() - stack.getCount();
-                            int adding = Math.min(start.getAnimationsToGo(), emptySlots);
+                            int adding = Math.min(start.getCount(), emptySlots);
 
                             stack.grow(adding);
                             start.shrink(adding);
