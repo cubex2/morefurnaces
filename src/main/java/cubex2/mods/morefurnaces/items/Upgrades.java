@@ -10,8 +10,8 @@ public enum Upgrades
 {
     STONE_TO_IRON(null, FurnaceType.IRON, "stone_to_iron", "III", "ISI", "III"),
     STONE_TO_NETHERRACK(null, FurnaceType.NETHERRACK, "stone_to_netherrack", "NNN", "NSN", "NNN"),
-    IRON_TO_GOLD(FurnaceType.IRON, FurnaceType.GOLD, "iron_to_gold", "GGG", "GiG", "GGG"),
-    IRON_TO_OBSIDIAN(FurnaceType.IRON, FurnaceType.OBSIDIAN, "iron_to_obsidian", "OOO", "OiO", "OOO"),
+    IRON_TO_GOLD(FurnaceType.IRON, FurnaceType.GOLD, "iron_to_gold", "GGG", "GIG", "GGG"),
+    IRON_TO_OBSIDIAN(FurnaceType.IRON, FurnaceType.OBSIDIAN, "iron_to_obsidian", "OOO", "OIO", "OOO"),
     GOLD_TO_DIAMOND(FurnaceType.GOLD, FurnaceType.DIAMOND, "gold_to_diamond", "DDD", "DgD", "DDD");
 
     private final FurnaceType from;
