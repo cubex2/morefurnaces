@@ -72,10 +72,7 @@ public enum FurnaceType implements IStringSerializable
         {
             TileEntityIronFurnace te = values()[meta].clazz.newInstance();
             return te;
-        } catch (InstantiationException e)
-        {
-            e.printStackTrace();
-        } catch (IllegalAccessException e)
+        } catch (InstantiationException | IllegalAccessException e)
         {
             e.printStackTrace();
         }

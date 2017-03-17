@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
-version = "1.11-1.9.4"
+version = "1.11.2-1.9.5"
 group = "cubex2.morefurnaces" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "MoreFurnaces"
 
@@ -18,9 +18,9 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 minecraft {
-    version = "1.11-13.19.0.2161"
+    version = "1.11.2-13.20.0.2222"
     runDir = "run"
-    mappings = "snapshot_20161127"
+    mappings = "snapshot_20161220"
     makeObfSourceJar = false
 }
 

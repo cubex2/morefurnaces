@@ -19,6 +19,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
@@ -69,6 +70,32 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         furnaceCookTime = new int[type.parallelSmelting];
         Arrays.fill(furnaceCookTime, 0);
         furnaceContents = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
+    }
+
+    public void copyStateFrom(TileEntityIronFurnace furnace)
+    {
+        int minParallel = Math.min(type.parallelSmelting, furnace.type.parallelSmelting);
+
+        for (int i = 0; i < minParallel; i++)
+        {
+            furnaceCookTime[i] = furnace.furnaceCookTime[i];
+        }
+
+        furnaceBurnTime = furnace.furnaceBurnTime;
+        currentItemBurnTime = furnace.currentItemBurnTime;
+        facing = furnace.facing;
+        isActive = furnace.isActive;
+        world.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 2, (byte) (isActive ? 1 : 0));
+    }
+
+    public void copyStateFrom(TileEntityFurnace furnace, byte facing)
+    {
+        furnaceCookTime[0] = furnace.getField(2);
+        furnaceBurnTime = furnace.getField(0);
+        currentItemBurnTime = furnace.getField(1);
+        setFacing(facing);
+        isActive = furnace.isBurning();
+        world.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 2, (byte) (isActive ? 1 : 0));
     }
 
     public int getSpeed()
@@ -312,7 +339,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
                 {
                     ++furnaceCookTime[i];
 
-                    if (furnaceCookTime[i] == getSpeed())
+                    if (furnaceCookTime[i] >= getSpeed())
                     {
                         furnaceCookTime[i] = 0;
                         this.smeltItem(i);
