@@ -1,6 +1,7 @@
 package cubex2.mods.morefurnaces;
 
 import cubex2.mods.morefurnaces.blocks.BlockMoreFurnaces;
+import cubex2.mods.morefurnaces.items.ItemUpgrade;
 import cubex2.mods.morefurnaces.proxies.CommonProxy;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -16,6 +17,7 @@ import java.io.IOException;
 public class MoreFurnaces
 {
     public static BlockMoreFurnaces blockFurnaces;
+    public static ItemUpgrade upgrade;
 
     @SidedProxy(clientSide = "cubex2.mods.morefurnaces.proxies.ClientProxy", serverSide = "cubex2.mods.morefurnaces.proxies.CommonProxy")
     public static CommonProxy proxy;
@@ -63,6 +65,7 @@ public class MoreFurnaces
     public void load(FMLInitializationEvent evt)
     {
         blockFurnaces = new BlockMoreFurnaces();
+        upgrade = new ItemUpgrade();
 
         for (FurnaceType typ : FurnaceType.values())
         {
