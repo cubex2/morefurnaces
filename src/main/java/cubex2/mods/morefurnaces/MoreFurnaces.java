@@ -2,6 +2,7 @@ package cubex2.mods.morefurnaces;
 
 import cubex2.mods.morefurnaces.blocks.BlockMoreFurnaces;
 import cubex2.mods.morefurnaces.items.ItemUpgrade;
+import cubex2.mods.morefurnaces.items.Upgrades;
 import cubex2.mods.morefurnaces.proxies.CommonProxy;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -74,5 +75,7 @@ public class MoreFurnaces
         FurnaceType.generateRecipes(blockFurnaces);
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
         proxy.registerRenderInformation();
+
+        Upgrades.addRecipes(upgrade);
     }
 }
