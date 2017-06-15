@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NNN",
+    "NPN",
+    "NNN"
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:netherrack"
+    },
+    "P": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "item": "morefurnaces:furnaceblock",
+    "data": 4
+  }
+}

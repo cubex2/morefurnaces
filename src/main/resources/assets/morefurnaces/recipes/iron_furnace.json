@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "IPI",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "P": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "item": "morefurnaces:furnaceblock",
+    "data": 0
+  }
+}

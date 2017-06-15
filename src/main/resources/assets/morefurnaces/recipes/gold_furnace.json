@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "GPG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "P": {
+      "item": "morefurnaces:furnaceblock",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "morefurnaces:furnaceblock",
+    "data": 1
+  }
+}

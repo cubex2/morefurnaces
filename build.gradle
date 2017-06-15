@@ -4,13 +4,13 @@ buildscript {
         maven { url = "http://files.minecraftforge.net/maven" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
-version = "1.11.2-1.9.5"
+version = "1.12-1.10.0"
 group = "cubex2.morefurnaces" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "MoreFurnaces"
 
@@ -18,7 +18,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 minecraft {
-    version = "1.11.2-13.20.0.2222"
+    version = "1.12-14.21.0.2327"
     runDir = "run"
     mappings = "snapshot_20161220"
     makeObfSourceJar = false

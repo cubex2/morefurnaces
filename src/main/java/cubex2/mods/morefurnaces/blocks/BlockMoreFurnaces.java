@@ -54,7 +54,7 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
 
         setDefaultState(blockState.getBaseState().withProperty(VARIANT, FurnaceType.IRON).withProperty(ACTIVE, false));
 
-        setUnlocalizedName("furnaceBlock");
+        setUnlocalizedName("furnaceblock");
         setHardness(2.5F);
         setSoundType(SoundType.METAL);
         setCreativeTab(CreativeTabs.DECORATIONS);
@@ -277,9 +277,10 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
         super.breakBlock(world, pos, state);
     }
 
+
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs tabs, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> list)
     {
         for (FurnaceType type : FurnaceType.values())
         {

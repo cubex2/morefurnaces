@@ -2,7 +2,6 @@ package cubex2.mods.morefurnaces;
 
 import cubex2.mods.morefurnaces.blocks.BlockMoreFurnaces;
 import cubex2.mods.morefurnaces.items.ItemUpgrade;
-import cubex2.mods.morefurnaces.items.Upgrades;
 import cubex2.mods.morefurnaces.proxies.CommonProxy;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -14,7 +13,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.IOException;
 
-@Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, dependencies = "required-after:cxlibrary@[1.4.0,)")
+@Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, dependencies = "required-after:cxlibrary@[1.5.0,)")
 public class MoreFurnaces
 {
     public static BlockMoreFurnaces blockFurnaces;
@@ -60,22 +59,20 @@ public class MoreFurnaces
         {
             config.save();
         }
+
+        blockFurnaces = new BlockMoreFurnaces();
+        upgrade = new ItemUpgrade();
     }
 
     @Mod.EventHandler
     public void load(FMLInitializationEvent evt)
     {
-        blockFurnaces = new BlockMoreFurnaces();
-        upgrade = new ItemUpgrade();
-
         for (FurnaceType typ : FurnaceType.values())
         {
             GameRegistry.registerTileEntity(typ.clazz, "CubeX2 " + typ.friendlyName);
         }
-        FurnaceType.generateRecipes(blockFurnaces);
+
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
         proxy.registerRenderInformation();
-
-        Upgrades.addRecipes(upgrade);
     }
 }

@@ -1,21 +1,15 @@
 package cubex2.mods.morefurnaces;
 
-import cubex2.mods.morefurnaces.blocks.BlockMoreFurnaces;
 import cubex2.mods.morefurnaces.tileentity.*;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.util.IStringSerializable;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public enum FurnaceType implements IStringSerializable
 {
-    IRON(2, 2, 2, 1, 150, 1.25f, "Iron Furnace", TileEntityIronFurnace.class, "III", "IPI", "III"),
-    GOLD(4, 5, 4, 1, 80, 2.0f, "Gold Furnace", TileEntityGoldFurnace.class, "GGG", "GPG", "GGG"),
-    DIAMOND(7, 9, 7, 1, 40, 4.0f, "Diamond Furnace", TileEntityDiamondFurnace.class, "DDD", "DPD", "DDD"),
-    OBSIDIAN(2, 2, 2, 2, 150, 2.0f, "Obsidian Furnace", TileEntityObsidianFurnace.class, "OOO", "O1O", "OOO"),
-    NETHERRACK(1, 1, 0, 1, 1800, 1.0f, "Netherrack Furnace", TileEntityNetherrackFurnace.class, "NNN", "NFN", "NNN");
+    IRON(2, 2, 2, 1, 150, 1.25f, "Iron Furnace", TileEntityIronFurnace.class),
+    GOLD(4, 5, 4, 1, 80, 2.0f, "Gold Furnace", TileEntityGoldFurnace.class),
+    DIAMOND(7, 9, 7, 1, 40, 4.0f, "Diamond Furnace", TileEntityDiamondFurnace.class),
+    OBSIDIAN(2, 2, 2, 2, 150, 2.0f, "Obsidian Furnace", TileEntityObsidianFurnace.class),
+    NETHERRACK(1, 1, 0, 1, 1800, 1.0f, "Netherrack Furnace", TileEntityNetherrackFurnace.class);
 
     final int inputSlots;
     final int outputSlots;
@@ -30,11 +24,10 @@ public enum FurnaceType implements IStringSerializable
     public final float consumptionRate;
     public final String friendlyName;
     public final Class<? extends TileEntityIronFurnace> clazz;
-    private final String[] recipe;
 
     FurnaceType(int inputSlots, int outputSlots, int fuelSlots,
                 int parallelSmelting, int speed, float consumptionRate, String friendlyName,
-                Class<? extends TileEntityIronFurnace> clazz, String... recipe)
+                Class<? extends TileEntityIronFurnace> clazz)
     {
         this.inputSlots = inputSlots;
         this.outputSlots = outputSlots;
@@ -62,9 +55,7 @@ public enum FurnaceType implements IStringSerializable
         this.consumptionRate = consumptionRate;
         this.friendlyName = friendlyName;
         this.clazz = clazz;
-        this.recipe = recipe;
     }
-
 
     public static TileEntityIronFurnace makeEntity(int meta)
     {
@@ -77,23 +68,6 @@ public enum FurnaceType implements IStringSerializable
             e.printStackTrace();
         }
         return null;
-    }
-
-    public static void generateRecipes(BlockMoreFurnaces blockResult)
-    {
-        ItemStack previous = new ItemStack(Blocks.FURNACE);
-        for (FurnaceType typ : values())
-        {
-            ShapedOreRecipe recipe = new ShapedOreRecipe(new ItemStack(
-                    blockResult, 1, typ.ordinal()), typ.recipe, 'I',
-                                                         Items.IRON_INGOT, 'G', Items.GOLD_INGOT, 'D', Items.DIAMOND,
-                                                         'O', Blocks.OBSIDIAN, 'N', Blocks.NETHERRACK, 'F',
-                                                         Blocks.FURNACE, '1', new ItemStack(MoreFurnaces.blockFurnaces),
-                                                         'P', previous
-            );
-            CraftingManager.getInstance().getRecipeList().add(recipe);
-            previous = new ItemStack(blockResult, 1, typ.ordinal());
-        }
     }
 
     public int getSpeed()

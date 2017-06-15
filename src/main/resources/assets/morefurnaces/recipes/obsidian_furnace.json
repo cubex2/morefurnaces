@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "OPO",
+    "OOO"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "P": {
+      "item": "morefurnaces:furnaceblock",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "morefurnaces:furnaceblock",
+    "data": 3
+  }
+}
