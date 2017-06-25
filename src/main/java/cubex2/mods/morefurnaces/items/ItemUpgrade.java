@@ -20,16 +20,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemUpgrade extends Item
 {
     public ItemUpgrade()
     {
         setUnlocalizedName("morefurnacesupgrade");
-        setRegistryName("morefurnaces", "upgrade");
-        GameRegistry.register(this);
-        setCreativeTab(CreativeTabs.SEARCH);
+        setRegistryName("upgrade");
+        setCreativeTab(CreativeTabs.MISC);
         setHasSubtypes(true);
     }
 
@@ -42,9 +40,12 @@ public class ItemUpgrade extends Item
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
-        for (int i = 0; i < Upgrades.values().length; i++)
+        if (isInCreativeTab(tab))
         {
-            subItems.add(new ItemStack(this, 1, i));
+            for (int i = 0; i < Upgrades.values().length; i++)
+            {
+                subItems.add(new ItemStack(this, 1, i));
+            }
         }
     }
 

@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
 public class ClientProxy extends CommonProxy
@@ -17,10 +18,17 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerRenderInformation()
     {
-        ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
+        //ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
 
-        Item item = Item.getByNameOrId("morefurnaces:furnaceBlock");
-        ModelBakery.registerItemVariants(item, new ResourceLocation("morefurnaces:furnace_iron"),
+        Item item = Item.getItemFromBlock(MoreFurnaces.blockFurnaces);
+
+        String[] suffixes = {"iron", "gold", "diamond", "netherrack", "obsidian"};
+        for (int i = 0; i < suffixes.length; i++)
+        {
+            ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation("morefurnaces:furnace_" + suffixes[i], "inventory"));
+        }
+
+     /*   ModelBakery.registerItemVariants(item, new ResourceLocation("morefurnaces:furnace_iron"),
                                          new ResourceLocation("morefurnaces:furnace_gold"),
                                          new ResourceLocation("morefurnaces:furnace_diamond"),
                                          new ResourceLocation("morefurnaces:furnace_netherrack"),
@@ -29,6 +37,7 @@ public class ClientProxy extends CommonProxy
         ModelResourceLocation l = new ModelResourceLocation("morefurnaces:furnace_iron", "inventory");
 
         mesher.register(item, 0, l);
+
 
         l = new ModelResourceLocation("morefurnaces:furnace_gold", "inventory");
         mesher.register(item, 1, l);
@@ -40,13 +49,13 @@ public class ClientProxy extends CommonProxy
         mesher.register(item, 3, l);
 
         l = new ModelResourceLocation("morefurnaces:furnace_netherrack", "inventory");
-        mesher.register(item, 4, l);
+        mesher.register(item, 4, l);*/
 
         for (Upgrades upgrade : Upgrades.values())
         {
-            ModelBakery.registerItemVariants(MoreFurnaces.upgrade, new ResourceLocation("morefurnaces", "upgrade_" + upgrade.getUnlocalizedName()));
-            l = new ModelResourceLocation("morefurnaces:upgrade_" + upgrade.getUnlocalizedName(), "inventory");
-            mesher.register(MoreFurnaces.upgrade, upgrade.ordinal(), l);
+            //ModelBakery.registerItemVariants(MoreFurnaces.upgrade, new ResourceLocation("morefurnaces", "upgrade_" + upgrade.getUnlocalizedName()));
+            ModelResourceLocation l = new ModelResourceLocation("morefurnaces:upgrade_" + upgrade.getUnlocalizedName(), "inventory");
+            ModelLoader.setCustomModelResourceLocation(MoreFurnaces.upgrade, upgrade.ordinal(), l);
         }
     }
 

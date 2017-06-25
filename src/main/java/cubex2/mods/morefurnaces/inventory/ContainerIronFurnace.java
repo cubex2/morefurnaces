@@ -71,18 +71,18 @@ public class ContainerIronFurnace extends ContainerCX
             {
                 if (lastCookTime[i] != furnace.furnaceCookTime[i])
                 {
-                    listener.sendProgressBarUpdate(this, i, furnace.furnaceCookTime[i]);
+                    listener.sendWindowProperty(this, i, furnace.furnaceCookTime[i]);
                 }
             }
 
             if (lastBurnTime != furnace.furnaceBurnTime)
             {
-                listener.sendProgressBarUpdate(this, type.parallelSmelting, furnace.furnaceBurnTime);
+                listener.sendWindowProperty(this, type.parallelSmelting, furnace.furnaceBurnTime);
             }
 
             if (lastItemBurnTime != furnace.currentItemBurnTime)
             {
-                listener.sendProgressBarUpdate(this, type.parallelSmelting + 1, furnace.currentItemBurnTime);
+                listener.sendWindowProperty(this, type.parallelSmelting + 1, furnace.currentItemBurnTime);
             }
         }
 

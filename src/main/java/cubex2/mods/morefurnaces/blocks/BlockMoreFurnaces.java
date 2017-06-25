@@ -65,8 +65,6 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
     {
         super.setUnlocalizedName(name);
         setRegistryName("morefurnaces", name);
-        GameRegistry.register(this);
-        GameRegistry.register(new ItemMoreFurnaces(this), new ResourceLocation(ModInformation.ID, name));
         return this;
     }
 

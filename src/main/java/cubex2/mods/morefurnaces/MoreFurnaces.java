@@ -1,13 +1,20 @@
 package cubex2.mods.morefurnaces;
 
 import cubex2.mods.morefurnaces.blocks.BlockMoreFurnaces;
+import cubex2.mods.morefurnaces.items.ItemMoreFurnaces;
 import cubex2.mods.morefurnaces.items.ItemUpgrade;
 import cubex2.mods.morefurnaces.proxies.CommonProxy;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -17,6 +24,7 @@ import java.io.IOException;
 public class MoreFurnaces
 {
     public static BlockMoreFurnaces blockFurnaces;
+    private static ItemMoreFurnaces itemBlock;
     public static ItemUpgrade upgrade;
 
     @SidedProxy(clientSide = "cubex2.mods.morefurnaces.proxies.ClientProxy", serverSide = "cubex2.mods.morefurnaces.proxies.CommonProxy")
@@ -36,6 +44,11 @@ public class MoreFurnaces
     public static float diamondConsumptionRate;
     public static float netherrackConsumptionRate;
     public static float obsidianConsumptionRate;
+
+    public MoreFurnaces()
+    {
+        MinecraftForge.EVENT_BUS.register(this);
+    }
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException
@@ -61,7 +74,26 @@ public class MoreFurnaces
         }
 
         blockFurnaces = new BlockMoreFurnaces();
+        itemBlock = (ItemMoreFurnaces) new ItemMoreFurnaces(blockFurnaces).setRegistryName(blockFurnaces.getRegistryName());
         upgrade = new ItemUpgrade();
+    }
+
+    @SubscribeEvent
+    public void registerBlocks(RegistryEvent.Register<Block> event)
+    {
+        event.getRegistry().register(blockFurnaces);
+    }
+
+    @SubscribeEvent
+    public void registerItems(RegistryEvent.Register<Item> event)
+    {
+        event.getRegistry().registerAll(upgrade, itemBlock);
+    }
+
+    @SubscribeEvent
+    public void registerModels(ModelRegistryEvent event)
+    {
+        proxy.registerRenderInformation();
     }
 
     @Mod.EventHandler
@@ -73,6 +105,5 @@ public class MoreFurnaces
         }
 
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
-        proxy.registerRenderInformation();
     }
 }
