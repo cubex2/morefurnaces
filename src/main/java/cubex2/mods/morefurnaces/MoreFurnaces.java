@@ -20,7 +20,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.IOException;
 
-@Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, dependencies = "required-after:cxlibrary@[1.5.0,)")
+@Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION,
+        acceptedMinecraftVersions = "[1.12,)",
+        dependencies = "required-after:cxlibrary@[1.5.0,)")
 public class MoreFurnaces
 {
     public static BlockMoreFurnaces blockFurnaces;
