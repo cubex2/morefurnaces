@@ -9,7 +9,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -20,6 +19,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 
 public class ItemUpgrade extends Item
 {
@@ -108,7 +109,9 @@ public class ItemUpgrade extends Item
         int[][] fromSlotIds = new int[][] {from.inputSlotIds, from.fuelSlotIds, from.outputSlotIds};
         int[][] toSlotIds = new int[][] {to.inputSlotIds, to.fuelSlotIds, to.outputSlotIds};
 
-        copyInventory(furnace, fromSlotIds, newFurnace, toSlotIds);
+        IItemHandlerModifiable fromHandler = (IItemHandlerModifiable) furnace.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+        IItemHandlerModifiable toHandler = (IItemHandlerModifiable) newFurnace.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+        copyInventory(fromHandler, fromSlotIds, toHandler, toSlotIds);
 
         world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockMoreFurnaces.VARIANT, to));
         world.setTileEntity(pos, newFurnace);
@@ -124,7 +127,9 @@ public class ItemUpgrade extends Item
         int[][] fromSlotIds = new int[][] {new int[] {0}, new int[] {1}, new int[] {2}};
         int[][] toSlotIds = new int[][] {to.inputSlotIds, to.fuelSlotIds, to.outputSlotIds};
 
-        copyInventory(furnace, fromSlotIds, newFurnace, toSlotIds);
+        IItemHandlerModifiable fromHandler = (IItemHandlerModifiable) furnace.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+        IItemHandlerModifiable toHandler = (IItemHandlerModifiable) newFurnace.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+        copyInventory(fromHandler, fromSlotIds, toHandler, toSlotIds);
 
         world.setBlockState(pos, MoreFurnaces.blockFurnaces.getDefaultState().withProperty(BlockMoreFurnaces.VARIANT, to));
         world.setTileEntity(pos, newFurnace);
@@ -132,7 +137,7 @@ public class ItemUpgrade extends Item
         newFurnace.copyStateFrom(furnace, facing);
     }
 
-    private void copyInventory(IInventory from, int[][] fromSlotIds, IInventory to, int[][] toSlotIds)
+    private void copyInventory(IItemHandlerModifiable from, int[][] fromSlotIds, IItemHandlerModifiable to, int[][] toSlotIds)
     {
         for (int i = 0; i < fromSlotIds.length; i++)
         {
@@ -145,8 +150,8 @@ public class ItemUpgrade extends Item
                 {
                     int toSlot = toSlotIds[i][j];
 
-                    to.setInventorySlotContents(toSlot, from.getStackInSlot(fromSlot));
-                    from.setInventorySlotContents(fromSlot, ItemStack.EMPTY);
+                    to.setStackInSlot(toSlot, from.getStackInSlot(fromSlot));
+                    from.setStackInSlot(fromSlot, ItemStack.EMPTY);
                 }
             }
         }

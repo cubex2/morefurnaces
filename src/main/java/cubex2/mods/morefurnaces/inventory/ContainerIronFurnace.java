@@ -2,10 +2,8 @@ package cubex2.mods.morefurnaces.inventory;
 
 
 import cubex2.cxlibrary.inventory.ContainerCX;
-import cubex2.cxlibrary.inventory.SlotCX;
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
-import javax.annotation.ParametersAreNonnullByDefault;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -13,8 +11,11 @@ import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -37,17 +38,17 @@ public class ContainerIronFurnace extends ContainerCX
         int slotId = 0;
         for (int i = 0; i < type.getNumInputSlots(); i++)
         {
-            addSlotToContainer(new SlotCX("furnace", invFurnace, slotId++));
+            addSlotToContainer(new SlotInput("furnace", invFurnace.getItemHandler(), slotId++));
         }
 
         for (int i = 0; i < type.getNumFuelSlots(); i++)
         {
-            addSlotToContainer(new SlotFuel("furnace", invFurnace, slotId++));
+            addSlotToContainer(new SlotFuel("furnace", invFurnace.getItemHandler(), slotId++));
         }
 
         for (int i = 0; i < type.getNumOutputSlots(); i++)
         {
-            addSlotToContainer(new SlotOutput("furnace", player, invFurnace, slotId++));
+            addSlotToContainer(new SlotOutput("furnace", player, invFurnace.getItemHandler(), slotId++));
         }
 
         addPlayerSlots(invPlayer);
@@ -57,7 +58,6 @@ public class ContainerIronFurnace extends ContainerCX
     public void addListener(IContainerListener listener)
     {
         super.addListener(listener);
-        listener.sendAllWindowProperties(this, furnace);
     }
 
     @Override
@@ -114,7 +114,8 @@ public class ContainerIronFurnace extends ContainerCX
     @Override
     public boolean canInteractWith(EntityPlayer player)
     {
-        return furnace.isUsableByPlayer(player);
+        BlockPos pos = furnace.getPos();
+        return player.world.getTileEntity(pos) == furnace && player.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64.0D;
     }
 
     private boolean isOutputSlot(int i)
@@ -141,28 +142,23 @@ public class ContainerIronFurnace extends ContainerCX
                 return true;
 
             slot.onSlotChange(stack1, stack);
-        }
-        else if (!isInputSlot(index) && !isFuelSlot(index))
+        } else if (!isInputSlot(index) && !isFuelSlot(index))
         {
             if (!FurnaceRecipes.instance().getSmeltingResult(stack1).isEmpty())
             {
                 if (!this.mergeItemStack(stack1, 0, type.getFirstFuelSlot(), false))
                     return true;
-            }
-            else if (TileEntityIronFurnace.isItemFuel(stack1))
+            } else if (TileEntityIronFurnace.isItemFuel(stack1))
             {
                 if (!this.mergeItemStack(stack1, type.getFirstFuelSlot(), type.getFirstOutputSlot(0), false))
                     return true;
-            }
-            else if (index >= type.getNumSlots() && index < type.getNumSlots() + 27)
+            } else if (index >= type.getNumSlots() && index < type.getNumSlots() + 27)
             {
                 if (!this.mergeItemStack(stack1, type.getNumSlots() + 27, type.getNumSlots() + 36, false))
                     return true;
-            }
-            else if (index >= type.getNumSlots() + 27 && index < type.getNumSlots() + 36 && !this.mergeItemStack(stack1, type.getNumSlots(), type.getNumSlots() + 27, false))
+            } else if (index >= type.getNumSlots() + 27 && index < type.getNumSlots() + 36 && !this.mergeItemStack(stack1, type.getNumSlots(), type.getNumSlots() + 27, false))
                 return true;
-        }
-        else if (!this.mergeItemStack(stack1, type.getNumSlots(), type.getNumSlots() + 36, false))
+        } else if (!this.mergeItemStack(stack1, type.getNumSlots(), type.getNumSlots() + 36, false))
             return true;
 
         return false;

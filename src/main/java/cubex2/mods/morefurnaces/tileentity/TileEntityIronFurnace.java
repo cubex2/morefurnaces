@@ -2,16 +2,14 @@ package cubex2.mods.morefurnaces.tileentity;
 
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.MoreFurnaces;
+import cubex2.mods.morefurnaces.inventory.ItemHandlerFurnace;
+import cubex2.mods.morefurnaces.inventory.ItemHandlerMoveStacks;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,7 +20,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.common.capabilities.Capability;
@@ -30,9 +27,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -40,21 +34,21 @@ import java.util.Arrays;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class TileEntityIronFurnace extends TileEntity implements ISidedInventory, ITickable
+public class TileEntityIronFurnace extends TileEntity implements ITickable
 {
     public int[] furnaceCookTime;
     public int furnaceBurnTime = 0;
     public int currentItemBurnTime = 0;
 
     private final FurnaceType type;
-    private final int[] SLOTS_BOTTOM;
-    private NonNullList<ItemStack> furnaceContents;
     private byte facing;
     private boolean isActive = false;
 
     private int ticksSinceSync = 0;
 
     private boolean updateLight = false;
+
+    private final ItemHandlerFurnace itemHandler;
 
     @SuppressWarnings("unused")
     public TileEntityIronFurnace()
@@ -66,10 +60,14 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     {
         super();
         this.type = type;
-        SLOTS_BOTTOM = ArrayUtils.addAll(type.outputSlotIds, type.fuelSlotIds);
         furnaceCookTime = new int[type.parallelSmelting];
         Arrays.fill(furnaceCookTime, 0);
-        furnaceContents = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
+        itemHandler = new ItemHandlerFurnace(this);
+    }
+
+    public ItemHandlerFurnace getItemHandler()
+    {
+        return itemHandler;
     }
 
     public void copyStateFrom(TileEntityIronFurnace furnace)
@@ -108,18 +106,6 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         return MoreFurnaces.ironConsumptionRate;
     }
 
-    @Override
-    public int getSizeInventory()
-    {
-        return type.getNumSlots();
-    }
-
-    @Override
-    public boolean isEmpty()
-    {
-        return furnaceContents.stream().allMatch(ItemStack::isEmpty);
-    }
-
     public byte getFacing()
     {
         return facing;
@@ -142,54 +128,6 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public ItemStack getStackInSlot(int i)
-    {
-        return furnaceContents.get(i);
-    }
-
-    @Override
-    public ItemStack decrStackSize(int index, int count)
-    {
-        return ItemStackHelper.getAndSplit(furnaceContents, index, count);
-    }
-
-    @Override
-    public ItemStack removeStackFromSlot(int index)
-    {
-        return ItemStackHelper.getAndRemove(furnaceContents, index);
-    }
-
-    @Override
-    public void setInventorySlotContents(int index, ItemStack stack)
-    {
-        boolean flag = !stack.isEmpty() && stack.isItemEqual(getStackInSlot(index)) && ItemStack.areItemStackTagsEqual(stack, getStackInSlot(index));
-        furnaceContents.set(index, stack);
-
-        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit())
-        {
-            stack.setCount(this.getInventoryStackLimit());
-        }
-
-        if (!flag && index < type.parallelSmelting)
-        {
-            furnaceCookTime[index] = 0;
-            markDirty();
-        }
-    }
-
-    @Override
-    public String getName()
-    {
-        return type.name();
-    }
-
-    @Override
-    public boolean hasCustomName()
-    {
-        return false;
-    }
-
-    @Override
     public ITextComponent getDisplayName()
     {
         return null;
@@ -199,12 +137,11 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     public void readFromNBT(NBTTagCompound nbtTagCompound)
     {
         super.readFromNBT(nbtTagCompound);
-        furnaceContents = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(nbtTagCompound, furnaceContents);
+        itemHandler.deserializeNBT(nbtTagCompound);
 
 
         furnaceBurnTime = nbtTagCompound.getShort("BurnTime");
-        currentItemBurnTime = (int) (getItemBurnTime(getStackInSlot(type.getFirstFuelSlot())) / getConsumptionRate());
+        currentItemBurnTime = (int) (getItemBurnTime(itemHandler.getStackInSlot(type.getFirstFuelSlot())) / getConsumptionRate());
         NBTTagList cookList = nbtTagCompound.getTagList("CookTimes", 10);
         furnaceCookTime = new int[type.parallelSmelting];
         for (int i = 0; i < cookList.tagCount(); ++i)
@@ -242,15 +179,12 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
 
         nbtTagCompound.setByte("facing", facing);
         nbtTagCompound.setBoolean("isActive", isActive);
-        ItemStackHelper.saveAllItems(nbtTagCompound, furnaceContents);
+
+        NBTTagCompound nbt = itemHandler.serializeNBT();
+        nbtTagCompound.setTag("Items", nbt.getTag("Items"));
+        nbtTagCompound.setInteger("Size", nbt.getInteger("Size"));
 
         return nbtTagCompound;
-    }
-
-    @Override
-    public int getInventoryStackLimit()
-    {
-        return 64;
     }
 
     public float getCookProgress(int id)
@@ -299,10 +233,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
 
         if (!world.isRemote)
         {
-            if (updateStacks())
-            {
-                inventoryChanged = true;
-            }
+            updateStacks();
 
             boolean canSmelt = false;
             for (int i = 0; i < type.parallelSmelting; i++)
@@ -316,7 +247,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
             if (furnaceBurnTime == 0 && canSmelt && type.fuelSlots > 0)
             {
                 int slot = type.getFirstFuelSlot();
-                ItemStack stack = getStackInSlot(slot);
+                ItemStack stack = itemHandler.getStackInSlot(slot);
                 currentItemBurnTime = furnaceBurnTime = (int) (getItemBurnTime(stack) / getConsumptionRate());
                 if (this.isBurning())
                 {
@@ -327,7 +258,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
 
                         if (stack.getCount() == 0)
                         {
-                            furnaceContents.set(slot, stack.getItem().getContainerItem(stack));
+                            itemHandler.setStackInSlot(slot, stack.getItem().getContainerItem(stack));
                         }
                     }
                 }
@@ -398,86 +329,34 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         return super.receiveClientEvent(i, j);
     }
 
-    private boolean updateStacks()
+    private void updateStacks()
     {
-        boolean invChanged = false;
+        itemHandler.moveInputStacks();
+
         for (int id = 0; id < type.parallelSmelting; id++)
         {
-            int startSlot = type.getFirstInputSlot(id);
-            int endSlot = type.getLastInputSlot(id);
-            for (int i = startSlot + 1; i <= endSlot; i++)
-            {
-                if (furnaceContents.get(startSlot).isEmpty() && !furnaceContents.get(i).isEmpty())
-                {
-                    furnaceContents.set(startSlot, furnaceContents.get(i).copy());
-                    furnaceContents.set(i, ItemStack.EMPTY);
-                    invChanged = true;
-                }
-            }
-
-            startSlot = type.getFirstOutputSlot(id);
-            endSlot = type.getLastOutputSlot(id);
+            ItemHandlerMoveStacks outputHandler = itemHandler.getOutputHandlers()[id];
 
             ItemStack result = ItemStack.EMPTY;
-            ItemStack input = furnaceContents.get(type.getFirstInputSlot(id));
+            ItemStack input = itemHandler.getStackInSlot(type.getFirstInputSlot(id));
             if (!input.isEmpty())
             {
                 result = FurnaceRecipes.instance().getSmeltingResult(input);
             }
             if (!result.isEmpty())
             {
-                for (int i = startSlot + 1; i <= endSlot; i++)
+                itemHandler.slotChecksEnabled = false;
+                ItemStack remainder = outputHandler.insertItem(0, result, true);
+                itemHandler.slotChecksEnabled = true;
+
+                if (!remainder.isEmpty())
                 {
-                    ItemStack start = furnaceContents.get(startSlot);
-                    if (!start.isEmpty() && (start.getCount() >= start.getMaxStackSize() - result.getCount() + 1 || !result.isItemEqual(start)))
-                    {
-                        ItemStack stack = furnaceContents.get(i);
-                        if (stack.isEmpty())
-                        {
-                            furnaceContents.set(i, start.copy());
-                            furnaceContents.set(startSlot, ItemStack.EMPTY);
-                            invChanged = true;
-                        } else if (stack.isItemEqual(start)
-                                   && stack.getCount() < stack.getMaxStackSize()
-                                   && start.getCount() > 0)
-                        {
-                            int emptySlots = stack.getMaxStackSize() - stack.getCount();
-                            int adding = Math.min(start.getCount(), emptySlots);
-
-                            stack.grow(adding);
-                            start.shrink(adding);
-
-                            if (stack.isEmpty())
-                            {
-                                furnaceContents.set(i, ItemStack.EMPTY);
-                            }
-                            if (furnaceContents.get(startSlot).isEmpty())
-                            {
-                                furnaceContents.set(startSlot, ItemStack.EMPTY);
-                            }
-                            invChanged = true;
-                        }
-                    }
+                    outputHandler.moveStacks();
                 }
             }
         }
 
-        if (type.fuelSlots > 0)
-        {
-            int startSlot = type.getFirstFuelSlot();
-            int endSlot = type.getLastFuelSlot();
-            for (int i = startSlot; i <= endSlot; i++)
-            {
-                if (furnaceContents.get(startSlot).isEmpty() && !furnaceContents.get(i).isEmpty())
-                {
-                    furnaceContents.set(startSlot, furnaceContents.get(i).copy());
-                    furnaceContents.set(i, ItemStack.EMPTY);
-                    invChanged = true;
-                }
-            }
-        }
-
-        return invChanged;
+        itemHandler.moveFuelStacks();
     }
 
     /**
@@ -488,8 +367,8 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         int inputIndex = type.getFirstInputSlot(id);
         int outputIndex = type.getFirstOutputSlot(id);
 
-        ItemStack input = furnaceContents.get(inputIndex);
-        ItemStack output = furnaceContents.get(outputIndex);
+        ItemStack input = itemHandler.getStackInSlot(inputIndex);
+        ItemStack output = itemHandler.getStackInSlot(outputIndex);
 
         if (input.isEmpty())
         {
@@ -504,7 +383,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
             if (!output.isItemEqual(res))
                 return false;
             int result = output.getCount() + res.getCount();
-            return result <= getInventoryStackLimit() && result <= res.getMaxStackSize();
+            return result <= itemHandler.getSlotLimit(outputIndex) && result <= res.getMaxStackSize();
         }
     }
 
@@ -518,13 +397,13 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
             int inputIndex = type.getFirstInputSlot(id);
             int outputIndex = type.getFirstOutputSlot(id);
 
-            ItemStack input = furnaceContents.get(inputIndex);
-            ItemStack output = furnaceContents.get(outputIndex);
+            ItemStack input = itemHandler.getStackInSlot(inputIndex);
+            ItemStack output = itemHandler.getStackInSlot(outputIndex);
             ItemStack result = FurnaceRecipes.instance().getSmeltingResult(input);
 
             if (output.isEmpty())
             {
-                furnaceContents.set(outputIndex, result.copy());
+                itemHandler.setStackInSlot(outputIndex, result.copy());
             } else if (output.isItemEqual(result))
             {
                 output.grow(result.getCount());
@@ -539,7 +418,7 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
 
             if (input.isEmpty())
             {
-                furnaceContents.set(inputIndex, ItemStack.EMPTY);
+                itemHandler.setStackInSlot(inputIndex, ItemStack.EMPTY);
             }
         }
     }
@@ -550,11 +429,11 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
 
         for (int i = 0; i < type.getNumFuelSlots(); i++)
         {
-            ItemStack stack = furnaceContents.get(startIndex + i);
+            ItemStack stack = itemHandler.getStackInSlot(startIndex + i);
 
             if (!stack.isEmpty() && stack.getItem() == Items.BUCKET)
             {
-                furnaceContents.set(startIndex + i, new ItemStack(Items.WATER_BUCKET));
+                itemHandler.setStackInSlot(startIndex + i, new ItemStack(Items.WATER_BUCKET));
                 break;
             }
         }
@@ -602,22 +481,6 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player)
-    {
-        return world.getTileEntity(pos) == this && player.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64.0D;
-    }
-
-    @Override
-    public void openInventory(EntityPlayer player)
-    {
-    }
-
-    @Override
-    public void closeInventory(EntityPlayer player)
-    {
-    }
-
-    @Override
     public SPacketUpdateTileEntity getUpdatePacket()
     {
         return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
@@ -635,89 +498,18 @@ public class TileEntityIronFurnace extends TileEntity implements ISidedInventory
         return this.writeToNBT(new NBTTagCompound());
     }
 
-    @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack)
-    {
-        if (type.isOutputSlot(index))
-        {
-            return false;
-        } else if (type.isInputSlot(index))
-        {
-            return true;
-        } else
-        {
-            ItemStack itemstack = this.furnaceContents.get(1);
-            return isItemFuel(stack) || SlotFurnaceFuel.isBucket(stack) && (itemstack.isEmpty() || itemstack.getItem() != Items.BUCKET);
-        }
-    }
-
-    @Override
-    public int getField(int id)
-    {
-        return 0;
-    }
-
-    @Override
-    public void setField(int id, int value)
-    {
-
-    }
-
-    @Override
-    public int getFieldCount()
-    {
-        return 0;
-    }
-
-    @Override
-    public void clear()
-    {
-        furnaceContents.clear();
-    }
-
-    @Override
-    public int[] getSlotsForFace(EnumFacing facing)
-    {
-        return facing == EnumFacing.DOWN ? SLOTS_BOTTOM : facing == EnumFacing.UP ? type.inputSlotIds : type.fuelSlotIds;
-    }
-
-    @Override
-    public boolean canInsertItem(int slot, ItemStack itemstack, EnumFacing facing)
-    {
-        return isItemValidForSlot(slot, itemstack);
-    }
-
-    @Override
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction)
-    {
-        if (direction == EnumFacing.DOWN && type.isFuelSlot(index))
-        {
-            Item item = stack.getItem();
-
-            if (item != Items.WATER_BUCKET && item != Items.BUCKET)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private IItemHandler handlerTop = new SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
-    private IItemHandler handlerBottom = new SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
-    private IItemHandler handlerSide = new SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
-
     @SuppressWarnings("unchecked")
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
     {
-        if (facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            if (facing == EnumFacing.DOWN)
-                return (T) handlerBottom;
-            else if (facing == EnumFacing.UP)
-                return (T) handlerTop;
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        {
+            if (facing == null)
+                return (T) itemHandler;
             else
-                return (T) handlerSide;
+                return (T) itemHandler.getHandlerForSide(facing);
+        }
+
         return super.getCapability(capability, facing);
     }
 
