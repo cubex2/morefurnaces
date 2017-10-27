@@ -11,6 +11,7 @@ import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -148,7 +149,7 @@ public class ContainerIronFurnace extends ContainerCX
             {
                 if (!this.mergeItemStack(stack1, 0, type.getFirstFuelSlot(), false))
                     return true;
-            } else if (TileEntityIronFurnace.isItemFuel(stack1))
+            } else if (TileEntityFurnace.isItemFuel(stack1))
             {
                 if (!this.mergeItemStack(stack1, type.getFirstFuelSlot(), type.getFirstOutputSlot(0), false))
                     return true;

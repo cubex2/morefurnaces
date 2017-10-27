@@ -5,12 +5,11 @@ import cubex2.mods.morefurnaces.MoreFurnaces;
 import cubex2.mods.morefurnaces.inventory.ItemHandlerFurnace;
 import cubex2.mods.morefurnaces.inventory.ItemHandlerMoveStacks;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -23,7 +22,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -141,7 +139,7 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
 
 
         furnaceBurnTime = nbtTagCompound.getShort("BurnTime");
-        currentItemBurnTime = (int) (getItemBurnTime(itemHandler.getStackInSlot(type.getFirstFuelSlot())) / getConsumptionRate());
+        currentItemBurnTime = getBurnTime(itemHandler.getStackInSlot(type.getFirstFuelSlot()));
         NBTTagList cookList = nbtTagCompound.getTagList("CookTimes", 10);
         furnaceCookTime = new int[type.parallelSmelting];
         for (int i = 0; i < cookList.tagCount(); ++i)
@@ -248,7 +246,7 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
             {
                 int slot = type.getFirstFuelSlot();
                 ItemStack stack = itemHandler.getStackInSlot(slot);
-                currentItemBurnTime = furnaceBurnTime = (int) (getItemBurnTime(stack) / getConsumptionRate());
+                currentItemBurnTime = furnaceBurnTime = getBurnTime(stack);
                 if (this.isBurning())
                 {
                     inventoryChanged = true;
@@ -307,6 +305,11 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
         {
             this.markDirty();
         }
+    }
+
+    private int getBurnTime(ItemStack stack)
+    {
+        return (int) (TileEntityFurnace.getItemBurnTime(stack) / getConsumptionRate());
     }
 
     @Override
@@ -437,47 +440,6 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
                 break;
             }
         }
-    }
-
-    /**
-     * Returns the number of ticks that the supplied fuel item will keep the furnace burning, or 0 if the item isn't fuel
-     */
-    private static int getItemBurnTime(ItemStack stack)
-    {
-        if (stack.isEmpty())
-            return 0;
-        else
-        {
-            Item item = stack.getItem();
-
-            if (stack.getItem() instanceof ItemBlock && Block.getBlockFromItem(item) != Blocks.AIR)
-            {
-                Block block = Block.getBlockFromItem(item);
-
-                if (block == Blocks.WOODEN_SLAB)
-                    return 150;
-
-                if (block.getDefaultState().getMaterial() == Material.WOOD)
-                    return 300;
-
-                if (block == Blocks.COAL_BLOCK)
-                    return 16000;
-            }
-            if (item instanceof ItemTool && ((ItemTool) item).getToolMaterialName().equals("WOOD")) return 200;
-            if (item instanceof ItemSword && ((ItemSword) item).getToolMaterialName().equals("WOOD")) return 200;
-            if (item instanceof ItemHoe && ((ItemHoe) item).getMaterialName().equals("WOOD")) return 200;
-            if (item == Items.STICK) return 100;
-            if (item == Items.COAL) return 1600;
-            if (item == Items.LAVA_BUCKET) return 20000;
-            if (item == Item.getItemFromBlock(Blocks.SAPLING)) return 100;
-            if (item == Items.BLAZE_ROD) return 2400;
-            return GameRegistry.getFuelValue(stack);
-        }
-    }
-
-    public static boolean isItemFuel(ItemStack stack)
-    {
-        return getItemBurnTime(stack) > 0;
     }
 
     @Override

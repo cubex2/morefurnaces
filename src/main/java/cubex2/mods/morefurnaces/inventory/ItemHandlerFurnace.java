@@ -6,6 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
@@ -150,7 +151,7 @@ public class ItemHandlerFurnace extends ItemStackHandler
             return true;
         } else
         {
-            return TileEntityIronFurnace.isItemFuel(stack) || SlotFurnaceFuel.isBucket(stack);
+            return TileEntityFurnace.isItemFuel(stack) || SlotFurnaceFuel.isBucket(stack);
         }
     }
 
