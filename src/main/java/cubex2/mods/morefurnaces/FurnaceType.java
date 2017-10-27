@@ -9,7 +9,9 @@ public enum FurnaceType implements IStringSerializable
     GOLD(4, 5, 4, 1, 80, 2.0f, "Gold Furnace", TileEntityGoldFurnace.class),
     DIAMOND(7, 9, 7, 1, 40, 4.0f, "Diamond Furnace", TileEntityDiamondFurnace.class),
     OBSIDIAN(2, 2, 2, 2, 150, 2.0f, "Obsidian Furnace", TileEntityObsidianFurnace.class),
-    NETHERRACK(1, 1, 0, 1, 1800, 1.0f, "Netherrack Furnace", TileEntityNetherrackFurnace.class);
+    NETHERRACK(1, 1, 0, 1, 1800, 1.0f, "Netherrack Furnace", TileEntityNetherrackFurnace.class),
+    COPPER(2, 2, 2, 1, 150, 1.25f, "Copper Furnace", TileEntityCopperFurnace.class),
+    SILVER(4, 5, 4, 1, 100, 1.75f, "Silver Furnace", TileEntitySilverFurnace.class);
 
     final int inputSlots;
     final int outputSlots;

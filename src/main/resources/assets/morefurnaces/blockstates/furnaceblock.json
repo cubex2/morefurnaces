@@ -20,6 +20,14 @@
     "active=false,facing=east,variant=diamond": { "model": "morefurnaces:furnace_diamond", "y": 90 },
     "active=false,facing=south,variant=diamond": { "model": "morefurnaces:furnace_diamond", "y": 180 },
     "active=false,facing=west,variant=diamond": { "model": "morefurnaces:furnace_diamond", "y": 270 },
+    "active=false,facing=north,variant=copper": { "model": "morefurnaces:furnace_copper"},
+    "active=false,facing=east,variant=copper": { "model": "morefurnaces:furnace_copper", "y": 90 },
+    "active=false,facing=south,variant=copper": { "model": "morefurnaces:furnace_copper", "y": 180 },
+    "active=false,facing=west,variant=copper": { "model": "morefurnaces:furnace_copper", "y": 270 },
+    "active=false,facing=north,variant=silver": { "model": "morefurnaces:furnace_silver"},
+    "active=false,facing=east,variant=silver": { "model": "morefurnaces:furnace_silver", "y": 90 },
+    "active=false,facing=south,variant=silver": { "model": "morefurnaces:furnace_silver", "y": 180 },
+    "active=false,facing=west,variant=silver": { "model": "morefurnaces:furnace_silver", "y": 270 },
 
     "active=true,facing=north,variant=iron": { "model": "morefurnaces:furnace_iron_on"},
     "active=true,facing=east,variant=iron": { "model": "morefurnaces:furnace_iron_on", "y": 90 },
@@ -40,6 +48,14 @@
     "active=true,facing=north,variant=diamond": { "model": "morefurnaces:furnace_diamond_on"},
     "active=true,facing=east,variant=diamond": { "model": "morefurnaces:furnace_diamond_on", "y": 90 },
     "active=true,facing=south,variant=diamond": { "model": "morefurnaces:furnace_diamond_on", "y": 180 },
-    "active=true,facing=west,variant=diamond": { "model": "morefurnaces:furnace_diamond_on", "y": 270 }
+    "active=true,facing=west,variant=diamond": { "model": "morefurnaces:furnace_diamond_on", "y": 270 },
+    "active=true,facing=north,variant=copper": { "model": "morefurnaces:furnace_copper_on"},
+    "active=true,facing=east,variant=copper": { "model": "morefurnaces:furnace_copper_on", "y": 90 },
+    "active=true,facing=south,variant=copper": { "model": "morefurnaces:furnace_copper_on", "y": 180 },
+    "active=true,facing=west,variant=copper": { "model": "morefurnaces:furnace_copper_on", "y": 270 },
+    "active=true,facing=north,variant=silver": { "model": "morefurnaces:furnace_silver_on"},
+    "active=true,facing=east,variant=silver": { "model": "morefurnaces:furnace_silver_on", "y": 90 },
+    "active=true,facing=south,variant=silver": { "model": "morefurnaces:furnace_silver_on", "y": 180 },
+    "active=true,facing=west,variant=silver": { "model": "morefurnaces:furnace_silver_on", "y": 270 }
   }
 }

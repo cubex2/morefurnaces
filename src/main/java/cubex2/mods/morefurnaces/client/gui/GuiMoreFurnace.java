@@ -22,6 +22,8 @@ public class GuiMoreFurnace extends ScreenCenter
     static ResourceLocation DATA_DIAMOND = new ResourceLocation("morefurnaces", "gui/diamond.json");
     static ResourceLocation DATA_OBSIDIAN = new ResourceLocation("morefurnaces", "gui/obsidian.json");
     static ResourceLocation DATA_NETHERRACK = new ResourceLocation("morefurnaces", "gui/netherrack.json");
+    static ResourceLocation DATA_COPPER = new ResourceLocation("morefurnaces", "gui/copper.json");
+    static ResourceLocation DATA_SILVER = new ResourceLocation("morefurnaces", "gui/silver.json");
 
     public enum GUI
     {
@@ -29,7 +31,9 @@ public class GuiMoreFurnace extends ScreenCenter
         GOLD(Textures.GOLD, FurnaceType.GOLD, DATA_GOLD),
         DIAMOND(Textures.DIAMOND, FurnaceType.DIAMOND, DATA_DIAMOND),
         OBSIDIAN(Textures.OBSIDIAN, FurnaceType.OBSIDIAN, DATA_OBSIDIAN),
-        NETHERRACK(Textures.NETHERRACK, FurnaceType.NETHERRACK, DATA_NETHERRACK);
+        NETHERRACK(Textures.NETHERRACK, FurnaceType.NETHERRACK, DATA_NETHERRACK),
+        COPPER(Textures.COPPER, FurnaceType.COPPER, DATA_COPPER),
+        SILVER(Textures.SILVER, FurnaceType.SILVER, DATA_SILVER);
 
         private GuiTexture texture;
         private FurnaceType mainType;

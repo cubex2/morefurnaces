@@ -1,0 +1,22 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "SSS",
+    "SCS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "type": "forge:ore_dict",
+      "ore": "ingotSilver"
+    },
+    "C": {
+      "type": "forge:ore_dict",
+      "ore": "nuggetCopper"
+    }
+  },
+  "result": {
+    "item": "morefurnaces:upgrade",
+    "data": 5
+  }
+}

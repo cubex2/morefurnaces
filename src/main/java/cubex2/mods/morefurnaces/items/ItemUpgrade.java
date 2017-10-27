@@ -63,7 +63,7 @@ public class ItemUpgrade extends Item
             if (useOnModFurnace(playerIn, world, pos, stack, upgrade)) return EnumActionResult.SUCCESS;
         } else if (state.getBlock() == Blocks.FURNACE || state.getBlock() == Blocks.LIT_FURNACE)
         {
-            if (upgrade == Upgrades.STONE_TO_IRON || upgrade == Upgrades.STONE_TO_NETHERRACK)
+            if (upgrade.isVanillaUpgrade())
             {
                 if (useOnVanillaFurnace(playerIn, world, pos, stack, upgrade)) return EnumActionResult.SUCCESS;
             }

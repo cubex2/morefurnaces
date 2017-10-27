@@ -1,0 +1,22 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "SSS",
+    "SPS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "type": "forge:ore_dict",
+      "ore": "ingotSilver"
+    },
+    "P": {
+      "item": "morefurnaces:furnaceblock",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "morefurnaces:furnaceblock",
+    "data": 6
+  }
+}

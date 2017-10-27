@@ -1,0 +1,21 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "CCC",
+    "CPC",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "type": "forge:ore_dict",
+      "ore": "ingotCopper"
+    },
+    "P": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "item": "morefurnaces:furnaceblock",
+    "data": 5
+  }
+}

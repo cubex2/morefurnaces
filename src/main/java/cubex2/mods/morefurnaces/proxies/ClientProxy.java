@@ -14,7 +14,7 @@ public class ClientProxy extends CommonProxy
     {
         Item item = Item.getItemFromBlock(MoreFurnaces.blockFurnaces);
 
-        String[] suffixes = {"iron", "gold", "diamond", "obsidian", "netherrack"};
+        String[] suffixes = {"iron", "gold", "diamond", "obsidian", "netherrack", "copper", "silver"};
         for (int i = 0; i < suffixes.length; i++)
         {
             ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation("morefurnaces:furnace_" + suffixes[i], "inventory"));

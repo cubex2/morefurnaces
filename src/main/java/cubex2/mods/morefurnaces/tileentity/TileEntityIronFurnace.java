@@ -236,7 +236,7 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
                 dirty |= consumeFuel();
             }
 
-            for (int i = type.parallelSmelting; i > 0; i--)
+            for (int i = 0; i < type.parallelSmelting; i++)
             {
                 dirty |= progressCooking(i);
             }
