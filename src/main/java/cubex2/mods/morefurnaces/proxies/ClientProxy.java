@@ -5,9 +5,7 @@ import cubex2.mods.morefurnaces.MoreFurnaces;
 import cubex2.mods.morefurnaces.items.Upgrades;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.client.FMLClientHandler;
 
 public class ClientProxy extends CommonProxy
 {
@@ -27,11 +25,5 @@ public class ClientProxy extends CommonProxy
             ModelResourceLocation l = new ModelResourceLocation("morefurnaces:upgrade_" + upgrade.getUnlocalizedName(), "inventory");
             ModelLoader.setCustomModelResourceLocation(MoreFurnaces.upgrade, upgrade.ordinal(), l);
         }
-    }
-
-    @Override
-    public World getClientWorld()
-    {
-        return FMLClientHandler.instance().getClient().world;
     }
 }

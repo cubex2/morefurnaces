@@ -70,11 +70,6 @@ public enum FurnaceType implements IStringSerializable
         return null;
     }
 
-    public int getSpeed()
-    {
-        return speed;
-    }
-
     public boolean isInputSlot(int slotId)
     {
         return arrayContains(inputSlotIds, slotId);

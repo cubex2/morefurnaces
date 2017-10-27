@@ -19,6 +19,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
@@ -59,82 +60,114 @@ public class ItemUpgrade extends Item
         IBlockState state = world.getBlockState(pos);
         if (state.getBlock() == MoreFurnaces.blockFurnaces)
         {
-            TileEntity te = world.getTileEntity(pos);
-            if (te != null && te instanceof TileEntityIronFurnace)
-            {
-                TileEntityIronFurnace furnace = (TileEntityIronFurnace) te;
-                FurnaceType furnaceType = furnace.getType();
-
-                if (upgrade.canUpgrade(furnaceType))
-                {
-                    upgradeFurnace(world, pos, furnace, upgrade.getUpgradedType());
-
-                    if (!playerIn.capabilities.isCreativeMode)
-                    {
-                        stack.shrink(1);
-                    }
-
-                    return EnumActionResult.SUCCESS;
-                }
-            }
+            if (useOnModFurnace(playerIn, world, pos, stack, upgrade)) return EnumActionResult.SUCCESS;
         } else if (state.getBlock() == Blocks.FURNACE || state.getBlock() == Blocks.LIT_FURNACE)
         {
             if (upgrade == Upgrades.STONE_TO_IRON || upgrade == Upgrades.STONE_TO_NETHERRACK)
             {
-                TileEntity te = world.getTileEntity(pos);
-                if (te != null && te instanceof TileEntityFurnace)
-                {
-                    TileEntityFurnace furnace = (TileEntityFurnace) te;
-                    upgradeVanillaFurnace(world, pos, furnace, upgrade.getUpgradedType());
-
-                    if (!playerIn.capabilities.isCreativeMode)
-                    {
-                        stack.shrink(1);
-                    }
-
-                    return EnumActionResult.SUCCESS;
-                }
+                if (useOnVanillaFurnace(playerIn, world, pos, stack, upgrade)) return EnumActionResult.SUCCESS;
             }
         }
 
         return EnumActionResult.PASS;
     }
 
-    private void upgradeFurnace(World world, BlockPos pos, TileEntityIronFurnace furnace, FurnaceType to)
+    private boolean useOnVanillaFurnace(EntityPlayer playerIn, World world, BlockPos pos, ItemStack stack, Upgrades upgrade)
+    {
+        TileEntity te = world.getTileEntity(pos);
+        if (te != null && te instanceof TileEntityFurnace)
+        {
+            TileEntityFurnace furnace = (TileEntityFurnace) te;
+            boolean upgraded = upgradeVanillaFurnace(world, pos, furnace, upgrade.getUpgradedType());
+
+            if (upgraded && !playerIn.capabilities.isCreativeMode)
+            {
+                stack.shrink(1);
+            }
+
+            return true;
+        }
+        return false;
+    }
+
+    private boolean useOnModFurnace(EntityPlayer playerIn, World world, BlockPos pos, ItemStack stack, Upgrades upgrade)
+    {
+        TileEntity te = world.getTileEntity(pos);
+        if (te != null && te instanceof TileEntityIronFurnace)
+        {
+            TileEntityIronFurnace furnace = (TileEntityIronFurnace) te;
+            FurnaceType furnaceType = furnace.getType();
+
+            if (upgrade.canUpgrade(furnaceType))
+            {
+                boolean upgraded = upgradeFurnace(world, pos, furnace, upgrade.getUpgradedType());
+
+                if (upgraded && !playerIn.capabilities.isCreativeMode)
+                {
+                    stack.shrink(1);
+                }
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean upgradeFurnace(World world, BlockPos pos, TileEntityIronFurnace furnace, FurnaceType to)
     {
         FurnaceType from = furnace.getType();
 
         TileEntityIronFurnace newFurnace = FurnaceType.makeEntity(to.ordinal());
 
-        int[][] fromSlotIds = new int[][] {from.inputSlotIds, from.fuelSlotIds, from.outputSlotIds};
-        int[][] toSlotIds = new int[][] {to.inputSlotIds, to.fuelSlotIds, to.outputSlotIds};
+        if (newFurnace != null)
+        {
+            int[][] fromSlotIds = new int[][] {from.inputSlotIds, from.fuelSlotIds, from.outputSlotIds};
 
-        IItemHandlerModifiable fromHandler = (IItemHandlerModifiable) furnace.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        IItemHandlerModifiable toHandler = (IItemHandlerModifiable) newFurnace.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        copyInventory(fromHandler, fromSlotIds, toHandler, toSlotIds);
+            copyInventory(furnace, fromSlotIds, newFurnace);
 
-        world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockMoreFurnaces.VARIANT, to));
-        world.setTileEntity(pos, newFurnace);
+            world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockMoreFurnaces.VARIANT, to));
+            world.setTileEntity(pos, newFurnace);
 
-        newFurnace.copyStateFrom(furnace);
+            newFurnace.copyStateFrom(furnace);
+
+            return true;
+        } else
+        {
+            return false;
+        }
     }
 
-    private void upgradeVanillaFurnace(World world, BlockPos pos, TileEntityFurnace furnace, FurnaceType to)
+    private boolean upgradeVanillaFurnace(World world, BlockPos pos, TileEntityFurnace furnace, FurnaceType to)
     {
         byte facing = (byte) world.getBlockState(pos).getValue(BlockFurnace.FACING).ordinal();
         TileEntityIronFurnace newFurnace = FurnaceType.makeEntity(to.ordinal());
 
-        int[][] fromSlotIds = new int[][] {new int[] {0}, new int[] {1}, new int[] {2}};
-        int[][] toSlotIds = new int[][] {to.inputSlotIds, to.fuelSlotIds, to.outputSlotIds};
+        if (newFurnace != null)
+        {
+            int[][] fromSlotIds = new int[][] {new int[] {0}, new int[] {1}, new int[] {2}};
 
-        IItemHandlerModifiable fromHandler = (IItemHandlerModifiable) furnace.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        IItemHandlerModifiable toHandler = (IItemHandlerModifiable) newFurnace.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+            copyInventory(furnace, fromSlotIds, newFurnace);
+
+            world.setBlockState(pos, MoreFurnaces.blockFurnaces.getDefaultState().withProperty(BlockMoreFurnaces.VARIANT, to));
+            world.setTileEntity(pos, newFurnace);
+
+            newFurnace.copyStateFrom(furnace, facing);
+
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    private void copyInventory(ICapabilityProvider from, int[][] fromSlotIds, TileEntityIronFurnace to)
+    {
+        FurnaceType type = to.getType();
+        int[][] toSlotIds = new int[][] {type.inputSlotIds, type.fuelSlotIds, type.outputSlotIds};
+
+        IItemHandlerModifiable fromHandler = (IItemHandlerModifiable) from.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+        IItemHandlerModifiable toHandler = (IItemHandlerModifiable) to.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         copyInventory(fromHandler, fromSlotIds, toHandler, toSlotIds);
-
-        world.setBlockState(pos, MoreFurnaces.blockFurnaces.getDefaultState().withProperty(BlockMoreFurnaces.VARIANT, to));
-        world.setTileEntity(pos, newFurnace);
-
-        newFurnace.copyStateFrom(furnace, facing);
     }
 
     private void copyInventory(IItemHandlerModifiable from, int[][] fromSlotIds, IItemHandlerModifiable to, int[][] toSlotIds)

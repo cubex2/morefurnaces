@@ -2,12 +2,8 @@ package cubex2.mods.morefurnaces.blocks;
 
 
 import cubex2.mods.morefurnaces.FurnaceType;
-import cubex2.mods.morefurnaces.ModInformation;
 import cubex2.mods.morefurnaces.MoreFurnaces;
-import cubex2.mods.morefurnaces.items.ItemMoreFurnaces;
 import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
-import java.util.Random;
-import javax.annotation.ParametersAreNonnullByDefault;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -16,6 +12,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -24,28 +21,24 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class BlockMoreFurnaces extends Block implements ITileEntityProvider
 {
-    public static final PropertyEnum VARIANT = PropertyEnum.create("variant", FurnaceType.class);
-    public static final PropertyEnum FACING = BlockHorizontal.FACING;
+    public static final PropertyEnum<FurnaceType> VARIANT = PropertyEnum.create("variant", FurnaceType.class);
+    public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyBool ACTIVE = PropertyBool.create("active");
 
     public BlockMoreFurnaces()
@@ -83,7 +76,7 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
     @Override
     public int getMetaFromState(IBlockState state)
     {
-        return ((FurnaceType)state.getValue(VARIANT)).ordinal();
+        return state.getValue(VARIANT).ordinal();
     }
 
     @Override
@@ -102,7 +95,7 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
         TileEntity te = world.getTileEntity(pos);
         if (te != null && te instanceof TileEntityIronFurnace)
         {
-            TileEntityIronFurnace furnace = (TileEntityIronFurnace)te;
+            TileEntityIronFurnace furnace = (TileEntityIronFurnace) te;
             facing = EnumFacing.getFront(furnace.getFacing());
             if (facing == EnumFacing.DOWN || facing == EnumFacing.UP)
                 facing = EnumFacing.NORTH;
@@ -129,7 +122,7 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
     {
         TileEntity te = world.getTileEntity(pos);
         if (te != null && te instanceof TileEntityIronFurnace)
-            return ((TileEntityIronFurnace)te).isActive() ? (int)(0.8 * 15) : 0;
+            return ((TileEntityIronFurnace) te).isActive() ? (int) (0.8 * 15) : 0;
         else
             return 0;
     }
@@ -145,12 +138,12 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
     {
         if (!world.isRemote)
         {
-            EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+            EnumFacing enumfacing = state.getValue(FACING);
 
             TileEntity te = world.getTileEntity(pos);
             if (te != null && te instanceof TileEntityIronFurnace)
             {
-                enumfacing = EnumFacing.getFront(((TileEntityIronFurnace)te).getFacing());
+                enumfacing = EnumFacing.getFront(((TileEntityIronFurnace) te).getFacing());
             }
 
             IBlockState iblockstate = world.getBlockState(pos.north());
@@ -162,23 +155,20 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
             if (enumfacing == EnumFacing.NORTH && iblockstate.isFullBlock() && !iblockstate1.isFullBlock())
             {
                 enumfacing = EnumFacing.SOUTH;
-            }
-            else if (enumfacing == EnumFacing.SOUTH && iblockstate1.isFullBlock() && !iblockstate.isFullBlock())
+            } else if (enumfacing == EnumFacing.SOUTH && iblockstate1.isFullBlock() && !iblockstate.isFullBlock())
             {
                 enumfacing = EnumFacing.NORTH;
-            }
-            else if (enumfacing == EnumFacing.WEST && iblockstate2.isFullBlock() && !iblockstate3.isFullBlock())
+            } else if (enumfacing == EnumFacing.WEST && iblockstate2.isFullBlock() && !iblockstate3.isFullBlock())
             {
                 enumfacing = EnumFacing.EAST;
-            }
-            else if (enumfacing == EnumFacing.EAST && iblockstate3.isFullBlock() && !iblockstate2.isFullBlock())
+            } else if (enumfacing == EnumFacing.EAST && iblockstate3.isFullBlock() && !iblockstate2.isFullBlock())
             {
                 enumfacing = EnumFacing.WEST;
             }
 
             if (te != null && te instanceof TileEntityIronFurnace)
             {
-                ((TileEntityIronFurnace)te).setFacing((byte)enumfacing.ordinal());
+                ((TileEntityIronFurnace) te).setFacing((byte) enumfacing.ordinal());
                 world.notifyBlockUpdate(pos, state, state, 3);
             }
         }
@@ -191,35 +181,32 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
         TileEntity te = world.getTileEntity(pos);
         if (te != null && te instanceof TileEntityIronFurnace)
         {
-            TileEntityIronFurnace tef = (TileEntityIronFurnace)te;
+            TileEntityIronFurnace tef = (TileEntityIronFurnace) te;
             if (tef.isActive())
             {
                 byte facing = tef.getFacing();
-                float var7 = pos.getX() + 0.5F;
-                float var8 = pos.getY() + 0.0F + random.nextFloat() * 6.0F / 16.0F;
-                float var9 = pos.getZ() + 0.5F;
+                float x = pos.getX() + 0.5F;
+                float y = pos.getY() + 0.0F + random.nextFloat() * 6.0F / 16.0F;
+                float z = pos.getZ() + 0.5F;
                 float var10 = 0.52F;
                 float var11 = random.nextFloat() * 0.6F - 0.3F;
 
                 if (facing == 4)
                 {
-                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, var7 - var10, var8, var9 + var11, 0.0D, 0.0D, 0.0D);
-                    world.spawnParticle(EnumParticleTypes.FLAME, var7 - var10, var8, var9 + var11, 0.0D, 0.0D, 0.0D);
-                }
-                else if (facing == 5)
+                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x - var10, y, z + var11, 0.0D, 0.0D, 0.0D);
+                    world.spawnParticle(EnumParticleTypes.FLAME, x - var10, y, z + var11, 0.0D, 0.0D, 0.0D);
+                } else if (facing == 5)
                 {
-                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, var7 + var10, var8, var9 + var11, 0.0D, 0.0D, 0.0D);
-                    world.spawnParticle(EnumParticleTypes.FLAME, var7 + var10, var8, var9 + var11, 0.0D, 0.0D, 0.0D);
-                }
-                else if (facing == 2)
+                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + var10, y, z + var11, 0.0D, 0.0D, 0.0D);
+                    world.spawnParticle(EnumParticleTypes.FLAME, x + var10, y, z + var11, 0.0D, 0.0D, 0.0D);
+                } else if (facing == 2)
                 {
-                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, var7 + var11, var8, var9 - var10, 0.0D, 0.0D, 0.0D);
-                    world.spawnParticle(EnumParticleTypes.FLAME, var7 + var11, var8, var9 - var10, 0.0D, 0.0D, 0.0D);
-                }
-                else if (facing == 3)
+                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + var11, y, z - var10, 0.0D, 0.0D, 0.0D);
+                    world.spawnParticle(EnumParticleTypes.FLAME, x + var11, y, z - var10, 0.0D, 0.0D, 0.0D);
+                } else if (facing == 3)
                 {
-                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, var7 + var11, var8, var9 + var10, 0.0D, 0.0D, 0.0D);
-                    world.spawnParticle(EnumParticleTypes.FLAME, var7 + var11, var8, var9 + var10, 0.0D, 0.0D, 0.0D);
+                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + var11, y, z + var10, 0.0D, 0.0D, 0.0D);
+                    world.spawnParticle(EnumParticleTypes.FLAME, x + var11, y, z + var10, 0.0D, 0.0D, 0.0D);
                 }
             }
         }
@@ -228,7 +215,7 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float f1, float f2, float f3)
     {
-        FurnaceType type = (FurnaceType)state.getValue(VARIANT);
+        FurnaceType type = state.getValue(VARIANT);
         if (type == FurnaceType.NETHERRACK && facing == EnumFacing.UP)
             return false;
         TileEntity te = world.getTileEntity(pos);
@@ -239,7 +226,7 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
         if (world.isRemote)
             return true;
 
-        player.openGui(MoreFurnaces.instance, ((TileEntityIronFurnace)te).getType().ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
+        player.openGui(MoreFurnaces.instance, ((TileEntityIronFurnace) te).getType().ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
         return true;
     }
 
@@ -257,7 +244,7 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
         TileEntity te = world.getTileEntity(pos);
         if (te != null && te instanceof TileEntityIronFurnace)
         {
-            ((TileEntityIronFurnace)te).setFacing((byte)facing.ordinal());
+            ((TileEntityIronFurnace) te).setFacing((byte) facing.ordinal());
             world.notifyBlockUpdate(pos, state, state, 3);
         }
     }
@@ -268,7 +255,7 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
         TileEntity te = world.getTileEntity(pos);
         if (te instanceof IInventory)
         {
-            InventoryHelper.dropInventoryItems(world, pos, (IInventory)te);
+            InventoryHelper.dropInventoryItems(world, pos, (IInventory) te);
             world.updateComparatorOutputLevel(pos, this);
         }
 
@@ -289,10 +276,8 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
     @Override
     public boolean isFireSource(World world, BlockPos pos, EnumFacing side)
     {
-        FurnaceType type = (FurnaceType)world.getBlockState(pos).getValue(VARIANT);
-        if (type == FurnaceType.NETHERRACK && side == EnumFacing.UP)
-            return true;
-        return false;
+        FurnaceType type = world.getBlockState(pos).getValue(VARIANT);
+        return type == FurnaceType.NETHERRACK && side == EnumFacing.UP;
     }
 
     @Override
