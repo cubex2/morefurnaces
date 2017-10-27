@@ -72,10 +72,7 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
     {
         int minParallel = Math.min(type.parallelSmelting, furnace.type.parallelSmelting);
 
-        for (int i = 0; i < minParallel; i++)
-        {
-            furnaceCookTime[i] = furnace.furnaceCookTime[i];
-        }
+        System.arraycopy(furnace.furnaceCookTime, 0, furnaceCookTime, 0, minParallel);
 
         furnaceBurnTime = furnace.furnaceBurnTime;
         currentItemBurnTime = furnace.currentItemBurnTime;
@@ -215,8 +212,8 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
             world.addBlockEvent(pos, MoreFurnaces.blockFurnaces, 2, (byte) (isActive ? 1 : 0));
         }
 
-        boolean var1 = this.isBurning();
-        boolean inventoryChanged = false;
+        boolean wasBurning = this.isBurning();
+        boolean dirty = false;
 
         if (this.isBurning() && type.fuelSlots > 0)
         {
@@ -231,80 +228,128 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
 
         if (!world.isRemote)
         {
-            updateStacks();
+            moveStacks();
 
-            boolean canSmelt = false;
-            for (int i = 0; i < type.parallelSmelting; i++)
+            if (furnaceBurnTime == 0 && canSmelt() && type.fuelSlots > 0)
             {
-                if (canSmelt(i))
-                {
-                    canSmelt = true;
-                    break;
-                }
-            }
-            if (furnaceBurnTime == 0 && canSmelt && type.fuelSlots > 0)
-            {
-                int slot = type.getFirstFuelSlot();
-                ItemStack stack = itemHandler.getStackInSlot(slot);
-                currentItemBurnTime = furnaceBurnTime = getBurnTime(stack);
-                if (this.isBurning())
-                {
-                    inventoryChanged = true;
-                    if (!stack.isEmpty())
-                    {
-                        stack.shrink(1);
-
-                        if (stack.getCount() == 0)
-                        {
-                            itemHandler.setStackInSlot(slot, stack.getItem().getContainerItem(stack));
-                        }
-                    }
-                }
+                dirty |= consumeFuel();
             }
 
-            for (int i = 0; i < type.parallelSmelting; i++)
+            for (int i = type.parallelSmelting; i > 0; i--)
             {
-                if (this.isBurning() && this.canSmelt(i))
-                {
-                    ++furnaceCookTime[i];
-
-                    if (furnaceCookTime[i] >= getSpeed())
-                    {
-                        furnaceCookTime[i] = 0;
-                        this.smeltItem(i);
-                        inventoryChanged = true;
-                    }
-                } else
-                {
-                    furnaceCookTime[i] = 0;
-                }
+                dirty |= progressCooking(i);
             }
 
-            if (var1 != this.isBurning() && type.fuelSlots > 0)
+            dirty |= updateBlockActiveState(wasBurning);
+        }
+
+        if (dirty)
+        {
+            this.markDirty();
+        }
+    }
+
+    /**
+     * Checks if any smelt line can smelt an item.
+     */
+    private boolean canSmelt()
+    {
+        for (int i = 0; i < type.parallelSmelting; i++)
+        {
+            if (canSmelt(i))
             {
-                inventoryChanged = true;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the burning state of the furnace has changed. If it has changed update the block.
+     *
+     * @param wasBurning Whether the furnace was burning in the previous tick.
+     * @return True if the state has changed, false if not.
+     */
+    private boolean updateBlockActiveState(boolean wasBurning)
+    {
+        boolean dirty = false;
+
+        if (wasBurning != this.isBurning() && type.fuelSlots > 0)
+        {
+            dirty = true;
+            isActive = this.isBurning();
+
+            IBlockState state = world.getBlockState(pos);
+            world.notifyBlockUpdate(pos, state, state, 3);
+        } else if (type.fuelSlots == 0)
+        {
+            if (isActive != isBurning())
+            {
+                currentItemBurnTime = furnaceBurnTime = 3600;
+                dirty = true;
                 isActive = this.isBurning();
 
                 IBlockState state = world.getBlockState(pos);
                 world.notifyBlockUpdate(pos, state, state, 3);
-            } else if (type.fuelSlots == 0)
-            {
-                if (isActive != isBurning())
-                {
-                    currentItemBurnTime = furnaceBurnTime = 3600;
-                    inventoryChanged = true;
-                    isActive = this.isBurning();
-
-                    IBlockState state = world.getBlockState(pos);
-                    world.notifyBlockUpdate(pos, state, state, 3);
-                }
             }
         }
 
-        if (inventoryChanged)
+        return dirty;
+    }
+
+    /**
+     * Progresses the cook time and smelt item when ready of the smelt line with the given id.
+     *
+     * @return True if item has been smelted, false if not.
+     */
+    private boolean progressCooking(int id)
+    {
+        if (this.isBurning() && this.canSmelt(id))
         {
-            this.markDirty();
+            ++furnaceCookTime[id];
+
+            if (furnaceCookTime[id] >= getSpeed())
+            {
+                furnaceCookTime[id] = 0;
+                this.smeltItem(id);
+                return true;
+
+            }
+        } else
+        {
+            furnaceCookTime[id] = 0;
         }
+
+        return false;
+    }
+
+    /**
+     * Consumes the fuel in the fuel slot, if there is fuel in it.
+     *
+     * @return True if the fuel has been consumed, false if not.
+     */
+    private boolean consumeFuel()
+    {
+        int slot = type.getFirstFuelSlot();
+        ItemStack stack = itemHandler.getStackInSlot(slot);
+        currentItemBurnTime = furnaceBurnTime = getBurnTime(stack);
+        if (this.isBurning())
+        {
+            if (!stack.isEmpty())
+            {
+                stack.shrink(1);
+
+                if (stack.getCount() == 0)
+                {
+                    itemHandler.setStackInSlot(slot, stack.getItem().getContainerItem(stack));
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     private int getBurnTime(ItemStack stack)
@@ -312,27 +357,7 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
         return (int) (TileEntityFurnace.getItemBurnTime(stack) / getConsumptionRate());
     }
 
-    @Override
-    public boolean receiveClientEvent(int i, int j)
-    {
-        if (world != null && !world.isRemote) return true;
-        if (i == 1)
-        {
-            facing = (byte) j;
-            return true;
-        } else if (i == 2)
-        {
-            isActive = j == 1;
-            if (world != null)
-                world.checkLightFor(EnumSkyBlock.BLOCK, pos);
-            else
-                updateLight = true;
-            return true;
-        }
-        return super.receiveClientEvent(i, j);
-    }
-
-    private void updateStacks()
+    private void moveStacks()
     {
         itemHandler.moveInputStacks();
 
@@ -360,6 +385,26 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
         }
 
         itemHandler.moveFuelStacks();
+    }
+
+    @Override
+    public boolean receiveClientEvent(int i, int j)
+    {
+        if (world != null && !world.isRemote) return true;
+        if (i == 1)
+        {
+            facing = (byte) j;
+            return true;
+        } else if (i == 2)
+        {
+            isActive = j == 1;
+            if (world != null)
+                world.checkLightFor(EnumSkyBlock.BLOCK, pos);
+            else
+                updateLight = true;
+            return true;
+        }
+        return super.receiveClientEvent(i, j);
     }
 
     /**
