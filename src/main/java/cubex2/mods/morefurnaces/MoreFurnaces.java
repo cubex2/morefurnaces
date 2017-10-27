@@ -8,7 +8,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -35,18 +34,6 @@ public class MoreFurnaces
     @Mod.Instance(ModInformation.ID)
     public static MoreFurnaces instance;
 
-    public static int ironSpeed;
-    public static int goldSpeed;
-    public static int diamondSpeed;
-    public static int netherrackSpeed;
-    public static int obsidianSpeed;
-
-    public static float ironConsumptionRate;
-    public static float goldConsumptionRate;
-    public static float diamondConsumptionRate;
-    public static float netherrackConsumptionRate;
-    public static float obsidianConsumptionRate;
-
     public MoreFurnaces()
     {
         MinecraftForge.EVENT_BUS.register(this);
@@ -55,25 +42,7 @@ public class MoreFurnaces
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException
     {
-        Configuration config = new Configuration(event.getSuggestedConfigurationFile());
-        try
-        {
-            config.load();
-            ironSpeed = config.get("General", "ironFurnaceSpeed", FurnaceType.IRON.speed).getInt();
-            goldSpeed = config.get("General", "goldFurnaceSpeed", FurnaceType.GOLD.speed).getInt();
-            diamondSpeed = config.get("General", "diamondFurnaceSpeed", FurnaceType.DIAMOND.speed).getInt();
-            netherrackSpeed = config.get("General", "netherrackFurnaceSpeed", FurnaceType.NETHERRACK.speed).getInt();
-            obsidianSpeed = config.get("General", "obsidianFurnaceSpeed", FurnaceType.OBSIDIAN.speed).getInt();
-
-            ironConsumptionRate = (float) config.get("General", "ironFurnaceConsumptionRate", FurnaceType.IRON.consumptionRate).getDouble(FurnaceType.IRON.consumptionRate);
-            goldConsumptionRate = (float) config.get("General", "goldFurnaceConsumptionRate", FurnaceType.GOLD.consumptionRate).getDouble(FurnaceType.GOLD.consumptionRate);
-            diamondConsumptionRate = (float) config.get("General", "diamondFurnaceConsumptionRate", FurnaceType.DIAMOND.consumptionRate).getDouble(FurnaceType.DIAMOND.consumptionRate);
-            netherrackConsumptionRate = (float) config.get("General", "netherrackFurnaceConsumptionRate", FurnaceType.NETHERRACK.consumptionRate).getDouble(FurnaceType.NETHERRACK.consumptionRate);
-            obsidianConsumptionRate = (float) config.get("General", "obsidianFurnaceConsumptionRate", FurnaceType.OBSIDIAN.consumptionRate).getDouble(FurnaceType.OBSIDIAN.consumptionRate);
-        } finally
-        {
-            config.save();
-        }
+        Config.init(event.getSuggestedConfigurationFile());
 
         blockFurnaces = new BlockMoreFurnaces();
         itemBlock = (ItemMoreFurnaces) new ItemMoreFurnaces(blockFurnaces).setRegistryName(blockFurnaces.getRegistryName());

@@ -1,5 +1,6 @@
 package cubex2.mods.morefurnaces.tileentity;
 
+import cubex2.mods.morefurnaces.Config;
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.MoreFurnaces;
 import cubex2.mods.morefurnaces.inventory.ItemHandlerFurnace;
@@ -93,12 +94,12 @@ public class TileEntityIronFurnace extends TileEntity implements ITickable
 
     public int getSpeed()
     {
-        return MoreFurnaces.ironSpeed;
+        return Config.getFurnaceSpeed(type);
     }
 
     public float getConsumptionRate()
     {
-        return MoreFurnaces.ironConsumptionRate;
+        return Config.getConsumptionRate(type);
     }
 
     public byte getFacing()
