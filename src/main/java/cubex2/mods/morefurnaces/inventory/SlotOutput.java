@@ -9,6 +9,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.SlotItemHandler;
 
+import javax.annotation.Nonnull;
+
 public class SlotOutput extends SlotItemHandler implements ISlotCX
 {
     private final String name;
@@ -34,6 +36,16 @@ public class SlotOutput extends SlotItemHandler implements ISlotCX
     public boolean isItemValid(ItemStack stack)
     {
         return false;
+    }
+
+    @Override
+    public void onSlotChange(@Nonnull ItemStack p_75220_1_, @Nonnull ItemStack p_75220_2_)
+    {
+        int d = p_75220_2_.getCount() - p_75220_1_.getCount();
+        if (d > 0)
+        {
+            onCrafting(p_75220_2_, d);
+        }
     }
 
     /**
@@ -82,12 +94,11 @@ public class SlotOutput extends SlotItemHandler implements ISlotCX
             if (f == 0.0F)
             {
                 i = 0;
-            }
-            else if (f < 1.0F)
+            } else if (f < 1.0F)
             {
-                int j = MathHelper.floor((float)i * f);
+                int j = MathHelper.floor((float) i * f);
 
-                if (j < MathHelper.ceil((float)i * f) && Math.random() < (double)((float)i * f - (float)j))
+                if (j < MathHelper.ceil((float) i * f) && Math.random() < (double) ((float) i * f - (float) j))
                 {
                     ++j;
                 }
