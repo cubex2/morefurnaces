@@ -2,7 +2,7 @@
 {
   "modid": "MoreFurnaces",
   "name": "More Furnaces",
-  "description": "Three new furnaces: Iron, Gold, Obsidian and Diamond Furnace.",
+  "description": "More Furnaces adds 7 new furnaces made of iron, copper, silver, gold, diamond, obsidian and netherrack to the game. Each has different abilities like more slots, higher smelting speed or dual smelting.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "http://www.minecraftforum.net/topic/506109-",
