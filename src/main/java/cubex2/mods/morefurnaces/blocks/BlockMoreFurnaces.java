@@ -19,8 +19,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
@@ -253,9 +251,12 @@ public class BlockMoreFurnaces extends Block implements ITileEntityProvider
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
         TileEntity te = world.getTileEntity(pos);
-        if (te instanceof IInventory)
+        if (te instanceof TileEntityIronFurnace)
         {
-            InventoryHelper.dropInventoryItems(world, pos, (IInventory) te);
+            ((TileEntityIronFurnace) te).getItemHandler().dropAllItems(
+                    world,
+                    (double) pos.getX(), (double) pos.getY(), (double) pos.getZ()
+            );
             world.updateComparatorOutputLevel(pos, this);
         }
 

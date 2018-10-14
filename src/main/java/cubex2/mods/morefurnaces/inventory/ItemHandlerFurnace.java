@@ -3,11 +3,13 @@ package cubex2.mods.morefurnaces.inventory;
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
@@ -175,5 +177,18 @@ public class ItemHandlerFurnace extends ItemStackHandler
         super.onContentsChanged(slot);
 
         tile.markDirty();
+    }
+
+    public void dropAllItems(World world, double x, double y, double z)
+    {
+        CombinedInvWrapper inv = new CombinedInvWrapper(bottomSideHandler, topSideHandler, sidesSideHandler);
+        for (int i = 0; i < inv.getSlots(); i++)
+        {
+            ItemStack stack = inv.extractItem(i, 64, false);
+            if (!stack.isEmpty())
+            {
+                InventoryHelper.spawnItemStack(world, x, y, z, stack);
+            }
+        }
     }
 }
