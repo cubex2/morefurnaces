@@ -181,13 +181,9 @@ public class ItemHandlerFurnace extends ItemStackHandler
 
     public void dropAllItems(World world, double x, double y, double z)
     {
-        CombinedInvWrapper inv = new CombinedInvWrapper(bottomSideHandler, topSideHandler, sidesSideHandler);
-        for (int i = 0; i < inv.getSlots(); i++)
-        {
-            ItemStack stack = inv.extractItem(i, 64, false);
-            if (!stack.isEmpty())
-            {
-                InventoryHelper.spawnItemStack(world, x, y, z, stack);
+        for(int i = 0; i < this.getSlots(); i++) {
+            if(!this.getStackInSlot(i).isEmpty()) {
+                InventoryHelper.spawnItemStack(world, x, y, z, this.getStackInSlot(i));
             }
         }
     }
