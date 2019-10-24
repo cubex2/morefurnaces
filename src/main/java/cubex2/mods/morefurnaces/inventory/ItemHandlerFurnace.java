@@ -2,6 +2,7 @@ package cubex2.mods.morefurnaces.inventory;
 
 import cubex2.mods.morefurnaces.FurnaceType;
 import cubex2.mods.morefurnaces.tileentity.TileEntityIronFurnace;
+import cubex2.mods.morefurnaces.tileentity.TileEntityNetherrackFurnace;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.SlotFurnaceFuel;
@@ -90,14 +91,17 @@ public class ItemHandlerFurnace extends ItemStackHandler
         return range;
     }
 
-    public IItemHandlerModifiable getHandlerForSide(@Nonnull EnumFacing facing)
-    {
-        if (facing == EnumFacing.DOWN)
-            return bottomSideHandler;
-        if (facing == EnumFacing.UP)
-            return topSideHandler;
-        return sidesSideHandler;
-    }
+	public IItemHandlerModifiable getHandlerForSide(@Nonnull EnumFacing facing) {
+		if (FurnaceType.NETHERRACK.equals(type) && TileEntityNetherrackFurnace.class.isInstance(tile) && facing.equals(EnumFacing.getFront(tile.getFacing()).getOpposite())) {
+			return topSideHandler;
+		}
+
+		if (facing == EnumFacing.DOWN)
+			return bottomSideHandler;
+		if (facing == EnumFacing.UP)
+			return topSideHandler;
+		return sidesSideHandler;
+	}
 
     public void moveFuelStacks()
     {
@@ -144,7 +148,7 @@ public class ItemHandlerFurnace extends ItemStackHandler
     {
         if (!slotChecksEnabled)
             return true;
-
+        
         if (type.isOutputSlot(index))
         {
             return false;
@@ -181,13 +185,9 @@ public class ItemHandlerFurnace extends ItemStackHandler
 
     public void dropAllItems(World world, double x, double y, double z)
     {
-        CombinedInvWrapper inv = new CombinedInvWrapper(bottomSideHandler, topSideHandler, sidesSideHandler);
-        for (int i = 0; i < inv.getSlots(); i++)
-        {
-            ItemStack stack = inv.extractItem(i, 64, false);
-            if (!stack.isEmpty())
-            {
-                InventoryHelper.spawnItemStack(world, x, y, z, stack);
+        for(int i = 0; i < this.getSlots(); i++) {
+            if(!this.getStackInSlot(i).isEmpty()) {
+                InventoryHelper.spawnItemStack(world, x, y, z, this.getStackInSlot(i));
             }
         }
     }
