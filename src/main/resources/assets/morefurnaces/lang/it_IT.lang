@@ -1,0 +1,15 @@
+IRON_furnace.name=Fornace di ferro
+GOLD_furnace.name=Fornace dorata
+DIAMOND_furnace.name=Fornace di diamante
+OBSIDIAN_furnace.name=Fornace d'ossidiana
+NETHERRACK_furnace.name=Fornace di netherrack
+COPPER_furnace.name=Fornace di rame
+SILVER_furnace.name=Fornace argentata
+item.morefurnacesupgrade.stone_to_iron.name=Miglioramento: da pietra a ferro
+item.morefurnacesupgrade.stone_to_netherrack.name=Miglioramento: da pietra a netherrack
+item.morefurnacesupgrade.iron_to_gold.name=Miglioramento: da ferro a oro
+item.morefurnacesupgrade.iron_to_obsidian.name=Miglioramento: da ferro a ossidiana
+item.morefurnacesupgrade.gold_to_diamond.name=Miglioramento: da oro a diamante
+item.morefurnacesupgrade.copper_to_silver.name=Miglioramento: da rame ad argento
+item.morefurnacesupgrade.iron_to_silver.name=Miglioramento: da ferro ad argento
+item.morefurnacesupgrade.stone_to_copper.name=Miglioramento: da pietra a rame
